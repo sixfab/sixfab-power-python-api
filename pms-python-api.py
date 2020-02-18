@@ -3,9 +3,10 @@
 import smbus2
 import RPi.GPIO as GPIO
 import time
-import crc16
+from crc16 import crc16
 
 bus = smbus2.SMBus(1)
+crc = crc16.CRC16();
 
 #############################################################
 ### Communication Protocol ##################################
@@ -114,10 +115,10 @@ class SixfabPMS:
 		command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
 		print(command)
 
-		crc = crc16.crc16xmodem(bytes(command))
-		print(crc)
-		crcHigh = (crc >> 8) & 0xFF
-		crcLow = crc & 0xFF
+		calCRC = crc.exampleOfUseCRC16(bytes(command), PROTOCOL_HEADER_SIZE + datalen)
+		print(calCRC)
+		crcHigh = (calCRC >> 8) & 0xFF
+		crcLow = calCRC & 0xFF
 		print(crcHigh)
 		print(crcLow)
 		bufferSend.append(crcHigh)
