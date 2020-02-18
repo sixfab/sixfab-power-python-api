@@ -105,7 +105,8 @@ class SixfabPMS:
 	#############################################################
 	def sendCommand(self):
 		global bufferSend
-		print(bufferSend)
+		print("Sent Command:")
+		print('[{}]'.format(', '.join(hex(x) for x in bufferSend)))
 		bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
 
 	def checkCommand(self, recievedByte):
@@ -140,7 +141,7 @@ class SixfabPMS:
 			
 		for i in range(lenOfResponse):
 			c = bus.read_byte(DEVICE_ADDRESS)
-			print("Recieved byte: " + str(hex(c)))
+			#print("Recieved byte: " + str(hex(c)))
 			msg = self.checkCommand(c)
 			
 			if(msg != None and msg != -1):
@@ -161,12 +162,12 @@ class SixfabPMS:
 	def calculateCRC16(self, command, returnType = 0):
 		datalen = (command[3] << 8) + (command[4] & 0xFF)
 		command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
-		print("calculateCRC Func: " + str(command))
+		#print("calculateCRC Func: " + str(command))
 
 		calCRC = crc.exampleOfUseCRC16(bytes(command), PROTOCOL_HEADER_SIZE + datalen)
 		crcHigh = (calCRC >> 8) & 0xFF
 		crcLow = calCRC & 0xFF
-		print("CRC16: " + str(calCRC) + "\rCRC16 High: " + str(crcHigh) + "\rCRC16 Low: " + str(crcLow))
+		print("CRC16: " + str(calCRC) + "\t" + "CRC16 High: " + str(crcHigh) + "\t" + "CRC16 Low: " + str(crcLow))
 		
 		if(returnType == 0):
 			return (crcHigh, crcLow)
