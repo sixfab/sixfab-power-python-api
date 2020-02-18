@@ -16,13 +16,15 @@ bufferSend = list()
 bufferRecieve = list()
 bufferRecieveIndex = 0
 
+RESPONSE_DELAY = 					100
+
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
 PROTOCOL_HEADER_SIZE =				5
 PROTOCOL_FRAME_SIZE =				7
 COMMAND_SIZE_FOR_FLOAT = 			11
 COMMAND_SIZE_FOR_DOUBLE = 			13
-COMMAND_SIZE_FOR_INT = 				9
+COMMAND_SIZE_FOR_INT16 = 			9
 COMMAND_SIZE_FOR_INT32 = 			11
 
 
@@ -32,10 +34,31 @@ COMMAND_TYPE_RESPONSE =				0x03
 
 DEVICE_ADDRESS = 0x41      #7 bit address (will be left shifted to add the read write bit)
 
-PROTOCOL_COMMAND_GET_INPUT_TEMP = 				1
-PROTOCOL_COMMAND_GET_INPUT_VOLTAGE = 			2
-PROTOCOL_COMMAND_GET_INPUT_CURRENT = 			3
-PROTOCOL_COMMAND_GET_INPUT_POWER =	 			4
+PROTOCOL_COMMAND_GET_INPUT_TEMP = 						1
+PROTOCOL_COMMAND_GET_INPUT_VOLTAGE = 					2
+PROTOCOL_COMMAND_GET_INPUT_CURRENT = 					3
+PROTOCOL_COMMAND_GET_INPUT_POWER =	 					4
+PROTOCOL_COMMAND_GET_SYSTEM_TEMP = 						5
+PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE = 					6
+PROTOCOL_COMMAND_GET_SYSTEM_CURRENT = 					7
+PROTOCOL_COMMAND_GET_SYSTEM_POWER =	 					8
+PROTOCOL_COMMAND_GET_BATTERY_TEMP = 					9
+PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE = 					10
+PROTOCOL_COMMAND_GET_BATTERY_CURRENT = 					11
+PROTOCOL_COMMAND_GET_BATTERY_POWER =	 				12
+PROTOCOL_COMMAND_GET_BATTERY_PERCENTAGE = 				13
+PROTOCOL_COMMAND_GET_BATTERY_HEALT =	 				14
+PROTOCOL_COMMAND_GET_FAN_SPEED = 						15
+PROTOCOL_COMMAND_GET_WATCHDOG_STATUS = 					16
+PROTOCOL_COMMAND_GET_BATTERY_CHARGE_MAX_PERCENTAGE = 	17
+
+
+
+PROTOCOL_COMMAND_GET_FIRMWARE_VER =	 					200
+
+
+
+
 
 ###########################################
 ### Private Methods #######################
@@ -66,10 +89,12 @@ class SixfabPMS:
 	def __init__(self):
 		debug_print(self.board + " Class initialized!")
  		
+
 	def __del__(self): 
 		#self.clearGPIOs()
 		print("Class Destructed")
 			
+
 	# Function for clearing GPIO's setup
 	def clearGPIOs(self):
 		GPIO.cleanup()
@@ -133,29 +158,204 @@ class SixfabPMS:
 		bufferSend.append(crcHigh)
 		bufferSend.append(crcLow)
 
-	def calculateCRC16(self, command):
+	def calculateCRC16(self, command, returnType = 0):
 		datalen = (command[3] << 8) + (command[4] & 0xFF)
 		command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
 		print("calculateCRC Func: " + str(command))
 
 		calCRC = crc.exampleOfUseCRC16(bytes(command), PROTOCOL_HEADER_SIZE + datalen)
-		print(calCRC)
 		crcHigh = (calCRC >> 8) & 0xFF
 		crcLow = calCRC & 0xFF
-		print(crcHigh)
-		print(crcLow)
-		return (crcHigh, crcLow)
+		print("CRC16: " + str(calCRC) + "\rCRC16 High: " + str(crcHigh) + "\rCRC16 Low: " + str(crcLow))
+		
+		if(returnType == 0):
+			return (crcHigh, crcLow)
+		else:
+			return calCRC
 		
 
+	#############################################################
+	### API Call Methods ########################################
+	#############################################################
+	
+	# -----------------------------------------------------------
+	# Function for getting input temperature
+	# Parameter : None
+	# Return : float temp [Celcius]
+	# -----------------------------------------------------------
 	def getInputTemp(self):
 		self.createCommand(PROTOCOL_COMMAND_GET_INPUT_TEMP)
 		self.sendCommand()
-		delay_ms(100)
-		raw = self.recieveCommand(COMMAND_SIZE_FOR_FLOAT)
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:9], "big")
+		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
 		return temp / 100
 
+
+	# -----------------------------------------------------------
+	# Function for getting input voltage
+	# Parameter : None
+	# Return : float voltage [Volt]
+	# -----------------------------------------------------------
+	def getInputVoltage(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_INPUT_VOLTAGE)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return voltage / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting input current
+	# Parameter : None
+	# Return : float current [Ampere]
+	# -----------------------------------------------------------
+	def getInputCurrent(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_INPUT_CURRENT)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return current / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting input power
+	# Parameter : None
+	# Return : float power [Watt]
+	# -----------------------------------------------------------
+	def getInputPower(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_INPUT_POWER)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return power / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting system temperature
+	# Parameter : None
+	# Return : float temp [Celcius]
+	# -----------------------------------------------------------
+	def getSystemTemp(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SYSTEM_TEMP)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
+		return temp / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting system voltage
+	# Parameter : None
+	# Return : float voltage [Volt]
+	# -----------------------------------------------------------
+	def getSystemVoltage(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return voltage / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting system current
+	# Parameter : None
+	# Return : float current [Ampere]
+	# -----------------------------------------------------------
+	def getSystemCurrent(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SYSTEM_CURRENT)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return current / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting system power
+	# Parameter : None
+	# Return : float power [Watt]
+	# -----------------------------------------------------------
+	def getSystemPower(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SYSTEM_POWER)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return power / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery temperature
+	# Parameter : None
+	# Return : float temp [Celcius]
+	# -----------------------------------------------------------
+	def getBatteryTemp(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_TEMP)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
+		return temp / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery voltage
+	# Parameter : None
+	# Return : float voltage [Volt]
+	# -----------------------------------------------------------
+	def getBatteryVoltage(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return voltage / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery current
+	# Parameter : None
+	# Return : float current [Ampere]
+	# -----------------------------------------------------------
+	def getBatteryCurrent(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_CURRENT)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return current / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery power
+	# Parameter : None
+	# Return : float power [Watt]
+	# -----------------------------------------------------------
+	def getBatteryPower(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SYSTEM_POWER)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
+
+		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		return power / 100
 
 
 # Example Code Area
