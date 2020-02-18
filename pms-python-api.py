@@ -4,6 +4,7 @@ import smbus2
 import RPi.GPIO as GPIO
 import time
 from crc16 import CRC16
+import struct
 
 bus = smbus2.SMBus(1)
 crc = CRC16();
@@ -66,7 +67,8 @@ class SixfabPMS:
 		debug_print(self.board + " Class initialized!")
  		
 	def __del__(self): 
-		self.clearGPIOs()
+		#self.clearGPIOs()
+		print("Class Destructed")
 			
 	# Function for clearing GPIO's setup
 	def clearGPIOs(self):
@@ -96,14 +98,18 @@ class SixfabPMS:
 			return -1
 		
 		datalen = (bufferRecieve[3] << 8) | bufferRecieve[4]
-		datalen = datalen / 2
+		datalen = int(datalen / 2)
 
 		if(bufferRecieveIndex == (PROTOCOL_FRAME_SIZE + datalen)):
-			print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
-			bufferRecieveIndex = 0
-			return bufferRecieve[0:(PROTOCOL_FRAME_SIZE + datalen)]
+			crcRecieved = (bufferRecieve[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | bufferRecieve[PROTOCOL_FRAME_SIZE + datalen - 1]
 
-			
+			print("CRC Check ABORT!")
+			print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
+			return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
+
+			bufferRecieveIndex = 0
+
+
 	def recieveCommand(self, lenOfResponse):
 		global bufferRecieve
 			
@@ -112,7 +118,7 @@ class SixfabPMS:
 			print("Recieved byte: " + str(hex(c)))
 			msg = self.checkCommand(c)
 			
-			if(msg != -1):
+			if(msg != None and msg != -1):
 				return msg
 
 
@@ -123,12 +129,14 @@ class SixfabPMS:
 		bufferSend.append(COMMAND_TYPE_REQUEST)
 		bufferSend.append(0x00)
 		bufferSend.append(0x00)
-
+		(crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE])
+		bufferSend.append(crcHigh)
+		bufferSend.append(crcLow)
 
 	def calculateCRC16(self, command):
 		datalen = (command[3] << 8) + (command[4] & 0xFF)
 		command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
-		print(command)
+		print("calculateCRC Func: " + str(command))
 
 		calCRC = crc.exampleOfUseCRC16(bytes(command), PROTOCOL_HEADER_SIZE + datalen)
 		print(calCRC)
@@ -136,18 +144,17 @@ class SixfabPMS:
 		crcLow = calCRC & 0xFF
 		print(crcHigh)
 		print(crcLow)
-		bufferSend.append(crcHigh)
-		bufferSend.append(crcLow)
+		return (crcHigh, crcLow)
 		
 
 	def getInputTemp(self):
-		createCommand(PROTOCOL_COMMAND_GET_INPUT_TEMP)
+		self.createCommand(PROTOCOL_COMMAND_GET_INPUT_TEMP)
 		self.sendCommand()
 		delay_ms(100)
 		raw = self.recieveCommand(COMMAND_SIZE_FOR_FLOAT)
 
-		temp = struct.unpack('<f', raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_FLOAT])
-		return temp
+		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:9], "big")
+		return temp / 100
 
 
 
@@ -155,15 +162,8 @@ class SixfabPMS:
 
 pms = SixfabPMS()
 
-print(getInputTemp())
+print(pms.getInputTemp())
 
-'''
-pms.createCommand(1)
-pms.calculateCRC16(bufferSend)
-pms.sendCommand()
-delay_ms(100)
-pms.recieveCommand(16)
-'''
 # End of Example Code Area	
 
 	
