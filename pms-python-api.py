@@ -19,12 +19,22 @@ START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
 PROTOCOL_HEADER_SIZE =				5
 PROTOCOL_FRAME_SIZE =				7
+COMMAND_SIZE_FOR_FLOAT = 			11
+COMMAND_SIZE_FOR_DOUBLE = 			13
+COMMAND_SIZE_FOR_INT = 				9
+COMMAND_SIZE_FOR_INT32 = 			11
+
 
 COMMAND_TYPE_REQUEST = 				0x01
 COMMAND_TYPE_RESPONSE = 			0x02
 COMMAND_TYPE_RESPONSE =				0x03
 
 DEVICE_ADDRESS = 0x41      #7 bit address (will be left shifted to add the read write bit)
+
+PROTOCOL_COMMAND_GET_INPUT_TEMP = 				1
+PROTOCOL_COMMAND_GET_INPUT_VOLTAGE = 			2
+PROTOCOL_COMMAND_GET_INPUT_CURRENT = 			3
+PROTOCOL_COMMAND_GET_INPUT_POWER =	 			4
 
 ###########################################
 ### Private Methods #######################
@@ -39,7 +49,7 @@ def millis():
 	return int(time.time())
 
 # Function for delay as miliseconds
-def delay(ms):
+def delay_ms(ms):
 	time.sleep(float(ms/1000.0))
 
 #############################################################
@@ -77,13 +87,13 @@ class SixfabPMS:
 		datalen = 0
 
 		if(bufferRecieveIndex == 0 and recievedByte != START_BYTE_RECIEVED):
-			return
+			return -1
 			
 		bufferRecieve.append(recievedByte)
 		bufferRecieveIndex += 1
 		
 		if(bufferRecieveIndex < PROTOCOL_HEADER_SIZE):
-			return
+			return -1
 		
 		datalen = (bufferRecieve[3] << 8) | bufferRecieve[4]
 		datalen = datalen / 2
@@ -91,17 +101,22 @@ class SixfabPMS:
 		if(bufferRecieveIndex == (PROTOCOL_FRAME_SIZE + datalen)):
 			print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
 			bufferRecieveIndex = 0
-		
-		
+			return bufferRecieve[0:(PROTOCOL_FRAME_SIZE + datalen)]
+
+			
 	def recieveCommand(self, lenOfResponse):
 		global bufferRecieve
 			
 		for i in range(lenOfResponse):
 			c = bus.read_byte(DEVICE_ADDRESS)
 			print("Recieved byte: " + str(hex(c)))
-			self.checkCommand(c)
+			msg = self.checkCommand(c)
+			
+			if(msg != -1):
+				return msg
 
-	def createDummyData(self, command):
+
+	def createCommand(self, command, command_type = COMMAND_TYPE_REQUEST):
 		global bufferSend
 		bufferSend.append(START_BYTE_SENT)
 		bufferSend.append(command)
@@ -125,15 +140,30 @@ class SixfabPMS:
 		bufferSend.append(crcLow)
 		
 
+	def getInputTemp(self):
+		createCommand(PROTOCOL_COMMAND_GET_INPUT_TEMP)
+		self.sendCommand()
+		delay_ms(100)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_FLOAT)
+
+		temp = struct.unpack('<f', raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_FLOAT])
+		return temp
+
+
+
 # Example Code Area
 
 pms = SixfabPMS()
 
-pms.createDummyData(1)
+print(getInputTemp())
+
+'''
+pms.createCommand(1)
 pms.calculateCRC16(bufferSend)
 pms.sendCommand()
-time.sleep(0.1)
+delay_ms(100)
 pms.recieveCommand(16)
+'''
 # End of Example Code Area	
 
 	
