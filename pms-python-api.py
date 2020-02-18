@@ -97,7 +97,7 @@ class SixfabPMS:
 		for i in range(lenOfResponse):
 			c = bus.read_byte(DEVICE_ADDRESS)
 			print("Recieved byte: " + str(hex(c)))
-			checkCommand(c)
+			self.checkCommand(c)
 
 	def createDummyData(self, command):
 		global bufferSend
