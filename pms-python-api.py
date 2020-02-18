@@ -3,6 +3,7 @@
 import smbus2
 import RPi.GPIO as GPIO
 import time
+import crc16
 
 bus = smbus2.SMBus(1)
 
@@ -106,14 +107,29 @@ class SixfabPMS:
 		bufferSend.append(COMMAND_TYPE_REQUEST)
 		bufferSend.append(0x00)
 		bufferSend.append(0x00)
-		bufferSend.append(0x05)
-		bufferSend.append(0x04)
+
+
+	def calculateCRC16(self, command):
+		datalen = (command[3] << 8) + (command[4] & 0xFF)
+		command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
+		print(command)
+
+		crc = crc16.crc16xmodem(bytes(command))
+		print(crc)
+		crcHigh = (crc >> 8) & 0xFF
+		crcLow = crc & 0xFF
+		print(crcHigh)
+		print(crcLow)
+		bufferSend.append(crcHigh)
+		bufferSend.append(crcLow)
+		
 
 # Example Code Area
 
 pms = SixfabPMS()
 
 pms.createDummyData(1)
+pms.calculateCRC16(bufferSend)
 pms.sendCommand()
 time.sleep(0.1)
 pms.recieveCommand(16)
