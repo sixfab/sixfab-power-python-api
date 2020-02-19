@@ -16,7 +16,7 @@ bufferSend = list()
 bufferRecieve = list()
 bufferRecieveIndex = 0
 
-RESPONSE_DELAY = 					100
+RESPONSE_DELAY = 					10
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
@@ -135,6 +135,7 @@ class SixfabPMS:
 		print("Sent Command:")
 		print('[{}]'.format(', '.join(hex(x) for x in bufferSend)))
 		bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
+		
 
 	def checkCommand(self, recievedByte):
 		global bufferRecieve
@@ -177,6 +178,7 @@ class SixfabPMS:
 
 	def createCommand(self, command, command_type = COMMAND_TYPE_REQUEST):
 		global bufferSend
+		bufferSend.clear()
 		bufferSend.append(START_BYTE_SENT)
 		bufferSend.append(command)
 		bufferSend.append(command_type)
@@ -189,6 +191,7 @@ class SixfabPMS:
 
 	def createSetCommand(self, command, value, lenByte, command_type = COMMAND_TYPE_REQUEST):
 		global bufferSend
+		bufferSend.clear()
 		bufferSend.append(START_BYTE_SENT)
 		bufferSend.append(command)
 		bufferSend.append(command_type)
@@ -536,16 +539,18 @@ class SixfabPMS:
 
 		animation = raw[PROTOCOL_HEADER_SIZE : 3]
 		return animation
-
-
-
+	
 
 # Example Code Area
 
 pms = SixfabPMS()
 
 print(pms.getInputTemp())
+delay_ms(500)
+print(pms.getInputVoltage())
+delay_ms(500)
+print(pms.getInputCurrent())
+delay_ms(500)
+print(pms.getInputPower())
 
 # End of Example Code Area	
-
-	
