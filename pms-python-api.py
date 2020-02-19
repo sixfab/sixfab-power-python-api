@@ -26,11 +26,11 @@ COMMAND_SIZE_FOR_FLOAT = 			11
 COMMAND_SIZE_FOR_DOUBLE = 			13
 COMMAND_SIZE_FOR_INT16 = 			9
 COMMAND_SIZE_FOR_INT32 = 			11
+COMMAND_SIZE_FOR_UINT8 = 			8
 
 
 COMMAND_TYPE_REQUEST = 				0x01
 COMMAND_TYPE_RESPONSE = 			0x02
-COMMAND_TYPE_RESPONSE =				0x03
 
 DEVICE_ADDRESS = 0x41      #7 bit address (will be left shifted to add the read write bit)
 
@@ -46,14 +46,41 @@ PROTOCOL_COMMAND_GET_BATTERY_TEMP = 					9
 PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE = 					10
 PROTOCOL_COMMAND_GET_BATTERY_CURRENT = 					11
 PROTOCOL_COMMAND_GET_BATTERY_POWER =	 				12
-PROTOCOL_COMMAND_GET_BATTERY_PERCENTAGE = 				13
+PROTOCOL_COMMAND_GET_BATTERY_LEVEL = 					13
 PROTOCOL_COMMAND_GET_BATTERY_HEALT =	 				14
 PROTOCOL_COMMAND_GET_FAN_SPEED = 						15
 PROTOCOL_COMMAND_GET_WATCHDOG_STATUS = 					16
-PROTOCOL_COMMAND_GET_BATTERY_CHARGE_MAX_PERCENTAGE = 	17
-
-
-
+PROTOCOL_COMMAND_SET_WATCHDOG_STATUS =  				17
+PROTOCOL_COMMAND_SET_RGB_ANIMATION = 					18
+PROTOCOL_COMMAND_GET_RGB_ANIMATION = 					19
+PROTOCOL_COMMAND_SET_FAN_SPEED = 						20
+PROTOCOL_COMMAND_SET_FAN_AUTOMATION = 					21
+PROTOCOL_COMMAND_GET_FAN_AUTOMATION = 					22
+# -----------------------------------------------------	23
+PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL = 		24
+PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL = 		25
+PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL = 		26
+PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL = 		27
+PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS = 			28
+PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS = 			29
+PROTOCOL_COMMAND_GET_POWER_MODE = 						30
+PROTOCOL_COMMAND_GET_BUTTON1_STATUS = 					31
+PROTOCOL_COMMAND_GET_BUTTON2_STATUS = 					32
+PROTOCOL_COMMAND_SET_RTC_TIME = 						33
+PROTOCOL_COMMAND_GET_RTC_TIME =		 					34
+PROTOCOL_COMMAND_HARD_POWER_OFF =		 				35
+PROTOCOL_COMMAND_SOFT_POWER_OFF =		 				36
+PROTOCOL_COMMAND_HARD_REBOOT =			 				37
+PROTOCOL_COMMAND_SOFT_REBOOT =		 					38
+# .
+# .
+# .
+PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT = 				100
+PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT = 				101
+PROTOCOL_COMMAND_EDIT_SCHEDULED_EVENT = 				102
+# .
+# .
+# .
 PROTOCOL_COMMAND_GET_FIRMWARE_VER =	 					200
 
 
@@ -152,12 +179,34 @@ class SixfabPMS:
 		global bufferSend
 		bufferSend.append(START_BYTE_SENT)
 		bufferSend.append(command)
-		bufferSend.append(COMMAND_TYPE_REQUEST)
+		bufferSend.append(command_type)
 		bufferSend.append(0x00)
 		bufferSend.append(0x00)
 		(crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE])
 		bufferSend.append(crcHigh)
 		bufferSend.append(crcLow)
+
+
+	def createSetCommand(self, command, value, lenByte, command_type = COMMAND_TYPE_REQUEST):
+		global bufferSend
+		bufferSend.append(START_BYTE_SENT)
+		bufferSend.append(command)
+		bufferSend.append(command_type)
+
+		lenLow = lenByte & 0xFF
+		lenHigh = (lenByte >> 8) & 0xFF
+
+		bufferSend.append(lenHigh)
+		bufferSend.append(lenLow)
+
+		byteArray = value.to_bytes(len(value),"big")
+		bufferSend.append(byteArray)
+		print(bufferSend)
+
+		(crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE+lenByte])
+		bufferSend.append(crcHigh)
+		bufferSend.append(crcLow)
+		print(bufferSend)
 
 	def calculateCRC16(self, command, returnType = 0):
 		datalen = (command[3] << 8) + (command[4] & 0xFF)
@@ -350,13 +399,145 @@ class SixfabPMS:
 	# Return : float power [Watt]
 	# -----------------------------------------------------------
 	def getBatteryPower(self):
-		self.createCommand(PROTOCOL_COMMAND_GET_SYSTEM_POWER)
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_POWER)
 		self.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return power / 100
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery level
+	# Parameter : None
+	# Return : int level [%]
+	# -----------------------------------------------------------
+	def getBatteryLevel(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_LEVEL)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		level = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return level
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery healt
+	# Parameter : None
+	# Return : int healt [%]
+	# -----------------------------------------------------------
+	def getBatteryHealt(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_HEALT)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		healt = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return healt
+
+
+	# -----------------------------------------------------------
+	# Function for getting fan speed
+	# Parameter : None
+	# Return : int speed [RPM]
+	# -----------------------------------------------------------
+	def getFanSpeed(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_FAN_SPEED)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		rpm = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return rpm
+
+
+	# -----------------------------------------------------------
+	# Function for setting fan speed
+	# Parameter : uint8 speed [STOP, LOW, HIGH] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setFanSpeed(self, fanSpeed):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_SPEED, fanSpeed, 2)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+
+	# -----------------------------------------------------------
+	# Function for getting watchdog status
+	# Parameter : None
+	# Return : int8 status [true, false]
+	# -----------------------------------------------------------
+	def getWatchdogStatus(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_WATCHDOG_STATUS)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		return status
+
+
+	# -----------------------------------------------------------
+	# Function for setting watchdog status
+	# Parameter : uint8 status [true, false] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setFanSpeed(self, status):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+	# -----------------------------------------------------------
+	# Function for setting RGB animation
+	# Parameter : uint8 type [DISABLED, HEARTBEAT, TEMP_MAP]
+	# Parameter : uint8 color [RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, WHITE]
+	# Parameter : uint8 speed [SLOW, NORMAL, FAST] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setRgbAnimation(self, animType, color, speed):
+		
+		value = byteArray()
+		value.append(bytes(animType))
+		value.append(bytes(color))
+		value.append(bytes(speed))
+
+		self.createSetCommand(PROTOCOL_COMMAND_SET_RGB_ANIMATION, value, 3)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+
+	# -----------------------------------------------------------
+	# Function for getting RGB animation
+	# Parameter : None
+	# Return : byteArray(3) - ledAnimation[animType, color, speed]
+	# -----------------------------------------------------------
+	def getRgbAnimation(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_RGB_ANIMATION)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(10)
+
+		animation = raw[PROTOCOL_HEADER_SIZE : 3]
+		return animation
+
+
 
 
 # Example Code Area
