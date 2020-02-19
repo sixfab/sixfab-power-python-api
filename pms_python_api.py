@@ -539,18 +539,5 @@ class SixfabPMS:
 
 		animation = raw[PROTOCOL_HEADER_SIZE : 3]
 		return animation
-	
 
-# Example Code Area
 
-pms = SixfabPMS()
-
-print(pms.getInputTemp())
-delay_ms(500)
-print(pms.getInputVoltage())
-delay_ms(500)
-print(pms.getInputCurrent())
-delay_ms(500)
-print(pms.getInputPower())
-
-# End of Example Code Area	
