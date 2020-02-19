@@ -1,11 +1,12 @@
-from pms-python-api import SixfabPMS
+from pms_python_api import SixfabPMS
+import time
 
 pms = SixfabPMS()
 
 print(pms.getInputTemp())
-delay_ms(500)
+time.sleep(0.5)
 print(pms.getInputVoltage())
-delay_ms(500)
+time.sleep(0.5)
 print(pms.getInputCurrent())
-delay_ms(500)
+time.sleep(0.5)
 print(pms.getInputPower())

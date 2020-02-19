@@ -16,7 +16,7 @@ bufferSend = list()
 bufferRecieve = list()
 bufferRecieveIndex = 0
 
-RESPONSE_DELAY = 					10
+RESPONSE_DELAY = 					100
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
@@ -159,9 +159,8 @@ class SixfabPMS:
 
 			print("CRC Check ABORT!")
 			print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
-			return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
-
 			bufferRecieveIndex = 0
+			return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
 
 
 	def recieveCommand(self, lenOfResponse):
@@ -173,6 +172,7 @@ class SixfabPMS:
 			msg = self.checkCommand(c)
 			
 			if(msg != None and msg != -1):
+				bufferRecieve.clear()
 				return msg
 
 
