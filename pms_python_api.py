@@ -7,7 +7,7 @@ from crc16 import CRC16
 import struct
 
 bus = smbus2.SMBus(1)
-crc = CRC16();
+crc = CRC16()
 
 #############################################################
 ### Communication Protocol ##################################
@@ -457,19 +457,18 @@ class SixfabPMS:
 
 
 	# -----------------------------------------------------------
-	# Function for setting fan speed
-	# Parameter : uint8 speed [STOP, LOW, HIGH] 
+	# Function for setting watchdog status
+	# Parameter : uint8 status [true, false] 
 	# Return : uint8 result [true, false]
 	# -----------------------------------------------------------
-	def setFanSpeed(self, fanSpeed):
-		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_SPEED, fanSpeed, 2)
+	def setFanSpeed(self, status):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
 		self.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
 		return result
-
 
 
 	# -----------------------------------------------------------
@@ -488,21 +487,6 @@ class SixfabPMS:
 
 
 	# -----------------------------------------------------------
-	# Function for setting watchdog status
-	# Parameter : uint8 status [true, false] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setFanSpeed(self, status):
-		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
-		self.sendCommand()
-		delay_ms(RESPONSE_DELAY)
-		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
-
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
-		return result
-
-
-	# -----------------------------------------------------------
 	# Function for setting RGB animation
 	# Parameter : uint8 type [DISABLED, HEARTBEAT, TEMP_MAP]
 	# Parameter : uint8 color [RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, WHITE]
@@ -511,7 +495,7 @@ class SixfabPMS:
 	# -----------------------------------------------------------
 	def setRgbAnimation(self, animType, color, speed):
 		
-		value = byteArray()
+		value = bytearray()
 		value.append(bytes(animType))
 		value.append(bytes(color))
 		value.append(bytes(speed))
