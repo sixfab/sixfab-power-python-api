@@ -64,14 +64,9 @@ class SixfabPMS:
  		
 
 	def __del__(self): 
-		#command.clearGPIOs()
+		#GPIO.cleanup()
 		print("Class Destructed")
 			
-
-	# Function for clearing GPIO's setup
-	def clearGPIOs(self):
-		GPIO.cleanup()
-
 
 	#############################################################
 	### API Call Methods ########################################
@@ -278,7 +273,7 @@ class SixfabPMS:
 	# Return : int healt [%]
 	# -----------------------------------------------------------
 	def getBatteryHealt(self):
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_HEALT)
+		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
@@ -382,7 +377,10 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(10)
 
-		animation = raw[PROTOCOL_HEADER_SIZE : 3]
+		animation = bytearray()
+		for i in range(3):
+			animation.append(raw[PROTOCOL_HEADER_SIZE + i])
+		
 		return animation
 
 
@@ -421,7 +419,10 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(10)
 
-		fanAutomation = raw[PROTOCOL_HEADER_SIZE : 3]
+		fanAutomation = bytearray()
+		for i in range(3):
+			fanAutomation.append(raw[PROTOCOL_HEADER_SIZE + i])
+		
 		return fanAutomation
 
 	
