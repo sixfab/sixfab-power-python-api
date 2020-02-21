@@ -1,4 +1,4 @@
-from pms_python_api import SixfabPMS
+from pythonapi import SixfabPMS
 import time
 
 pms = SixfabPMS()
