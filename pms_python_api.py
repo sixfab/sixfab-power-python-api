@@ -27,7 +27,7 @@ COMMAND_SIZE_FOR_DOUBLE = 			13
 COMMAND_SIZE_FOR_INT16 = 			9
 COMMAND_SIZE_FOR_INT32 = 			11
 COMMAND_SIZE_FOR_UINT8 = 			8
-
+COMMAND_SIZE_FOR_INT64 = 			15
 
 COMMAND_TYPE_REQUEST = 				0x01
 COMMAND_TYPE_RESPONSE = 			0x02
@@ -63,7 +63,7 @@ PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL = 		26
 PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL = 		27
 PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS = 			28
 PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS = 			29
-PROTOCOL_COMMAND_GET_POWER_MODE = 						30
+PROTOCOL_COMMAND_GET_WORKING_MODE = 					30
 PROTOCOL_COMMAND_GET_BUTTON1_STATUS = 					31
 PROTOCOL_COMMAND_GET_BUTTON2_STATUS = 					32
 PROTOCOL_COMMAND_SET_RTC_TIME = 						33
@@ -77,15 +77,11 @@ PROTOCOL_COMMAND_SOFT_REBOOT =		 					38
 # .
 PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT = 				100
 PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT = 				101
-PROTOCOL_COMMAND_EDIT_SCHEDULED_EVENT = 				102
+PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS =          102
 # .
 # .
 # .
 PROTOCOL_COMMAND_GET_FIRMWARE_VER =	 					200
-
-
-
-
 
 ###########################################
 ### Private Methods #######################
@@ -130,6 +126,8 @@ class SixfabPMS:
 	#############################################################
 	### I2C Protocol Functions ##################################
 	#############################################################
+	
+	# Function for sending command
 	def sendCommand(self):
 		global bufferSend
 		print("Sent Command:")
@@ -137,6 +135,7 @@ class SixfabPMS:
 		bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
 		
 
+	# Function for checking command according to protocol
 	def checkCommand(self, recievedByte):
 		global bufferRecieve
 		global bufferRecieveIndex
@@ -163,6 +162,7 @@ class SixfabPMS:
 			return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
 
 
+	# Function for recieving command
 	def recieveCommand(self, lenOfResponse):
 		global bufferRecieve
 			
@@ -176,6 +176,7 @@ class SixfabPMS:
 				return msg
 
 
+	# Function for creating command according to protocol
 	def createCommand(self, command, command_type = COMMAND_TYPE_REQUEST):
 		global bufferSend
 		bufferSend.clear()
@@ -189,6 +190,7 @@ class SixfabPMS:
 		bufferSend.append(crcLow)
 
 
+	# Function for creating set command according to protocol
 	def createSetCommand(self, command, value, lenByte, command_type = COMMAND_TYPE_REQUEST):
 		global bufferSend
 		bufferSend.clear()
@@ -211,6 +213,8 @@ class SixfabPMS:
 		bufferSend.append(crcLow)
 		print(bufferSend)
 
+
+	# Function for calculating CRC16
 	def calculateCRC16(self, command, returnType = 0):
 		datalen = (command[3] << 8) + (command[4] & 0xFF)
 		command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
@@ -487,6 +491,21 @@ class SixfabPMS:
 
 
 	# -----------------------------------------------------------
+	# Function for setting watchdog status
+	# Parameter : uint8 status [true, false] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setWatchdogStatus(self, status):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_WATCHDOG_STATUS, status, 1)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+	# -----------------------------------------------------------
 	# Function for setting RGB animation
 	# Parameter : uint8 type [DISABLED, HEARTBEAT, TEMP_MAP]
 	# Parameter : uint8 color [RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, WHITE]
@@ -524,4 +543,344 @@ class SixfabPMS:
 		animation = raw[PROTOCOL_HEADER_SIZE : 3]
 		return animation
 
+
+	# -----------------------------------------------------------
+	# Function for setting fan automation
+	# Parameter : uint8 disable-treshold [celcius]
+	# Parameter : uint8 slow-treshold [celcius]
+	# Parameter : uint8 fast-treshold [celcius] 
+	# Return : result
+	# -----------------------------------------------------------
+	def setFanAutomation(self, disableTreshold, slowTreshold, fastTreshold):
+
+		value = bytearray()
+		value.append(bytes(disableTreshold))
+		value.append(bytes(slowTreshold))
+		value.append(bytes(fastTreshold))
+
+		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 3)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+
+	# -----------------------------------------------------------
+	# Function for getting fan automation
+	# Parameter : None
+	# Return : byteArray(3) - fanAutomation[disableTreshold, slowTreshold, fastTreshold]
+	# -----------------------------------------------------------
+	def getFanAutomation(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(10)
+
+		fanAutomation = raw[PROTOCOL_HEADER_SIZE : 3]
+		return fanAutomation
+
+	
+
+	# -----------------------------------------------------------
+	# Function for setting battery max charge level
+	# Parameter : uint8 level [%] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setBatteryMaxChargeLevel(self, level):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL, level, 1)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		level = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return level
+
+
+	# -----------------------------------------------------------
+	# Function for getting battery max charge level
+	# Parameter : None
+	# Return : int8 level [true, false]
+	# -----------------------------------------------------------
+	def getBatteryMaxChargeLevel(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		level = raw[PROTOCOL_HEADER_SIZE + 1]
+		return level
+
+	
+	# -----------------------------------------------------------
+	# Function for setting safe shutdown battery level
+	# Parameter : uint8 level [%] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setSafeShutdownBatteryLevel(self, level):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL, level, 1)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		level = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return level
+
+
+	# -----------------------------------------------------------
+	# Function for getting safe shutdown battery level
+	# Parameter : None
+	# Return : int8 level [true, false]
+	# -----------------------------------------------------------
+	def getSafeShutdownBatteryLevel(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		level = raw[PROTOCOL_HEADER_SIZE + 1]
+		return level
+
+
+	# -----------------------------------------------------------
+	# Function for setting safe shutdown status
+	# Parameter : uint8 status [%] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setSafeShutdownBatteryStatus(self, status):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, status, 1)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		status = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return status
+
+
+	# -----------------------------------------------------------
+	# Function for setting safe shutdown status
+	# Parameter : None
+	# Return : int8 status [true, false]
+	# -----------------------------------------------------------
+	def getSafeShutdownBatteryStatus(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		return status
+
+
+	# -----------------------------------------------------------
+	# Function for getting working mode
+	# Parameter : None
+	# Return : int8 workingMode [charging, Fully Charged - Adapter Powered, Battery Powered ]
+	# -----------------------------------------------------------
+	def getWorkingMode(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_WORKING_MODE)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		mode = raw[PROTOCOL_HEADER_SIZE + 1]
+		return mode
+
+
+	# -----------------------------------------------------------
+	# Function for getting button 1
+	# Parameter : None
+	# Return : int8 buttonStatus [pressed, released]
+	# -----------------------------------------------------------
+	def getButton1Status(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BUTTON1_STATUS)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		return status
+
+
+	# -----------------------------------------------------------
+	# Function for getting button 2
+	# Parameter : None
+	# Return : int8 buttonStatus [pressed, released]
+	# -----------------------------------------------------------
+	def getButton2Status(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_BUTTON2_STATUS)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		return status
+
+
+
+	# -----------------------------------------------------------
+	# Function for setting RTC Time
+	# Parameter : uint64 timestamp [timestamp] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setRtcTime(self, timestamp):
+		self.createSetCommand(PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 8)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT64)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+	# -----------------------------------------------------------
+	# Function for getting RTC Time
+	# Parameter : None
+	# Return : uint64 timestamp [timestamp]
+	# -----------------------------------------------------------
+	def getRtcTime(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_RTC_TIME)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_INT64)
+
+		timestamp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT64 - 2], "big")
+		return timestamp
+
+
+
+	# -----------------------------------------------------------
+	# Function for hard powering off
+	# Parameter : None 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def hardPowerOff(self):
+		self.createCommand(PROTOCOL_COMMAND_HARD_POWER_OFF)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+	# -----------------------------------------------------------
+	# Function for soft powering off
+	# Parameter : None 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def softPowerOff(self):
+		self.createCommand(PROTOCOL_COMMAND_SOFT_POWER_OFF)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+	
+	# -----------------------------------------------------------
+	# Function for hard rebooting
+	# Parameter : None 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def hardReboot(self):
+		self.createCommand(PROTOCOL_COMMAND_HARD_REBOOT)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+	# -----------------------------------------------------------
+	# Function for soft rebooting
+	# Parameter : None 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def softReboot(self):
+		self.createCommand(PROTOCOL_COMMAND_SOFT_REBOOT)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+	# -----------------------------------------------------------
+	# Function for creating scheduling event
+	# Parameter : uint8 eventID [id]
+	# Parameter : uint8 scheduletype [time, interval]
+	# Parameter : uint8 timeOrInterval [exact time, interval]
+	# Parameter : uint8 repeat [once, repeated]
+	# Parameter : uint8 repeatPeriod [everyday, specific days]
+	# Parameter : uint8 action [start, hard shutdown, soft shutdown, hard reboot, soft reboot]
+	# Return : result
+	# -----------------------------------------------------------
+	def createScheduledEvent(self, eventID, scheduletype, timeOrInterval, repeat, repeatPeriod, action):
+
+		value = bytearray()
+		value.append(bytes(eventID))
+		value.append(bytes(scheduletype))
+		value.append(bytes(timeOrInterval))
+		value.append(bytes(repeat))
+		value.append(bytes(repeatPeriod))
+		value.append(bytes(action))
+
+		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 6)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+
+	# -----------------------------------------------------------
+	# Function for removing scheduling event
+	# Parameter : uint8 eventID [celcius]
+	# Return : result
+	# -----------------------------------------------------------
+	def removeScheduledEvent(self, eventID):
+
+		self.createSetCommand(PROTOCOL_COMMAND_SET_FAN_AUTOMATION, eventID, 1)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+	
+	# -----------------------------------------------------------
+	# Function for removing scheduling event
+	# Parameter : uint8 eventID [celcius]
+	# Return : result
+	# -----------------------------------------------------------
+	def removeAllScheduledEvents(self, eventID):
+
+		self.createCommand(PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		return result
+
+	
+	# -----------------------------------------------------------
+	# Function for getting firmware ver
+	# Parameter : None
+	# Return : char[8] ver [Ex. v1.00.00]
+	# -----------------------------------------------------------
+	def getFirmwareVer(self):
+		self.createCommand(PROTOCOL_COMMAND_GET_FIRMWARE_VER)
+		self.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = self.recieveCommand(15)
+
+		ver = str(raw[PROTOCOL_HEADER_SIZE : 8])
+		return ver
 
