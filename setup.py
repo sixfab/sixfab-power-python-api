@@ -9,6 +9,6 @@ setup(
     license='MIT',
     url='https://github.com/sixfab/pms-python-api',
     dependency_links  = [],
-	install_requires  = ['smbus2'],
-    packages=find_packages()
+    install_requires  = ['smbus2'],
+	packages=find_packages()
 )
