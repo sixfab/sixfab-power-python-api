@@ -581,7 +581,7 @@ class SixfabPMS:
 	# Return : uint8 result [true, false]
 	# -----------------------------------------------------------
 	def setRtcTime(self, timestamp):
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 8)
+		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 4)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
@@ -603,7 +603,6 @@ class SixfabPMS:
 
 		timestamp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big")
 		return timestamp
-
 
 
 	# -----------------------------------------------------------
