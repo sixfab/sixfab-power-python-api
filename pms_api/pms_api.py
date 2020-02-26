@@ -366,9 +366,9 @@ class SixfabPMS:
 	def setRgbAnimation(self, animType, color, speed):
 		
 		value = bytearray()
-		value.append(bytes(animType))
-		value.append(bytes(color))
-		value.append(bytes(speed))
+		value.append(int(animType))
+		value.append(int(color))
+		value.append(int(speed))
 
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RGB_ANIMATION, value, 3)
 		command.sendCommand()
@@ -400,19 +400,17 @@ class SixfabPMS:
 
 	# -----------------------------------------------------------
 	# Function for setting fan automation
-	# Parameter : uint8 disable-treshold [celcius]
 	# Parameter : uint8 slow-treshold [celcius]
-	# Parameter : uint8 fast-treshold [celcius] 
+	# Parameter : uint8 fast-treshold [celcius]
 	# Return : result
 	# -----------------------------------------------------------
-	def setFanAutomation(self, disableTreshold, slowTreshold, fastTreshold):
+	def setFanAutomation(self, slowTreshold, fastTreshold):
 
 		value = bytearray()
-		value.append(bytes(disableTreshold))
-		value.append(bytes(slowTreshold))
-		value.append(bytes(fastTreshold))
+		value.append(int(slowTreshold))
+		value.append(int(fastTreshold))
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 3)
+		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 2)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
@@ -601,9 +599,9 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_GET_RTC_TIME)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT64)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		timestamp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT64 - 2], "big")
+		timestamp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big")
 		return timestamp
 
 
@@ -752,7 +750,10 @@ class SixfabPMS:
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(15)
-
-		ver = str(raw[PROTOCOL_HEADER_SIZE : 8])
+		ver = bytearray(8)
+		
+		for i in range(8):
+			ver[i] = raw[PROTOCOL_HEADER_SIZE + i ]
+		
 		return ver
 

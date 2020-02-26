@@ -133,7 +133,7 @@ class Command:
             crcRecieved = (bufferRecieve[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | bufferRecieve[PROTOCOL_FRAME_SIZE + datalen - 1]
 
             #print("CRC Check ABORT!")
-            #print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
+            print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
             bufferRecieveIndex = 0
             return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
 
@@ -181,14 +181,22 @@ class Command:
         bufferSend.append(lenHigh)
         bufferSend.append(lenLow)
 
-        byteArray = value.to_bytes(len(value),"big")
-        bufferSend.append(byteArray)
-        print(bufferSend)
+        if(isinstance(value, int)):
+            byteArray = value.to_bytes(lenByte,"big")
+        elif(isinstance(value, bytearray)):
+            byteArray = value
+        else:
+            print("Wrong parameter for CreateSetComamnd!")
+
+        for i in range(lenByte):
+            bufferSend.append(int(byteArray[i]))
+
+        #print(bufferSend)
 
         (crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE+lenByte])
         bufferSend.append(crcHigh)
         bufferSend.append(crcLow)
-        print(bufferSend)
+        #print(bufferSend)
 
 
     # Function for calculating CRC16
