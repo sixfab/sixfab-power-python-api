@@ -2,14 +2,25 @@ from pythonapi import SixfabPMS
 import time
 
 pms = SixfabPMS()
+'''
+print("Battery Temp: " + str(pms.getBatteryTemp()))
+time.sleep(0.1)
+print("Battery Voltage: " + str(pms.getBatteryVoltage()))
+time.sleep(0.1)
+print("Battery Current: " + str(pms.getBatteryCurrent()))
+time.sleep(0.1)
+print("Battery Power: " + str(pms.getBatteryPower()))
+time.sleep(0.1)
+print("Battery Health: " + str(pms.getBatteryHealth()))
+time.sleep(0.1)
+print("Battery Level: " + str(pms.getBatteryLevel()))
+time.sleep(0.1)
+print("Working Mode: " + str(pms.getWorkingMode()))
+time.sleep(0.1)
+print("Watchdog Status: " + str(pms.getWatchdogStatus()))
+'''
 
-print(pms.getFanAutomation())
-'''
-print(pms.getBatteryTemp())
-time.sleep(0.5)
-print(pms.getSystemVoltage())
-time.sleep(0.5)
-print(pms.getBatteryCurrent())
-time.sleep(0.5)
-print(pms.getInputPower())
-'''
+print("Fan Health: " + str(pms.getFanHealth()))
+time.sleep(0.1)
+print("Watchdog alarm: " + str(pms.askWatchdogAlarm()))
+time.sleep(0.1)

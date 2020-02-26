@@ -58,7 +58,7 @@ class Command:
     PROTOCOL_COMMAND_SET_FAN_SPEED = 						20
     PROTOCOL_COMMAND_SET_FAN_AUTOMATION = 					21
     PROTOCOL_COMMAND_GET_FAN_AUTOMATION = 					22
-    # -----------------------------------------------------	23
+    PROTOCOL_COMMAND_GET_FAN_HEALTH =	                    23
     PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL = 		24
     PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL = 		25
     PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL = 		26
@@ -74,6 +74,7 @@ class Command:
     PROTOCOL_COMMAND_SOFT_POWER_OFF =		 				36
     PROTOCOL_COMMAND_HARD_REBOOT =			 				37
     PROTOCOL_COMMAND_SOFT_REBOOT =		 					38
+    PROTOCOL_COMAMND_WATCHDOG_ALARM =                       39
     # .
     # .
     # .
@@ -100,9 +101,14 @@ class Command:
 	# Function for sending command
     def sendCommand(self):
         global bufferSend
-        print("Sent Command:")
-        print('[{}]'.format(', '.join(hex(x) for x in bufferSend)))
-        bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
+        #print("Sent Command:")
+        #print('[{}]'.format(', '.join(hex(x) for x in bufferSend)))
+        try:
+            bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
+        except:
+            pass
+            
+       
 		
 
 	# Function for checking command according to protocol
@@ -126,7 +132,7 @@ class Command:
         if(bufferRecieveIndex == (PROTOCOL_FRAME_SIZE + datalen)):
             crcRecieved = (bufferRecieve[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | bufferRecieve[PROTOCOL_FRAME_SIZE + datalen - 1]
 
-            print("CRC Check ABORT!")
+            #print("CRC Check ABORT!")
             print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
             bufferRecieveIndex = 0
             return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
@@ -137,6 +143,7 @@ class Command:
         global bufferRecieve
             
         for i in range(lenOfResponse):
+
             c = bus.read_byte(DEVICE_ADDRESS)
             #print("Recieved byte: " + str(hex(c)))
             msg = self.checkCommand(c)
@@ -193,7 +200,7 @@ class Command:
         calCRC = crc.exampleOfUseCRC16(bytes(command), PROTOCOL_HEADER_SIZE + datalen)
         crcHigh = (calCRC >> 8) & 0xFF
         crcLow = calCRC & 0xFF
-        print("CRC16: " + str(calCRC) + "\t" + "CRC16 High: " + str(crcHigh) + "\t" + "CRC16 Low: " + str(crcLow))
+        #print("CRC16: " + str(calCRC) + "\t" + "CRC16 High: " + str(crcHigh) + "\t" + "CRC16 Low: " + str(crcLow))
         
         if(returnType == 0):
             return (crcHigh, crcLow)

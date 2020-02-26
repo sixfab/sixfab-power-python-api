@@ -219,7 +219,7 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
-		return voltage / 100
+		return voltage / 1000
 
 
 	# -----------------------------------------------------------
@@ -234,7 +234,7 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
-		return current / 100
+		return current / 1000
 
 
 	# -----------------------------------------------------------
@@ -249,7 +249,7 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
-		return power / 100
+		return power / 1000
 
 
 	# -----------------------------------------------------------
@@ -266,20 +266,34 @@ class SixfabPMS:
 		level = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
 		return level
 
+	# -----------------------------------------------------------
+	# Function for getting fan health
+	# Parameter : None
+	# Return : int level [HEALTY, BROKEN]
+	# -----------------------------------------------------------
+	def getFanHealth(self):
+		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_HEALTH)
+		command.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return health
+
 
 	# -----------------------------------------------------------
-	# Function for getting battery healt
+	# Function for getting battery health
 	# Parameter : None
-	# Return : int healt [%]
+	# Return : int health [%]
 	# -----------------------------------------------------------
-	def getBatteryHealt(self):
+	def getBatteryHealth(self):
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
 
-		healt = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
-		return healt
+		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return health
 
 
 	# -----------------------------------------------------------
@@ -651,6 +665,21 @@ class SixfabPMS:
 
 		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
 		return result
+
+
+	# -----------------------------------------------------------
+	# Function for asking watchdog alarm exist
+	# Parameter : None 
+	# Return : uint8 alarm [true, false]
+	# -----------------------------------------------------------
+	def askWatchdogAlarm(self):
+		command.createCommand(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
+		command.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		alarm_status = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return alarm_status
 
 
 	# -----------------------------------------------------------
