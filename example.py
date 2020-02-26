@@ -1,4 +1,4 @@
-from pythonapi import SixfabPMS
+from pms_api import SixfabPMS
 import time
 
 pms = SixfabPMS()
@@ -24,3 +24,6 @@ print("Fan Health: " + str(pms.getFanHealth()))
 time.sleep(0.1)
 print("Watchdog alarm: " + str(pms.askWatchdogAlarm()))
 time.sleep(0.1)
+print("Watchdog Status: " + str(pms.getWatchdogStatus()))
+time.sleep(0.1)
+print("Working Mode: " + str(pms.getWorkingMode()))

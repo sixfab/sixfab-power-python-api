@@ -312,7 +312,7 @@ class SixfabPMS:
 
 
 	# -----------------------------------------------------------
-	# Function for setting watchdog status
+	# Function for setting fan speed
 	# Parameter : uint8 status [true, false] 
 	# Return : uint8 result [true, false]
 	# -----------------------------------------------------------
@@ -322,7 +322,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -337,7 +337,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
 
 
@@ -352,7 +352,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -375,7 +375,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -417,7 +417,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -452,7 +452,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		level = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
 
 
@@ -482,7 +482,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		level = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
 
 
@@ -512,7 +512,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		status = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
 
 
@@ -527,7 +527,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
 
 
@@ -542,7 +542,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		mode = raw[PROTOCOL_HEADER_SIZE + 1]
+		mode = raw[PROTOCOL_HEADER_SIZE]
 		return mode
 
 
@@ -557,7 +557,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
 
 
@@ -572,7 +572,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		status = raw[PROTOCOL_HEADER_SIZE + 1]
+		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
 
 
@@ -586,9 +586,9 @@ class SixfabPMS:
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 8)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT64)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -619,7 +619,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 	# -----------------------------------------------------------
@@ -633,7 +633,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 	
@@ -648,7 +648,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -663,7 +663,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -707,7 +707,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 
@@ -723,7 +723,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 	
 	# -----------------------------------------------------------
@@ -738,7 +738,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		result = raw[PROTOCOL_HEADER_SIZE + 1 ]
+		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
 	

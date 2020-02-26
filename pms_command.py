@@ -133,7 +133,7 @@ class Command:
             crcRecieved = (bufferRecieve[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | bufferRecieve[PROTOCOL_FRAME_SIZE + datalen - 1]
 
             #print("CRC Check ABORT!")
-            print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
+            #print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
             bufferRecieveIndex = 0
             return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
 
