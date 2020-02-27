@@ -1,0 +1,7 @@
+#!/usr/bin/python3
+
+class Definition:
+	TIME_FORMAT_EPOCH = 0
+	TIME_FORMAT_DATE_AND_TIME = 1
+	TIME_FORMAT_DATE = 2
+	TIME_FORMAT_TIME = 3

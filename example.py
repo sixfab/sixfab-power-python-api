@@ -1,4 +1,4 @@
-from pms_api import SixfabPMS
+from pms_api import SixfabPMS, Definition
 import time
 
 pms = SixfabPMS()
@@ -47,4 +47,4 @@ time.sleep(0.1)
 print("Set Fan Automation Result: " + str(pms.setFanAutomation(1, 1)))
 '''
 
-print("RTC: " + str(pms.getRtcTime()))
+print("RTC: " + str(pms.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME)))

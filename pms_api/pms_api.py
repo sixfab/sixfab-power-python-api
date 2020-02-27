@@ -2,7 +2,9 @@
 
 import RPi.GPIO as GPIO
 import time
+import datetime
 from .pms_command import Command
+from .definitions import *
 
 command = Command()
 
@@ -592,17 +594,28 @@ class SixfabPMS:
 
 	# -----------------------------------------------------------
 	# Function for getting RTC Time
-	# Parameter : None
-	# Return : uint64 timestamp [timestamp]
+	# Parameter : format [Definition -> TIME_FORMAT_EPOCH, TIME_FORMAT_DATE_AND_TIME, TIME_FORMAT_DATE, TIME_FORMAT_TIME]
+	# Return : uint32 timestamp | string date_and_time | string date | string time
 	# -----------------------------------------------------------
-	def getRtcTime(self):
+	def getRtcTime(self, format = Definition.TIME_FORMAT_EPOCH):
 		command.createCommand(command.PROTOCOL_COMMAND_GET_RTC_TIME)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		timestamp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big")
-		return timestamp
+
+		if(format == Definition.TIME_FORMAT_EPOCH):
+			return timestamp
+		elif(format == Definition.TIME_FORMAT_DATE_AND_TIME):
+			date_and_time = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+			return date_and_time
+		elif(format == Definition.TIME_FORMAT_DATE):
+			date = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
+			return date
+		elif(format == Definition.TIME_FORMAT_TIME):
+			time = datetime.datetime.fromtimestamp(timestamp).strftime('%H:%M:%S')
+			return time
 
 
 	# -----------------------------------------------------------
