@@ -2,12 +2,10 @@
 
 import smbus2
 import time
-from .crc16 import CRC16
 import struct
-
+import crc16
 
 bus = smbus2.SMBus(1)
-crc = CRC16()
 
 #############################################################
 ### Communication Protocol ##################################
@@ -88,11 +86,14 @@ class Command:
 
     # Initializer function
     def __init__(self):
-        print("Comamnd Class initialized!")
+        #print("Command Class initialized!")
+        pass
 
 
-    def __del__(self): 
-        print("Command Class Destructed")
+    def __del__(self):
+        #print("Command Class Destructed")
+        pass
+
 
     #############################################################
 	### I2C Protocol Functions ##################################
@@ -127,15 +128,25 @@ class Command:
             return -1
         
         datalen = (bufferRecieve[3] << 8) | bufferRecieve[4]
-        datalen = int(datalen / 2)
 
         if(bufferRecieveIndex == (PROTOCOL_FRAME_SIZE + datalen)):
+            
             crcRecieved = (bufferRecieve[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | bufferRecieve[PROTOCOL_FRAME_SIZE + datalen - 1]
+            #print("CRC Received: " + str(crcRecieved))
+            
+            crcCalculated = self.calculateCRC16(bufferRecieve[0:PROTOCOL_HEADER_SIZE+datalen], 1)
+            #print("CRC Calculated: " + str(crcCalculated))
 
-            #print("CRC Check ABORT!")
-            print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
-            bufferRecieveIndex = 0
-            return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
+            if(crcCalculated == crcRecieved):
+                #print("CRC Check OK")
+                #print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
+                bufferRecieveIndex = 0
+                return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
+            else:
+                print("CRC Check FAILED!")
+                bufferRecieveIndex = 0
+                return 0
+            
 
 
     # Function for recieving command
@@ -201,11 +212,7 @@ class Command:
 
     # Function for calculating CRC16
     def calculateCRC16(self, command, returnType = 0):
-        datalen = (command[3] << 8) + (command[4] & 0xFF)
-        command = command[0 : PROTOCOL_HEADER_SIZE + datalen]
-        #print("calculateCRC Func: " + str(command))
-
-        calCRC = crc.exampleOfUseCRC16(bytes(command), PROTOCOL_HEADER_SIZE + datalen)
+        calCRC = crc16.crc16xmodem(bytes(command))
         crcHigh = (calCRC >> 8) & 0xFF
         crcLow = calCRC & 0xFF
         #print("CRC16: " + str(calCRC) + "\t" + "CRC16 High: " + str(crcHigh) + "\t" + "CRC16 Low: " + str(crcLow))
