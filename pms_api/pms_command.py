@@ -14,7 +14,6 @@ bufferSend = list()
 bufferRecieve = list()
 bufferRecieveIndex = 0
 
-RESPONSE_DELAY = 					100
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
@@ -73,6 +72,8 @@ class Command:
     PROTOCOL_COMMAND_HARD_REBOOT =			 				37
     PROTOCOL_COMMAND_SOFT_REBOOT =		 					38
     PROTOCOL_COMAMND_WATCHDOG_ALARM =                       39
+    PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY = 			40
+    PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY =			41
     # .
     # .
     # .

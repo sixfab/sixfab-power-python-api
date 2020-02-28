@@ -9,8 +9,8 @@ print("Input Current: " + str(pms.getInputCurrent()))
 print("Input Power: " + str(pms.getInputPower()))
 print("System Temp: " + str(pms.getSystemTemp()))
 print("System Voltage: " + str(pms.getSystemVoltage()))
-print("System Current: " + str(pms.getSystemCurrent()))
-print("System Power: " + str(pms.getSystemPower()))
+#print("System Current: " + str(pms.getSystemCurrent()))	#Required delay
+#print("System Power: " + str(pms.getSystemPower()))		#Required delay
 print("Battery Temp: " + str(pms.getBatteryTemp()))
 print("Battery Voltage: " + str(pms.getBatteryVoltage()))
 print("Battery Current: " + str(pms.getBatteryCurrent()))
@@ -31,6 +31,8 @@ print("Fan Health: " + str(pms.getFanHealth()))
 #
 print("RTC: " + str(pms.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME)))
 print("Watchdog alarm: " + str(pms.askWatchdogAlarm()))
+print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
+print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(3400)))
 #
 #
 #

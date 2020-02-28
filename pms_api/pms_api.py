@@ -160,7 +160,7 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
-		return voltage / 100
+		return voltage / 1000
 
 
 	# -----------------------------------------------------------
@@ -175,7 +175,7 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
-		return current / 100
+		return current / 1000
 
 
 	# -----------------------------------------------------------
@@ -190,7 +190,7 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
-		return power / 100
+		return power / 1000
 
 
 	# -----------------------------------------------------------
@@ -689,6 +689,35 @@ class SixfabPMS:
 
 		alarm_status = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
 		return alarm_status
+
+	# -----------------------------------------------------------
+	# Function for getting battery design capacity
+	# Parameter : None 
+	# Return : uint16 capacity [maH]
+	# -----------------------------------------------------------
+	def getBatteryDesignCapacity(self):
+		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY)
+		command.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		capacity = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		return capacity
+
+
+	# -----------------------------------------------------------
+	# Function for setting battery design capacity
+	# Parameter : int16 cap [maH] 
+	# Return : uint8 result [true, false]
+	# -----------------------------------------------------------
+	def setBatteryDesignCapacity(self, capacity):
+		command.createSetCommand(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, capacity, 2)
+		command.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		status = raw[PROTOCOL_HEADER_SIZE]
+		return status
 
 
 	# -----------------------------------------------------------
