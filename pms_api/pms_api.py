@@ -779,10 +779,9 @@ class SixfabPMS:
 	
 	# -----------------------------------------------------------
 	# Function for removing scheduling event
-	# Parameter : uint8 eventID [celcius]
 	# Return : result
 	# -----------------------------------------------------------
-	def removeAllScheduledEvents(self, eventID):
+	def removeAllScheduledEvents(self):
 
 		command.createCommand(command.PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS)
 		command.sendCommand()
