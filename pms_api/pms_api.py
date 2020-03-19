@@ -3,7 +3,7 @@
 import time
 import datetime
 from .pms_command import Command
-from .definitions import *
+from .definitions import DayFactors, Definition
 
 command = Command()
 
@@ -466,7 +466,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		level = raw[PROTOCOL_HEADER_SIZE + 1]
+		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
 
 	
@@ -496,7 +496,7 @@ class SixfabPMS:
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
-		level = raw[PROTOCOL_HEADER_SIZE + 1]
+		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
 
 
