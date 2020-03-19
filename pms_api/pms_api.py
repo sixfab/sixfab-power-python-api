@@ -360,7 +360,7 @@ class SixfabPMS:
 	# -----------------------------------------------------------
 	# Function for setting RGB animation
 	# Parameter : uint8 type [DISABLED, HEARTBEAT, TEMP_MAP]
-	# Parameter : uint8 color [RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, WHITE]
+	# Parameter : uint8 color [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
 	# Parameter : uint8 speed [SLOW, NORMAL, FAST] 
 	# Return : uint8 result [true, false]
 	# -----------------------------------------------------------
