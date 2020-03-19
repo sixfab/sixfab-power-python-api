@@ -28,8 +28,9 @@ print("Fan Automation: " + str(pms.getFanAutomation()))
 #
 print("RTC: " + str(pms.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME)))
 print("Watchdog alarm: " + str(pms.askWatchdogAlarm()))
-#print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
-#print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(3400)))
+
+print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(3400)))
+print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
 #
 #
 #

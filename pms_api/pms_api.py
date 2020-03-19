@@ -711,7 +711,7 @@ class SixfabPMS:
 	# Return : uint8 result [true, false]
 	# -----------------------------------------------------------
 	def setBatteryDesignCapacity(self, capacity):
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, capacity, 2)
+		command.createSetCommand(command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY, capacity, 2)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
