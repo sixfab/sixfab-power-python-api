@@ -424,7 +424,7 @@ class SixfabPMS:
 	# -----------------------------------------------------------
 	# Function for getting fan automation
 	# Parameter : None
-	# Return : byteArray(3) - fanAutomation[disableTreshold, slowTreshold, fastTreshold]
+	# Return : byteArray(2) - fanAutomation[slowTreshold, fastTreshold]
 	# -----------------------------------------------------------
 	def getFanAutomation(self):
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -723,24 +723,37 @@ class SixfabPMS:
 	# -----------------------------------------------------------
 	# Function for creating scheduling event
 	# Parameter : uint8 eventID [id]
-	# Parameter : uint8 scheduletype [time, interval]
-	# Parameter : uint8 timeOrInterval [exact time, interval]
+	# Parameter : uint8 scheduleType [time, interval]
 	# Parameter : uint8 repeat [once, repeated]
-	# Parameter : uint8 repeatPeriod [everyday, specific days]
+	# Parameter : uint16 timeOrInterval [exact time[epoch], interval]
+	# Parameter : uint8 interval_type [seconds, minutes, hours, days]
+	# Parameter : uint8 repeatPeriod [day_factor]  
+	#########################################################################################################								 
+	# [RESERVED as Zero] - [monday] - [tuesday] - [wendsday] - [thursday] - [friday] - [saturday] - [sunday]
+	#	    Bit 7			Bit 6	    Bit 5	    Bit 4		  Bit 3		 Bit 2		  Bit 1	      Bit 0
+	#								 			
+	# *** Example Calculation for every day ***
+	# day_factor = 0b01111111 = 127
+	#
+	# *** Example Calculation for (sunday+monday+tuesday) ***
+	# day_factor = 0b01100001 = 97
+	######################################################################################################### 	
 	# Parameter : uint8 action [start, hard shutdown, soft shutdown, hard reboot, soft reboot]
 	# Return : result
 	# -----------------------------------------------------------
-	def createScheduledEvent(self, eventID, scheduletype, timeOrInterval, repeat, repeatPeriod, action):
+	def createScheduledEvent(self, eventID, scheduleType, repeat, timeOrInterval, interval_type, repeatPeriod, action):
 
 		value = bytearray()
-		value.append(bytes(eventID))
-		value.append(bytes(scheduletype))
-		value.append(bytes(timeOrInterval))
-		value.append(bytes(repeat))
-		value.append(bytes(repeatPeriod))
-		value.append(bytes(action))
+		value.append(eventID)
+		value.append(scheduleType)
+		value.append(repeat)
+		value.append((timeOrInterval >> 8) & 0xFF)
+		value.append(timeOrInterval & 0xFF)
+		value.append(interval_type)
+		value.append(repeatPeriod)
+		value.append(action)
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 6)
+		command.createSetCommand(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 8)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
@@ -756,7 +769,7 @@ class SixfabPMS:
 	# -----------------------------------------------------------
 	def removeScheduledEvent(self, eventID):
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, eventID, 1)
+		command.createSetCommand(command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT, eventID, 1)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)

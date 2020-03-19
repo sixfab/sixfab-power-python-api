@@ -22,6 +22,7 @@ print("Set Watchdog Status Result: " + str(pms.setWatchdogStatus(1)))
 print("RGB Animation Result: " + str(pms.setRgbAnimation(1,1,1)))
 print("RGB Animation: " + str(pms.getRgbAnimation()))
 print("Fan Health: " + str(pms.getFanHealth()))
+print("Fan Automation: " + str(pms.getFanAutomation()))
 #
 #
 #
