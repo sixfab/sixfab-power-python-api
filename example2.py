@@ -3,9 +3,6 @@ import time
 
 pms = SixfabPMS()
 
-#print("Battery Health: " + str(pms.getBatteryHealth()))
-#print("System Current: " + str(pms.getSystemCurrent()))	#Required delay
-#print("System Power: " + str(pms.getSystemPower()))		#Required delay
 print("Setting Watchdog Status: " + str(pms.setWatchdogStatus(0)))
 print("Getting Watchdog Status: " + str(pms.getWatchdogStatus()))
 print("RGB Animation Result: " + str(pms.setRgbAnimation(2,3,3)))

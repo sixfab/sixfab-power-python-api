@@ -3,7 +3,7 @@
 import time
 import datetime
 from .pms_command import Command
-from .definitions import DayFactors, Definition
+from .definitions import Definition
 
 command = Command()
 
