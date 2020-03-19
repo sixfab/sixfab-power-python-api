@@ -14,7 +14,7 @@ bufferSend = list()
 bufferRecieve = list()
 bufferRecieveIndex = 0
 
-RESPONSE_DELAY = 					10
+RESPONSE_DELAY = 					50
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
@@ -430,10 +430,10 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
-		raw = command.recieveCommand(10)
+		raw = command.recieveCommand(9)
 
 		fanAutomation = bytearray()
-		for i in range(3):
+		for i in range(2):
 			fanAutomation.append(raw[PROTOCOL_HEADER_SIZE + i])
 		
 		return fanAutomation

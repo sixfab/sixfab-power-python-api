@@ -153,16 +153,20 @@ class Command:
     # Function for recieving command
     def recieveCommand(self, lenOfResponse):
         global bufferRecieve
-            
+
         for i in range(lenOfResponse):
 
-            c = bus.read_byte(DEVICE_ADDRESS)
+            try:
+                c = bus.read_byte(DEVICE_ADDRESS)
+            except:
+                print("error in " + str(i))
+        
             #print("Recieved byte: " + str(hex(c)))
             msg = self.checkCommand(c)
-            
-            if(msg != None and msg != -1):
-                bufferRecieve.clear()
-                return msg
+
+        if(msg != None and msg != -1):
+            bufferRecieve.clear()
+            return msg
 
 
     # Function for creating command according to protocol
