@@ -3,6 +3,14 @@ import time
 
 pms = SixfabPMS()
 
+print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(3400)))
+print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
+
+print("Battery Voltage: " + str(pms.getBatteryVoltage()))
+print("Battery Current: " + str(pms.getBatteryCurrent()))
+print("Battery Level: " + str(pms.getBatteryLevel()))
+print("Working Mode: " + str(pms.getWorkingMode()))
+'''
 print("Input Temp: " + str(pms.getInputTemp()))
 print("Input Voltage: " + str(pms.getInputVoltage()))
 print("Input Current: " + str(pms.getInputCurrent()))
@@ -29,9 +37,8 @@ print("Fan Automation: " + str(pms.getFanAutomation()))
 print("RTC: " + str(pms.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME)))
 print("Watchdog alarm: " + str(pms.askWatchdogAlarm()))
 
-print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(3400)))
-print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
 #
 #
 #
 print("Firmware Ver: " + str(pms.getFirmwareVer()))
+'''
