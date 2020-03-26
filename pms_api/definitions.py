@@ -8,13 +8,13 @@ class Definition:
 	TIME_FORMAT_TIME = 3
 
 	# Day factor
-	MONDAY = 	(1<<6)
-	TUESDAY =	(1<<5)
-	WEDNESDAY =	(1<<4)
+	MONDAY = 	(1<<0)
+	TUESDAY =	(1<<1)
+	WEDNESDAY =	(1<<2)
 	THURSDAY =	(1<<3)
-	FRIDAY =	(1<<2)
-	SATURDAY =	(1<<1)
-	SUNDAY =	(1<<0)
+	FRIDAY =	(1<<4)
+	SATURDAY =	(1<<5)
+	SUNDAY =	(1<<6)
 
 	
 	

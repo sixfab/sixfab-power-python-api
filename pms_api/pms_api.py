@@ -729,8 +729,8 @@ class SixfabPMS:
 	# Parameter : uint8 interval_type [seconds, minutes, hours, days]
 	# Parameter : uint8 repeatPeriod [day_factor]  
 	#########################################################################################################								 
-	# [RESERVED as Zero] - [monday] - [tuesday] - [wendsday] - [thursday] - [friday] - [saturday] - [sunday]
-	#	    Bit 7			Bit 6	    Bit 5	    Bit 4		  Bit 3		 Bit 2		  Bit 1	      Bit 0
+	# [monday] - [tuesday] - [wednesday] - [thursday] - [friday] - [saturday] - [sunday] - [RESERVED as Zero]
+	# Bit 0		 Bit 1	     Bit 2	       Bit 3		Bit 4	   Bit 5		Bit 6	   Bit 7
 	#								 			
 	# *** Example Calculation for every day ***
 	# day_factor = 0b01111111 = 127
