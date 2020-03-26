@@ -8,13 +8,13 @@ print("************* Input Sensors **************")
 print("Input Temp: " + str(pms.getInputTemp()))
 print("Input Voltage: " + str(pms.getInputVoltage()))
 print("Input Current: " + str(pms.getInputCurrent()))
-#print("Input Power: " + str(pms.getInputPower()))			#Required delay
+print("Input Power: " + str(pms.getInputPower()))			#Required delay
 print("\r\n")
 print("************* System Sensors **************")
 print("System Temp: " + str(pms.getSystemTemp()))
 print("System Voltage: " + str(pms.getSystemVoltage()))
-#print("System Current: " + str(pms.getSystemCurrent()))	#Required delay
-#print("System Power: " + str(pms.getSystemPower()))		#Required delay
+print("System Current: " + str(pms.getSystemCurrent()))	#Required delay
+print("System Power: " + str(pms.getSystemPower()))		#Required delay
 print("\r\n")
 print("************* Battery **************")
 print("Battery Temp: " + str(pms.getBatteryTemp()))
@@ -30,7 +30,7 @@ print("Fan Speed: " + str(pms.getFanSpeed()))
 
 print("Setting Watchdog Status: " + str(pms.setWatchdogStatus(0)))
 print("Getting Watchdog Status: " + str(pms.getWatchdogStatus()))
-print("RGB Animation Result: " + str(pms.setRgbAnimation(2,3,3)))
+print("RGB Animation Result: " + str(pms.setRgbAnimation(1,3,3)))
 print("RGB Animation: " + str(pms.getRgbAnimation()))
 print("Set Fan Automation Result: " + str(pms.setFanAutomation(30,60)))
 print("Fan Automation: " + str(pms.getFanAutomation()))
