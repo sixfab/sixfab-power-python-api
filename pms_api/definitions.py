@@ -15,6 +15,8 @@ class Definition:
 	FRIDAY =	(1<<4)
 	SATURDAY =	(1<<5)
 	SUNDAY =	(1<<6)
+	EVERYDAY =  127
+
 
 	
 	

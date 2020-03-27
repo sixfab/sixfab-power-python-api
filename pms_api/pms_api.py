@@ -14,7 +14,7 @@ bufferSend = list()
 bufferRecieve = list()
 bufferRecieveIndex = 0
 
-RESPONSE_DELAY = 					50
+RESPONSE_DELAY = 					100
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
 START_BYTE_SENT = 					0xCD 		# Start Byte Sent
