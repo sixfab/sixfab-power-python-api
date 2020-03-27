@@ -736,7 +736,7 @@ class SixfabPMS:
 	# day_factor = 0b01111111 = 127
 	#
 	# *** Example Calculation for (sunday+monday+tuesday) ***
-	# day_factor = 0b01100001 = 97
+	# day_factor = 0b01000011 = 67
 	######################################################################################################### 	
 	# Parameter : uint8 action [start, hard shutdown, soft shutdown, hard reboot, soft reboot]
 	# Return : result
