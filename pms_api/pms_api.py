@@ -725,7 +725,7 @@ class SixfabPMS:
 	# Parameter : uint8 eventID [id]
 	# Parameter : uint8 scheduleType [time, interval]
 	# Parameter : uint8 repeat [once, repeated]
-	# Parameter : uint16 timeOrInterval [exact time[epoch], interval]
+	# Parameter : uint32 timeOrInterval [exact time[epoch], interval]
 	# Parameter : uint8 interval_type [seconds, minutes, hours, days]
 	# Parameter : uint8 repeatPeriod [day_factor]  
 	#########################################################################################################								 
@@ -747,13 +747,15 @@ class SixfabPMS:
 		value.append(eventID)
 		value.append(scheduleType)
 		value.append(repeat)
+		value.append((timeOrInterval >> 24) & 0xFF)
+		value.append((timeOrInterval >> 16) & 0xFF)
 		value.append((timeOrInterval >> 8) & 0xFF)
 		value.append(timeOrInterval & 0xFF)
 		value.append(interval_type)
 		value.append(repeatPeriod)
 		value.append(action)
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 8)
+		command.createSetCommand(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10)
 		command.sendCommand()
 		delay_ms(RESPONSE_DELAY)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
