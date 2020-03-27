@@ -30,7 +30,7 @@ print("Fan Speed: " + str(pms.getFanSpeed()))
 
 print("Setting Watchdog Status: " + str(pms.setWatchdogStatus(0)))
 print("Getting Watchdog Status: " + str(pms.getWatchdogStatus()))
-print("RGB Animation Result: " + str(pms.setRgbAnimation(1,3,3)))
+print("RGB Animation Result: " + str(pms.setRgbAnimation(2,3,3)))
 print("RGB Animation: " + str(pms.getRgbAnimation()))
 print("Set Fan Automation Result: " + str(pms.setFanAutomation(20,60)))
 print("Fan Automation: " + str(pms.getFanAutomation()))

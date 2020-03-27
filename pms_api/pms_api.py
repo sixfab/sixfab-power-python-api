@@ -763,6 +763,24 @@ class SixfabPMS:
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
+	# -----------------------------------------------------------
+	# Function for getting scheduled event ids
+	# Parameter : None
+	# Return : bytearray --> active ids of scheduled events  
+	# -----------------------------------------------------------
+	def getScheduledEventIds(self):
+		command.createCommand(command.PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS)
+		command.sendCommand()
+		delay_ms(RESPONSE_DELAY)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+
+		ids = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")	
+		ids_bytes = bytearray()
+
+		for i in range(10):
+			if(ids & (1<<i)):
+				ids_bytes.append(i)
+		return ids_bytes
 
 	# -----------------------------------------------------------
 	# Function for removing scheduling event
