@@ -726,6 +726,13 @@ class SixfabPMS:
 	# Parameter : uint8 scheduleType [time, interval]
 	# Parameter : uint8 repeat [once, repeated]
 	# Parameter : uint32 timeOrInterval [exact time[epoch], interval]
+	##################################################################
+	# daily exact_time formula: epoch_time_local % (24*60*60)
+	# daily exact time example: ---> 
+	# ----> Friday, March 27, 2020 11:19:00 PM GMT+03:00
+	# ----> epoch_local = 1585340340 (In this case local : GMT+3)
+	# ----> daily exact_time = 1585340340 % 86400 = 73140
+	##################################################################
 	# Parameter : uint8 interval_type [seconds, minutes, hours, days]
 	# Parameter : uint8 repeatPeriod [day_factor]  
 	#########################################################################################################								 
@@ -779,7 +786,7 @@ class SixfabPMS:
 
 		for i in range(10):
 			if(ids & (1<<i)):
-				ids_bytes.append(i)
+				ids_bytes.append(i+1)
 		return ids_bytes
 
 	# -----------------------------------------------------------
