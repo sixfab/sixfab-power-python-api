@@ -32,7 +32,7 @@ print("Setting Watchdog Status: " + str(pms.setWatchdogStatus(0)))
 print("Getting Watchdog Status: " + str(pms.getWatchdogStatus()))
 print("RGB Animation Result: " + str(pms.setRgbAnimation(1,3,3)))
 print("RGB Animation: " + str(pms.getRgbAnimation()))
-print("Set Fan Automation Result: " + str(pms.setFanAutomation(30,60)))
+print("Set Fan Automation Result: " + str(pms.setFanAutomation(20,60)))
 print("Fan Automation: " + str(pms.getFanAutomation()))
 print("Result Bat. Max Char. Level: " + str(pms.setBatteryMaxChargeLevel(90)))
 print("Bat. Max Char. Level: " + str(pms.getBatteryMaxChargeLevel()))
@@ -44,8 +44,8 @@ print("Button 1 Status: " + str(pms.getButton1Status()))
 print("Button 2 Status: " + str(pms.getButton2Status()))
 
 # RTC
-print("RTC: " + str(pms.setRtcTime(1254852)))
-print("RTC: " + str(pms.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME)))
+#print("RTC: " + str(pms.setRtcTime(1254852)))
+#print("RTC: " + str(pms.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME)))
 
 print("Ask Watchdog Alarm: " + str(pms.askWatchdogAlarm()))
 
@@ -54,14 +54,14 @@ print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(
 print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
 
 ## Create Scheduled Events 
-print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(0,1,2,120,1,(Definition.THURSDAY | Definition.FRIDAY),0)))
-print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(1,1,2,120,1,1,0)))
+#print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(0,1,2,120,1,(Definition.THURSDAY | Definition.FRIDAY),0)))
+#print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(1,1,2,120,1,1,0)))
 
 # Remove event by using id
-print("Result removing Scheduled Event: " + str(pms.removeScheduledEvent(1)))
+#print("Result removing Scheduled Event: " + str(pms.removeScheduledEvent(1)))
 
 # Remove all events
-print("Result removing all Scheduled Event: " + str(pms.removeAllScheduledEvents()))
+#print("Result removing all Scheduled Event: " + str(pms.removeAllScheduledEvents()))
 
 # Firmware Ver.
 print("Firmware Ver: " + str(pms.getFirmwareVer()))
