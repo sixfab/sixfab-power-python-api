@@ -733,7 +733,7 @@ class SixfabPMS:
 	# ----> epoch_local = 1585340340 (In this case local : GMT+3)
 	# ----> daily exact_time = 1585340340 % 86400 = 73140
 	##################################################################
-	# Parameter : uint8 interval_type [seconds, minutes, hours, days]
+	# Parameter : uint8 interval_type [seconds, minutes, hours]
 	# Parameter : uint8 repeatPeriod [day_factor]  
 	#########################################################################################################								 
 	# [monday] - [tuesday] - [wednesday] - [thursday] - [friday] - [saturday] - [sunday] - [RESERVED as Zero]
