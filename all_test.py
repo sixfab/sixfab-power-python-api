@@ -23,17 +23,19 @@ print("Battery Current: " + str(pms.getBatteryCurrent()))
 print("Battery Power: " + str(pms.getBatteryPower()))
 print("Battery Level: " + str(pms.getBatteryLevel()))
 print("Battery Health: " + str(pms.getBatteryHealth()))
-
+print("\r\n")
+print("************* Fan **************")
 print("Fan Health: " + str(pms.getFanHealth()))
 print("Fan Speed Result: " + str(pms.setFanSpeed(1)))
 print("Fan Speed: " + str(pms.getFanSpeed()))
-
+print("Set Fan Automation Result: " + str(pms.setFanAutomation(20,60)))
+print("Fan Automation: " + str(pms.getFanAutomation()))
+print("\r\n")
+print("************* Others **************")
 print("Setting Watchdog Status: " + str(pms.setWatchdogStatus(0)))
 print("Getting Watchdog Status: " + str(pms.getWatchdogStatus()))
 print("RGB Animation Result: " + str(pms.setRgbAnimation(2,3,3)))
 print("RGB Animation: " + str(pms.getRgbAnimation()))
-print("Set Fan Automation Result: " + str(pms.setFanAutomation(20,60)))
-print("Fan Automation: " + str(pms.getFanAutomation()))
 print("Result Bat. Max Char. Level: " + str(pms.setBatteryMaxChargeLevel(90)))
 print("Bat. Max Char. Level: " + str(pms.getBatteryMaxChargeLevel()))
 print("Result Safe Shutdown Bat Lev.: " + str(pms.setSafeShutdownBatteryLevel(10)))
@@ -54,8 +56,8 @@ print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(
 print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
 
 ## Create Scheduled Events 
-print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(0,1,2,120,1,(Definition.THURSDAY | Definition.FRIDAY),0)))
-print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(1,1,2,120,1,1,0)))
+#print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(0,1,2,120,1,(Definition.THURSDAY | Definition.FRIDAY),0)))
+#print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(1,1,2,120,1,1,0)))
 
 # Remove event by using id
 #print("Result removing Scheduled Event: " + str(pms.removeScheduledEvent(1)))

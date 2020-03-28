@@ -5,6 +5,7 @@ import datetime
 from .pms_command import Command
 from .definitions import Definition
 from .event import Event
+import os
 
 command = Command()
 
@@ -132,9 +133,9 @@ class SixfabPMS:
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return power / 1000
 
-
+	"""
 	# -----------------------------------------------------------
-	# Function for getting system temperature
+	# Function for getting system temperature (Raspberry core temperature)
 	# Parameter : None
 	# Return : float temp [Celcius]
 	# -----------------------------------------------------------
@@ -146,7 +147,12 @@ class SixfabPMS:
 
 		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
 		return temp / 100
+    """
 
+	def getSystemTemp(self):
+		temp = os.popen("vcgencmd measure_temp").readline()
+		temp = (temp.replace("temp=",""))
+		return float(temp[:-3])
 
 	# -----------------------------------------------------------
 	# Function for getting system voltage
@@ -857,5 +863,6 @@ class SixfabPMS:
 		for i in range(8):
 			ver[i] = raw[PROTOCOL_HEADER_SIZE + i ]
 		
-		return ver
+		ver_str = ver.decode('utf-8')
+		return ver_str
 
