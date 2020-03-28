@@ -8,13 +8,13 @@ print("************* Input Sensors **************")
 print("Input Temp: " + str(pms.getInputTemp()))
 print("Input Voltage: " + str(pms.getInputVoltage()))
 print("Input Current: " + str(pms.getInputCurrent()))
-print("Input Power: " + str(pms.getInputPower()))			#Required delay
+print("Input Power: " + str(pms.getInputPower()))			#Required delay #default 50
 print("\r\n")
 print("************* System Sensors **************")
 print("System Temp: " + str(pms.getSystemTemp()))
 print("System Voltage: " + str(pms.getSystemVoltage()))
-print("System Current: " + str(pms.getSystemCurrent()))	#Required delay
-print("System Power: " + str(pms.getSystemPower()))		#Required delay
+print("System Current: " + str(pms.getSystemCurrent()))		#Required delay #default 50
+print("System Power: " + str(pms.getSystemPower()))			#Required delay #default 50
 print("\r\n")
 print("************* Battery **************")
 print("Battery Temp: " + str(pms.getBatteryTemp()))
@@ -54,8 +54,8 @@ print("Set Battery Design Capacity Result: " + str(pms.setBatteryDesignCapacity(
 print("Battery Design Capacity: " + str(pms.getBatteryDesignCapacity()))
 
 ## Create Scheduled Events 
-#print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(0,1,2,120,1,(Definition.THURSDAY | Definition.FRIDAY),0)))
-#print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(1,1,2,120,1,1,0)))
+print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(0,1,2,120,1,(Definition.THURSDAY | Definition.FRIDAY),0)))
+print("Result creating Scheduled Event: " + str(pms.createScheduledEvent(1,1,2,120,1,1,0)))
 
 # Remove event by using id
 #print("Result removing Scheduled Event: " + str(pms.removeScheduledEvent(1)))

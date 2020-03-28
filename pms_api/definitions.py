@@ -29,9 +29,61 @@ class Definition:
 	SE_ID_8 =	(1<<8)
 	SE_ID_9 =	(1<<9) 
 
-	# Scheduled Event ID Status
-	NULL_ID = 0xFF
-	ACTIVE_ID = 0x01
+	# Set Command Result
+	SET_OK = 				1
+	SET_FAILED = 			2
+
+	# Set Command Result
+	FAN_HEALTY = 			1				
+	FAN_BROKEN = 			2					
+
+	# RGB Animation Type
+	RGB_DISABLED =			1
+	RGB_HEARTBEAT =			2
+	RGB_TEMP_MAP =			3
+
+	# RGB Color
+	RED = 					1
+	GREEN =					2
+	BLUE =					3
+	YELLOW =				4	
+	CYAN =					5
+	MAGENTA =				6	
+	WHITE =					7
+	BLACK =					8
+
+	# RGB Animation Speed
+	RGB_SLOW = 				1			
+	RGB_NORMAL = 			2
+	RGB_FAST =				3					
+
+	# Workin Mode
+	ADAPTER_POWERED_AND_CHARGING =				1
+	ADAPTER_POWERED_AND_FULLY_CHARGED = 		2 			
+	BATTERY_POWERED =							3							
+
+	# Actions
+	HARD_POWER_OFF = 		1
+	SOFT_POWER_OFF =		2
+	HARD_REBOOT = 			3
+	SOFT_REBOOT = 			4
+	HARD_POWER_ON = 		5
+	SOFT_POWER_ON = 		6
+
+	# Event Schedule Type
+	NO_EVENT =				0
+	EVENT_TIME = 			1
+	EVENT_INTERVAL = 		2
+
+
+	# Event Repeat Type
+	EVENT_ONE_SHOT = 		1
+	EVENT_REPEATED = 		2	
+
+	# IntervalType
+	INTERVAL_TYPE_SEC = 	1
+	INTERVAL_TYPE_MIN = 	2
+	INTERVAL_TYPE_HOUR =	3
 
 
 	
