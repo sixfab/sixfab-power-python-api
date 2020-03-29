@@ -57,19 +57,16 @@ def delay_ms(ms):
 #############################################################
 class SixfabPMS:
 	board = "Sixfab Raspberry Pi UPS HAT"
-	
-	# Special Characters
-	CTRL_Z = '\x1A'
-	
+		
 	# Initializer function
 	def __init__(self):
-		debug_print(self.board + " Class initialized!")
- 		
+		# debug_print(self.board + " Class initialized!")
+ 		pass
 
 	def __del__(self): 
-				print("Class Destructed")
+		# print("Class Destructed")
+		pass
 			
-
 	#############################################################
 	### API Call Methods ########################################
 	#############################################################
@@ -240,7 +237,7 @@ class SixfabPMS:
 		delay_ms(timeout)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big", signed=True)
 		return current / 1000
 
 
@@ -255,7 +252,7 @@ class SixfabPMS:
 		delay_ms(timeout)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
+		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big", signed=True)
 		return power / 1000
 
 
