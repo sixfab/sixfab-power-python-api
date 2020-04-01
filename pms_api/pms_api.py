@@ -863,3 +863,44 @@ class SixfabPMS:
 		ver_str = ver.decode('utf-8')
 		return ver_str
 
+	def updateFirmware(self, firmware_file, packet_size = 20, timeout=10):
+			packet_id = 0
+			requesting_packet_id = 1
+
+			f = open(firmware_file, "rb")
+			# Calculate packet count
+			all_data = f.read()
+			packet_count = int(len(all_data) / packet_size) + 1
+			leap_packet_size = len(all_data) % packet_size
+			f.close()
+
+			f = open(firmware_file, "rb")
+			data = bytes()
+
+			while(data or (packet_id == 0)):
+				if(packet_id != requesting_packet_id):
+					data = f.read(packet_size)
+					packet_id += 1
+
+				if(data):
+					if(packet_id == packet_count):
+						command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data, packet_len = leap_packet_size)
+						command.sendCommand()
+						delay_ms(timeout)
+						raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+					else:
+						command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data)
+						command.sendCommand()
+						delay_ms(timeout)
+						raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)	
+
+
+					try:
+						requesting_packet_id  = (raw[5] << 8) | (raw[6] & 0xFF)
+						print("Last Packet Read --> " + str(packet_id))
+						print("Requesting --> " + str(requesting_packet_id))
+
+						if(requesting_packet_id == 0xFFFF):
+							print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
+					except:
+						print("None Object Exception")

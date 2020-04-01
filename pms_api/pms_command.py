@@ -26,6 +26,8 @@ COMMAND_SIZE_FOR_INT32 = 			11
 COMMAND_SIZE_FOR_UINT8 = 			8
 COMMAND_SIZE_FOR_INT64 = 			15
 
+FIRMWARE_PACKET_LEN =               20
+
 COMMAND_TYPE_REQUEST = 				0x01
 COMMAND_TYPE_RESPONSE = 			0x02
 
@@ -85,6 +87,9 @@ class Command:
     # .
     # .
     PROTOCOL_COMMAND_GET_FIRMWARE_VER =	 					200
+    PROTOCOL_COMMAND_FIRMWARE_UPDATE =						201
+    PROTOCOL_COMMAND_WRITE_FIRMWARE_TO_FLASH =				202
+    PROTOCOL_COMMAND_RESET =								203
 
     # Initializer function
     def __init__(self):
@@ -214,6 +219,46 @@ class Command:
         bufferSend.append(crcHigh)
         bufferSend.append(crcLow)
         #print(bufferSend)
+
+
+    def createFirmwareUpdateCommand(self, packet_count, packet_id, packet, packet_len=FIRMWARE_PACKET_LEN):
+
+        global bufferSend
+        bufferSend.clear()
+        bufferSend.append(START_BYTE_SENT)
+        bufferSend.append(self.PROTOCOL_COMMAND_FIRMWARE_UPDATE)
+        bufferSend.append(COMMAND_TYPE_REQUEST)
+
+        datalen = packet_len + 4    # packet_len + packet_id_len + packet_count_len 
+        lenLow = datalen & 0xFF
+        lenHigh = (datalen >> 8) & 0xFF
+
+        bufferSend.append(lenHigh)
+        bufferSend.append(lenLow)
+
+        packetCountHigh = (packet_count >> 8) & 0xFF
+        packetCountLow = packet_count & 0xFF
+
+        bufferSend.append(packetCountHigh)
+        bufferSend.append(packetCountLow)
+
+        packetIdHigh = (packet_id >> 8) & 0xFF
+        packetIdLow = packet_id & 0xFF
+
+        bufferSend.append(packetIdHigh)
+        bufferSend.append(packetIdLow)
+
+        for i in range(packet_len):
+            try:
+                bufferSend.append(packet[i])
+            except:
+                pass
+            
+        #print(bufferSend)
+        (crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE+lenLow])
+        bufferSend.append(crcHigh)
+        bufferSend.append(crcLow)
+        print(bufferSend)
 
 
     # Function for calculating CRC16
