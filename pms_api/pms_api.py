@@ -863,9 +863,17 @@ class SixfabPMS:
 		ver_str = ver.decode('utf-8')
 		return ver_str
 
-	def updateFirmware(self, firmware_file, packet_size = 20, timeout=10):
+	# -----------------------------------------------------------
+	# Function for updating mcu firmware
+	# Parameter : firmware_file [.bin file path]
+	# Parameter : Do not pass this parameter
+	# Parameter : timeout (it should be min: 25 ms)
+	# Return : char[8] ver [Ex. v1.00.00]
+	# -----------------------------------------------------------
+	def updateFirmware(self, firmware_file, timeout=25):
 			packet_id = 0
 			requesting_packet_id = 1
+			packet_size = 20
 
 			f = open(firmware_file, "rb")
 			# Calculate packet count
@@ -877,10 +885,23 @@ class SixfabPMS:
 			f = open(firmware_file, "rb")
 			data = bytes()
 
+			result = self.clearProgramStorage() # Clear program storage for saving new program data
+			#print("Program Storage Clear Result: " + str(result))
+			if(result != 1):
+				return Definition.SET_FAILED
+
+			last_process = 0
+
 			while(data or (packet_id == 0)):
 				if(packet_id != requesting_packet_id):
 					data = f.read(packet_size)
 					packet_id += 1
+
+				process = int((packet_id * 100) / packet_count)
+				
+				if(process != last_process):
+					print("Firmware Update: %" + str(process) + " completed")
+					last_process = process
 
 				if(data):
 					if(packet_id == packet_count):
@@ -897,10 +918,35 @@ class SixfabPMS:
 
 					try:
 						requesting_packet_id  = (raw[5] << 8) | (raw[6] & 0xFF)
-						print("Last Packet Read --> " + str(packet_id))
-						print("Requesting --> " + str(requesting_packet_id))
+						#print("Last Packet Read --> " + str(packet_id))
+						#print("Requesting --> " + str(requesting_packet_id))
 
 						if(requesting_packet_id == 0xFFFF):
 							print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
+							self.resetMCU()
+							return Definition.SET_OK
 					except:
 						print("None Object Exception")
+			
+			# if firmware update doesn't ended succesfully
+			return Definition.SET_FAILED
+
+
+	def clearProgramStorage(self, timeout=500):
+		command.createCommand(command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE)
+		command.sendCommand()
+		delay_ms(timeout)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE]
+		return result
+
+	def resetMCU(self, timeout=RESPONSE_DELAY):
+		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU)
+		command.sendCommand()
+		delay_ms(timeout)
+		command.sendCommand()
+		delay_ms(timeout)
+		command.sendCommand()
+
+		

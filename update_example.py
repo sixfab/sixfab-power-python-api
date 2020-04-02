@@ -3,4 +3,5 @@ import time
 
 pms = SixfabPMS()
 
-pms.updateFirmware("pms-firmware.bin")
+result = pms.updateFirmware("pms-firmware.bin", timeout=25)
+print(result)
