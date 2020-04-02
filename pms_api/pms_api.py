@@ -863,46 +863,65 @@ class SixfabPMS:
 		ver_str = ver.decode('utf-8')
 		return ver_str
 
-	# -----------------------------------------------------------
+
+	# ------------------------------------------------------------------------------------------
 	# Function for updating mcu firmware
 	# Parameter : firmware_file [.bin file path]
-	# Parameter : Do not pass this parameter
+	# Parameter : do not pass this parameter
 	# Parameter : timeout (it should be min: 25 ms)
-	# Return : char[8] ver [Ex. v1.00.00]
-	# -----------------------------------------------------------
-	def updateFirmware(self, firmware_file, timeout=25):
+	# Parameter : update_method ( default --> 0 : boot_mode_update, 1 : firmware_mode_update)
+	# *******************************************************************************************
+	# boot_mode_update (Safe Method) --> MCU goes to bootloader mode. All working features
+	# have stopped for update sequence. 
+	# firmware_mode_update -->  All features continue to work throughout
+	# the update sequence. But i2c communications can disrupt to update. 
+	# So do not use any API function during the update sequence.
+	# *********************************************************************************************
+	# Return : Result [OK, FAIL]
+	# ---------------------------------------------------------------------------------------------
+	def updateFirmware(self, firmware_file, update_method = 0, timeout=25):
 			packet_id = 0
 			requesting_packet_id = 1
 			packet_size = 20
-
-			f = open(firmware_file, "rb")
+			
 			# Calculate packet count
+			f = open(firmware_file, "rb")
 			all_data = f.read()
 			packet_count = int(len(all_data) / packet_size) + 1
 			leap_packet_size = len(all_data) % packet_size
 			f.close()
 
+			# open file
 			f = open(firmware_file, "rb")
 			data = bytes()
 
-			result = self.clearProgramStorage() # Clear program storage for saving new program data
+			# Clear program storage for saving new program data
+			result = self.clearProgramStorage() 
 			#print("Program Storage Clear Result: " + str(result))
 			if(result != 1):
 				return Definition.SET_FAILED
 
-			last_process = 0
+			last_process = 0	# for process bar
 
+			# choose the update_method
+			if(update_method == 0):
+				self.resetForBootUpdate()
+				delay_ms(800)
+
+			# If any data exist
 			while(data or (packet_id == 0)):
 				if(packet_id != requesting_packet_id):
 					data = f.read(packet_size)
 					packet_id += 1
 
+				# calculate the process
 				process = int((packet_id * 100) / packet_count)
 				
 				if(process != last_process):
 					print("Firmware Update: %" + str(process) + " completed")
 					last_process = process
 
+				# send data to MCU
 				if(data):
 					if(packet_id == packet_count):
 						command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data, packet_len = leap_packet_size)
@@ -915,12 +934,12 @@ class SixfabPMS:
 						delay_ms(timeout)
 						raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)	
 
-
 					try:
 						requesting_packet_id  = (raw[5] << 8) | (raw[6] & 0xFF)
 						#print("Last Packet Read --> " + str(packet_id))
 						#print("Requesting --> " + str(requesting_packet_id))
 
+						# if final packet comes
 						if(requesting_packet_id == 0xFFFF):
 							print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
 							self.resetMCU()
@@ -932,6 +951,11 @@ class SixfabPMS:
 			return Definition.SET_FAILED
 
 
+	# -----------------------------------------------------------
+	# Function for clearing firmware storage
+	# Parameter : None
+	# Return : Result [OK, FAIL]
+	# -----------------------------------------------------------
 	def clearProgramStorage(self, timeout=500):
 		command.createCommand(command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE)
 		command.sendCommand()
@@ -941,12 +965,24 @@ class SixfabPMS:
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
+
+	# -----------------------------------------------------------
+	# Function for resetting MCU
+	# Parameter : None
+	# Return : None
+	# -----------------------------------------------------------
 	def resetMCU(self, timeout=RESPONSE_DELAY):
 		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU)
 		command.sendCommand()
-		delay_ms(timeout)
-		command.sendCommand()
-		delay_ms(timeout)
+	
+
+	# -----------------------------------------------------------
+	# Function for resetting MCU and go to boot mode
+	# Parameter : None
+	# Return : None
+	# -----------------------------------------------------------
+	def resetForBootUpdate(self, timeout=100):
+		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
 		command.sendCommand()
 
 		

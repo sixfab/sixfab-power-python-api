@@ -91,6 +91,8 @@ class Command:
     PROTOCOL_COMMAND_WRITE_FIRMWARE_TO_FLASH =				202
     PROTOCOL_COMMAND_RESET_MCU =							203
     PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE =                204
+    PROTOCOL_COMMAND_CLEAR_PROGRAM_AREA =                   205
+    PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE =            206
 
     # Initializer function
     def __init__(self):
