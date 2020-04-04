@@ -877,7 +877,8 @@ class SixfabPMS:
 	# the update sequence. But i2c communications can disrupt to update. 
 	# So do not use any API function during the update sequence.
 	# *********************************************************************************************
-	# Return : Result [OK, FAIL]
+	# Yield : Process [%] on every step
+	#		  Returns 1 or 2 end of process [SUCCESS, FAILED]
 	# ---------------------------------------------------------------------------------------------
 	def updateFirmware(self, firmware_file, update_method = 0, timeout=25):
 			packet_id = 0
@@ -916,9 +917,13 @@ class SixfabPMS:
 
 				# calculate the process
 				process = int((packet_id * 100) / packet_count)
+				yielded_value = None
 				
 				if(process != last_process):
-					print("Firmware Update: %" + str(process) + " completed")
+					if yielded_value != process:
+						yielded_value = process
+						yield process
+
 					last_process = process
 
 				# send data to MCU
@@ -943,12 +948,13 @@ class SixfabPMS:
 						if(requesting_packet_id == 0xFFFF):
 							print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
 							self.resetMCU()
-							return Definition.SET_OK
+							yield Definition.SET_OK
+							return
 					except:
-						print("None Object Exception")
+						raise ValueError("None Object Exception")
 			
 			# if firmware update doesn't ended succesfully
-			return Definition.SET_FAILED
+			yield Definition.SET_FAILED
 
 
 	# -----------------------------------------------------------

@@ -3,5 +3,12 @@ import time
 
 pms = SixfabPMS()
 
-result = pms.updateFirmware("pms-firmware.bin", timeout=25)
-print(result)
+result = 2 # failed by default
+
+try:
+    for step in pms.updateFirmware("pms-firmware.bin"):
+        print(f"{step}%")
+
+    print(f"Process ended with status code {result}")
+except:
+    print("raised error")
