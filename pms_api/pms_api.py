@@ -985,4 +985,26 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
 		command.sendCommand()
 
-		
+	# -----------------------------------------------------------
+	# Function for asking any software action is required
+	# Parameter : None
+	# Return : action_id [2 --> NO_ACTION, 13 --> SOFT_SHUTDOWN, 14 --> SOFT_REBOOT]
+	# -----------------------------------------------------------
+	def anySoftActionIsExist(self, timeout=RESPONSE_DELAY):
+		command.createCommand(command.PROTOCOL_COMMAND_IS_ANY_SOFT_ACTION_EXIST)
+		command.sendCommand()
+		delay_ms(timeout)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE]
+
+		if(result == 2):
+			return result
+		elif(result == Definition.ACTION_SOFT_SHUTDOWN):
+			os.system(Definition.C_SOFT_SHUTDOWN)
+			print("Shutdown in 5 seconds!")
+			return result
+		elif(result == Definition.ACTION_SOFT_REBOOT):
+			os.system(Definition.C_SOFT_REBOOT)
+			print("Reboot in 5 seconds!")
+			return result

@@ -85,6 +85,13 @@ class Definition:
 	INTERVAL_TYPE_MIN = 	2
 	INTERVAL_TYPE_HOUR =	3
 
+	# Software Action ids
+	ACTION_SOFT_SHUTDOWN = 	13
+	ACTION_SOFT_REBOOT = 	14
+	NO_SOFT_ACTION = 		2
 
-	
+	# Software Action Commands
+	C_SOFT_SHUTDOWN = 		"sleep(5) & sudo shutdown -h now"
+	C_SOFT_REBOOT = 		"sleep(5) & sudo reboot"
+ 	
 	
