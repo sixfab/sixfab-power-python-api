@@ -35,6 +35,12 @@ DEVICE_ADDRESS =                    0x41        #7 bit address (will be left shi
 
 class Command:
 
+    # API ERRORS
+    CRC_CHECK_FAILED = -2
+    BYTE_READ_FAILED = -3
+    BYTE_SEND_FAILED = -4
+
+    # API COMMANDS
     PROTOCOL_COMMAND_GET_INPUT_TEMP = 						1
     PROTOCOL_COMMAND_GET_INPUT_VOLTAGE = 					2
     PROTOCOL_COMMAND_GET_INPUT_CURRENT = 					3
@@ -120,7 +126,7 @@ class Command:
         try:
             bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
         except:
-            pass
+            return self.BYTE_SEND_FAILED
             
        
 		
@@ -158,7 +164,7 @@ class Command:
             else:
                 print("CRC Check FAILED!")
                 bufferRecieveIndex = 0
-                return 0
+                return self.CRC_CHECK_FAILED
             
 
 
@@ -172,13 +178,18 @@ class Command:
                 c = bus.read_byte(DEVICE_ADDRESS)
             except:
                 print("error in " + str(i))
+                return self.BYTE_READ_FAILED
         
             #print("Recieved byte: " + str(hex(c)))
             msg = self.checkCommand(c)
 
-        if(msg != None and msg != -1):
+        if(msg != None and msg != -1 and msg != self.CRC_CHECK_FAILED):
             bufferRecieve.clear()
             return msg
+        elif(msg == self.CRC_CHECK_FAILED):
+            return self.CRC_CHECK_FAILED
+        else:
+            return None
 
 
     # Function for creating command according to protocol
