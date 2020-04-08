@@ -3,5 +3,6 @@ import time
 
 pms = SixfabPMS()
 
-#print(pms.getButton1Status())
-print(pms.anySoftActionIsExist())
+print(pms.getButton1Status())
+#print(pms.anySoftActionIsExist())
+print(pms.getBatteryDesignCapacity())

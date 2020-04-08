@@ -646,7 +646,13 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
-		return result
+		
+		if(result == Definition.SET_OK):
+			print("Raspberry Pi will shutdown in 5 seconds!")
+			os.system("sleep(5) & sudo shutdown -h now")
+			return result
+		else:
+			return result
 
 	
 	# -----------------------------------------------------------
@@ -654,7 +660,7 @@ class SixfabPMS:
 	# Parameter : None 
 	# Return : uint8 result [true, false]
 	# -----------------------------------------------------------
-	def hardReboot(self, timeout=RESPONSE_DELAY):
+	def hardReboot(self, timeout=100):
 		command.createCommand(command.PROTOCOL_COMMAND_HARD_REBOOT)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -676,7 +682,13 @@ class SixfabPMS:
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
-		return result
+		
+		if(result == Definition.SET_OK):
+			print("Raspberry Pi will rebooing in 5 seconds!")
+			os.system("sleep(5) & sudo reboot")
+			return result
+		else:
+			return result
 
 
 	# -----------------------------------------------------------
@@ -990,27 +1002,3 @@ class SixfabPMS:
 	def resetForBootUpdate(self, timeout=100):
 		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
 		command.sendCommand()
-
-	# -----------------------------------------------------------
-	# Function for asking any software action is required
-	# Parameter : None
-	# Return : action_id [2 --> NO_ACTION, 13 --> SOFT_SHUTDOWN, 14 --> SOFT_REBOOT]
-	# -----------------------------------------------------------
-	def anySoftActionIsExist(self, timeout=RESPONSE_DELAY):
-		command.createCommand(command.PROTOCOL_COMMAND_IS_ANY_SOFT_ACTION_EXIST)
-		command.sendCommand()
-		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
-
-		result = raw[PROTOCOL_HEADER_SIZE]
-
-		if(result == 2):
-			return result
-		elif(result == Definition.ACTION_SOFT_SHUTDOWN):
-			os.system(Definition.C_SOFT_SHUTDOWN)
-			print("Shutdown in 5 seconds!")
-			return result
-		elif(result == Definition.ACTION_SOFT_REBOOT):
-			os.system(Definition.C_SOFT_REBOOT)
-			print("Reboot in 5 seconds!")
-			return result
