@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+from .exceptions import CRCCheckFailed
+
 import smbus2
 import time
 import struct
@@ -164,7 +166,7 @@ class Command:
             else:
                 print("CRC Check FAILED!")
                 bufferRecieveIndex = 0
-                return self.CRC_CHECK_FAILED
+                raise CRCCheckFailed("CRC check failed!")
             
 
 
@@ -187,7 +189,7 @@ class Command:
             bufferRecieve.clear()
             return msg
         elif(msg == self.CRC_CHECK_FAILED):
-            return self.CRC_CHECK_FAILED
+            raise CRCCheckFailed("CRC check failed!")
         else:
             return None
 
