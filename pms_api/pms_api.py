@@ -649,7 +649,7 @@ class SixfabPMS:
 		
 		if(result == Definition.SET_OK):
 			print("Raspberry Pi will shutdown in 5 seconds!")
-			os.system("sleep(5) & sudo shutdown -h now")
+			os.system("sleep 5 & sudo shutdown -h now")
 			return result
 		else:
 			return result
@@ -685,7 +685,7 @@ class SixfabPMS:
 		
 		if(result == Definition.SET_OK):
 			print("Raspberry Pi will rebooing in 5 seconds!")
-			os.system("sleep(5) & sudo reboot")
+			os.system("sleep 5 & sudo reboot")
 			return result
 		else:
 			return result
