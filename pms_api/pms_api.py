@@ -265,9 +265,9 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL)
 		command.sendCommand()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		level = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		level = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return level
 
 	# -----------------------------------------------------------
@@ -279,9 +279,9 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_HEALTH)
 		command.sendCommand()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return health
 
 
@@ -294,9 +294,9 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
 		command.sendCommand()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return health
 
 
@@ -309,9 +309,9 @@ class SixfabPMS:
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_SPEED)
 		command.sendCommand()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
 
-		rpm = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
+		rpm = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return rpm
 
 
