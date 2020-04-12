@@ -71,6 +71,10 @@ class SixfabPMS:
 	### API Call Methods ########################################
 	#############################################################
 	
+	def clearPipe(self):
+		command.createClearCommand()
+		command.sendCommand()
+
 	# -----------------------------------------------------------
 	# Function for getting input temperature
 	# Parameter : None

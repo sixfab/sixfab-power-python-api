@@ -3,7 +3,4 @@ import time
 
 pms = SixfabPMS()
 
-print("System Temp: " + str(pms.getBatteryLevel()))
-
-
-
+print("Clear " + str(pms.clearPipe()))

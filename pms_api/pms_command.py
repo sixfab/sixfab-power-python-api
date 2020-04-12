@@ -279,6 +279,13 @@ class Command:
         bufferSend.append(crcLow)
         #print(bufferSend)
 
+    def createClearCommand(self):
+        global bufferSend
+        bufferSend.clear()
+        
+        for i in range(32):
+            bufferSend.append(0xFF)
+
 
     # Function for calculating CRC16
     def calculateCRC16(self, command, returnType = 0):
