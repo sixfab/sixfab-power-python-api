@@ -3,7 +3,8 @@ import time
 
 pms = SixfabPMS()
 
-print("System Temp: " + str(pms.getBatteryLevel()))
+print("System Temp: " + str(pms.getSystemTemp()))
+print("System Temp: " + str(pms.sendSystemTemp()))
 
 
 

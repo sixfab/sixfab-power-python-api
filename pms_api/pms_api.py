@@ -134,26 +134,34 @@ class SixfabPMS:
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return power / 1000
 
-	"""
 	# -----------------------------------------------------------
-	# Function for getting system temperature (Raspberry core temperature)
+	# Function for getting raspberry pi core temperature
 	# Parameter : None
-	# Return : float temp [Celcius]
+	# Return : float temp [C]
 	# -----------------------------------------------------------
-	def getSystemTemp(self, timeout=RESPONSE_DELAY):
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP)
-		command.sendCommand()
-		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
-
-		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
-		return temp / 100
-    """
-
 	def getSystemTemp(self):
 		temp = os.popen("vcgencmd measure_temp").readline()
 		temp = (temp.replace("temp=",""))
 		return float(temp[:-3])
+		
+	
+	# -----------------------------------------------------------
+	# Function for sending raspberry pi core temperature to mcu
+	# Parameter : None
+	# Return : result [1,2]
+	# -----------------------------------------------------------
+	def sendSystemTemp(self, timeout=10):
+		temp = self.getSystemTemp()
+		tempInt = int(temp*100)
+		
+		command.createSetCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
+		command.sendCommand()
+		delay_ms(timeout)
+		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+
+		result = raw[PROTOCOL_HEADER_SIZE]
+		return result
+
 
 	# -----------------------------------------------------------
 	# Function for getting system voltage
