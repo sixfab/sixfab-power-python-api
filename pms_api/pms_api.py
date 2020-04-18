@@ -656,16 +656,22 @@ class SixfabPMS:
 		command.sendCommand()
 		delay_ms(timeout)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
-
+		result2 = 0
 		result = raw[PROTOCOL_HEADER_SIZE]
-		
-		if(result == Definition.SET_OK):
-			print("Raspberry Pi will shutdown in 5 seconds!")
-			os.system("sleep 5 & sudo shutdown -h now")
-			return result
-		else:
-			return result
 
+		if(result == Definition.SET_OK):
+			command.createSetCommand(command.PROTOCOL_COMMAND_SOFT_POWER_OFF, 1, 1)
+			command.sendCommand()
+			delay_ms(timeout)
+			raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+			result2 = raw[PROTOCOL_HEADER_SIZE]
+
+			if(result2 == Definition.SET_OK):
+				print("Raspberry Pi will shutdown in 5 seconds!")
+				os.system("sleep 5 & sudo shutdown -h now")
+				return result2
+
+		return Definition.SET_FAILED
 	
 	# -----------------------------------------------------------
 	# Function for hard rebooting
@@ -693,14 +699,22 @@ class SixfabPMS:
 		delay_ms(timeout)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
 
+		result2 = 0
 		result = raw[PROTOCOL_HEADER_SIZE]
-		
+
 		if(result == Definition.SET_OK):
-			print("Raspberry Pi will rebooing in 5 seconds!")
-			os.system("sleep 5 & sudo reboot")
-			return result
-		else:
-			return result
+			command.createSetCommand(command.PROTOCOL_COMMAND_SOFT_REBOOT, 1, 1)
+			command.sendCommand()
+			delay_ms(timeout)
+			raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+			result2 = raw[PROTOCOL_HEADER_SIZE]
+
+			if(result2 == Definition.SET_OK):
+				print("Raspberry Pi will shutdown in 5 seconds!")
+				os.system("sleep 5 & sudo reboot")
+				return result2
+				
+		return Definition.SET_FAILED
 
 
 	# -----------------------------------------------------------
