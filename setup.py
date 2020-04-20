@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='sixfab_pms',
+    name='sixfab-power-python-api',
     version='0.0.1',
     author='Yasin Kaya',
     author_email='yasinkaya.121@gmail.com',
     description='Sixfab power management service python api',
     license='MIT',
-    url='https://github.com/sixfab/pms-python-api',
+    url='https://github.com/sixfab/sixfab-power-python-api',
     dependency_links  = [],
     install_requires  = ['smbus2==0.3.0', 'crc16==0.1.1'],
 	packages=find_packages()
