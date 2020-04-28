@@ -2,7 +2,7 @@
 
 import time
 import datetime
-from .pms_command import Command
+from .command import Command
 from .definitions import Definition
 from .event import Event
 import os
@@ -12,27 +12,27 @@ command = Command()
 #############################################################
 ### Communication Protocol ##################################
 #############################################################
-bufferSend = list()
-bufferRecieve = list()
-bufferRecieveIndex = 0
+buffer_send = list()
+buffer_receive = list()
+buffer_recieve_index = 0
 
-RESPONSE_DELAY = 					10
+RESPONSE_DELAY = 10
 
-START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
-START_BYTE_SENT = 					0xCD 		# Start Byte Sent
-PROTOCOL_HEADER_SIZE =				5
-PROTOCOL_FRAME_SIZE =				7
-COMMAND_SIZE_FOR_FLOAT = 			11
-COMMAND_SIZE_FOR_DOUBLE = 			13
-COMMAND_SIZE_FOR_INT16 = 			9
-COMMAND_SIZE_FOR_INT32 = 			11
-COMMAND_SIZE_FOR_UINT8 = 			8
-COMMAND_SIZE_FOR_INT64 = 			15
+START_BYTE_RECIEVED = 0xDC 		# Start Byte Recieved
+START_BYTE_SENT = 0xCD 			# Start Byte Sent
+PROTOCOL_HEADER_SIZE = 5
+PROTOCOL_FRAME_SIZE = 7
+COMMAND_SIZE_FOR_FLOAT = 11
+COMMAND_SIZE_FOR_DOUBLE = 13
+COMMAND_SIZE_FOR_INT16 = 9
+COMMAND_SIZE_FOR_INT32 = 11
+COMMAND_SIZE_FOR_UINT8 = 8
+COMMAND_SIZE_FOR_INT64 = 15
 
-COMMAND_TYPE_REQUEST = 				0x01
-COMMAND_TYPE_RESPONSE = 			0x02
+COMMAND_TYPE_REQUEST = 0x01
+COMMAND_TYPE_RESPONSE = 0x02
 
-DEVICE_ADDRESS = 0x41      #7 bit address (will be left shifted to add the read write bit)
+DEVICE_ADDRESS = 0x41      		#7 bit address (will be left shifted to add the read write bit)
 
 
 
@@ -40,22 +40,25 @@ DEVICE_ADDRESS = 0x41      #7 bit address (will be left shifted to add the read 
 ### Private Methods #######################
 ###########################################
 
-# Function for printing debug message 
 def debug_print(message):
+	'''Function for printing debug message.'''
 	print(message)
 
-# Function for getting time as miliseconds
 def millis():
+	'''Function for getting time as miliseconds.'''
 	return int(time.time())
 
-# Function for delay as miliseconds
 def delay_ms(ms):
+	'''Function for delay as miliseconds.'''
 	time.sleep(float(ms/1000.0))
 
+
 #############################################################
-### PMS CLASS ###############################################
+### SIXFAB POWER CLASS ######################################
 #############################################################
-class SixfabPMS:
+class SixfabPower:
+	''' Sixfab Power Class.'''
+
 	board = "Sixfab Raspberry Pi UPS HAT"
 		
 	# Initializer function
@@ -71,16 +74,22 @@ class SixfabPMS:
 	### API Call Methods ########################################
 	#############################################################
 	
-	def clearPipe(self):
-		command.createClearCommand()
-		command.sendCommand()
+	def get_input_temp(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting input temperature
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
 
-	# -----------------------------------------------------------
-	# Function for getting input temperature
-	# Parameter : None
-	# Return : float temp [Celcius]
-	# -----------------------------------------------------------
-	def getInputTemp(self, timeout=RESPONSE_DELAY):
+
+		Return
+		------- 
+		
+		temperature : PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -90,12 +99,22 @@ class SixfabPMS:
 		return temp / 100
 
 
-	# -----------------------------------------------------------
-	# Function for getting input voltage
-	# Parameter : None
-	# Return : float voltage [Volt]
-	# -----------------------------------------------------------
-	def getInputVoltage(self, timeout=RESPONSE_DELAY):
+	def get_input_voltage(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting input voltage
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		voltage : input voltage [Volt] 
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -105,12 +124,22 @@ class SixfabPMS:
 		return voltage / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting input current
-	# Parameter : None
-	# Return : float current [Ampere]
-	# -----------------------------------------------------------
-	def getInputCurrent(self, timeout=RESPONSE_DELAY):
+	def get_input_current(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting input current
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		current : input current [Ampere] 
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_CURRENT)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -120,12 +149,22 @@ class SixfabPMS:
 		return current / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting input power
-	# Parameter : None
-	# Return : float power [Watt]
-	# -----------------------------------------------------------
-	def getInputPower(self, timeout=50):
+	def get_input_power(self, timeout=50):
+		'''
+		Function for getting input power
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		power : input power [Watt] 
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_POWER)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -134,23 +173,44 @@ class SixfabPMS:
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return power / 1000
 
-	# -----------------------------------------------------------
-	# Function for getting raspberry pi core temperature
-	# Parameter : None
-	# Return : float temp [C]
-	# -----------------------------------------------------------
-	def getSystemTemp(self):
+
+	def get_system_temp(self):
+		'''
+		Function for getting raspberry pi core temperature
+		
+		Parameters
+		-----------
+			
+		None
+
+
+		Return
+		------- 
+		
+		temperature : raspberry pi core temperature [Celcius] 
+		'''
 		temp = os.popen("vcgencmd measure_temp").readline()
 		temp = (temp.replace("temp=",""))
 		return float(temp[:-3])
 		
 	
-	# -----------------------------------------------------------
-	# Function for sending raspberry pi core temperature to mcu
-	# Parameter : None
-	# Return : result [1,2]
-	# -----------------------------------------------------------
-	def sendSystemTemp(self, timeout=10):
+
+	def send_system_temp(self, timeout=10):
+		'''
+		Function for sending raspberry pi core temperature to mcu
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		result : 1 for SUCCESS, 2 for FAIL
+		'''
+
 		temp = self.getSystemTemp()
 		tempInt = int(temp*100)
 		
@@ -163,12 +223,22 @@ class SixfabPMS:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for getting system voltage
-	# Parameter : None
-	# Return : float voltage [Volt]
-	# -----------------------------------------------------------
-	def getSystemVoltage(self, timeout=RESPONSE_DELAY):
+	def get_system_voltage(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting system voltage
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		voltage : voltage source that supplies raspberry pi and other peripherals [Volt]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -178,12 +248,21 @@ class SixfabPMS:
 		return voltage / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting system current
-	# Parameter : None
-	# Return : float current [Ampere]
-	# -----------------------------------------------------------
-	def getSystemCurrent(self, timeout=50):
+	def get_system_current(self, timeout=50):
+		'''
+		Function for getting system current
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		current : current that supplies raspberry pi and other peripherals [Ampere]
+		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_CURRENT)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -199,6 +278,20 @@ class SixfabPMS:
 	# Return : float power [Watt]
 	# -----------------------------------------------------------
 	def getSystemPower(self, timeout=50):
+		'''
+		Function for getting system power
+		
+		Parameters
+		-----------
+			
+		timeout : timeout while receiving the response (*optional)
+
+
+		Return
+		------- 
+		
+		power : power that supplies raspberry pi and other peripherals [Ampere]
+		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_POWER)
 		command.sendCommand()
 		delay_ms(timeout)

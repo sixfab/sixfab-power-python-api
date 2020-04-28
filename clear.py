@@ -1,4 +1,4 @@
-from pms_api import SixfabPMS, Definition
+from pms_api import pms_api, Definition
 import time
 
 pms = SixfabPMS()

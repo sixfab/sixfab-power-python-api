@@ -12,9 +12,9 @@ bus = smbus2.SMBus(1)
 #############################################################
 ### Communication Protocol ##################################
 #############################################################
-bufferSend = list()
-bufferRecieve = list()
-bufferRecieveIndex = 0
+buffer_send = list()
+buffer_receive = list()
+buffer_recieve_index = 0
 
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
@@ -122,11 +122,11 @@ class Command:
 	
 	# Function for sending command
     def sendCommand(self):
-        global bufferSend
+        global buffer_send
         #print("Sent Command:")
-        #print('[{}]'.format(', '.join(hex(x) for x in bufferSend)))
+        #print('[{}]'.format(', '.join(hex(x) for x in buffer_send)))
         try:
-            bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, bufferSend)
+            bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, buffer_send)
         except:
             return self.BYTE_SEND_FAILED
             
@@ -135,44 +135,44 @@ class Command:
 
 	# Function for checking command according to protocol
     def checkCommand(self, recievedByte):
-        global bufferRecieve
-        global bufferRecieveIndex
+        global buffer_receive
+        global buffer_recieve_index
         datalen = 0
 
-        if(bufferRecieveIndex == 0 and recievedByte != START_BYTE_RECIEVED):
+        if(buffer_recieve_index == 0 and recievedByte != START_BYTE_RECIEVED):
             return -1
             
-        bufferRecieve.append(recievedByte)
-        bufferRecieveIndex += 1
+        buffer_receive.append(recievedByte)
+        buffer_recieve_index += 1
         
-        if(bufferRecieveIndex < PROTOCOL_HEADER_SIZE):
+        if(buffer_recieve_index < PROTOCOL_HEADER_SIZE):
             return -1
         
-        datalen = (bufferRecieve[3] << 8) | bufferRecieve[4]
+        datalen = (buffer_receive[3] << 8) | buffer_receive[4]
 
-        if(bufferRecieveIndex == (PROTOCOL_FRAME_SIZE + datalen)):
+        if(buffer_recieve_index == (PROTOCOL_FRAME_SIZE + datalen)):
             
-            crcRecieved = (bufferRecieve[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | bufferRecieve[PROTOCOL_FRAME_SIZE + datalen - 1]
+            crcRecieved = (buffer_receive[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | buffer_receive[PROTOCOL_FRAME_SIZE + datalen - 1]
             #print("CRC Received: " + str(crcRecieved))
             
-            crcCalculated = self.calculateCRC16(bufferRecieve[0:PROTOCOL_HEADER_SIZE+datalen], 1)
+            crcCalculated = self.calculateCRC16(buffer_receive[0:PROTOCOL_HEADER_SIZE+datalen], 1)
             #print("CRC Calculated: " + str(crcCalculated))
 
             if(crcCalculated == crcRecieved):
                 #print("CRC Check OK")
-                #print('[{}]'.format(', '.join(hex(x) for x in bufferRecieve)))
-                bufferRecieveIndex = 0
-                return bufferRecieve[0:PROTOCOL_FRAME_SIZE + datalen]
+                #print('[{}]'.format(', '.join(hex(x) for x in buffer_receive)))
+                buffer_recieve_index = 0
+                return buffer_receive[0:PROTOCOL_FRAME_SIZE + datalen]
             else:
                 print("CRC Check FAILED!")
-                bufferRecieveIndex = 0
+                buffer_recieve_index = 0
                 raise CRCCheckFailed("CRC check failed!")
             
 
 
     # Function for recieving command
     def recieveCommand(self, lenOfResponse):
-        global bufferRecieve
+        global buffer_receive
 
         for i in range(lenOfResponse):
 
@@ -186,7 +186,7 @@ class Command:
             msg = self.checkCommand(c)
 
         if(msg != None and msg != -1 and msg != self.CRC_CHECK_FAILED):
-            bufferRecieve.clear()
+            buffer_receive.clear()
             return msg
         elif(msg == self.CRC_CHECK_FAILED):
             raise CRCCheckFailed("CRC check failed!")
@@ -196,31 +196,31 @@ class Command:
 
     # Function for creating command according to protocol
     def createCommand(self, command, command_type = COMMAND_TYPE_REQUEST):
-        global bufferSend
-        bufferSend.clear()
-        bufferSend.append(START_BYTE_SENT)
-        bufferSend.append(command)
-        bufferSend.append(command_type)
-        bufferSend.append(0x00)
-        bufferSend.append(0x00)
-        (crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE])
-        bufferSend.append(crcHigh)
-        bufferSend.append(crcLow)
+        global buffer_send
+        buffer_send.clear()
+        buffer_send.append(START_BYTE_SENT)
+        buffer_send.append(command)
+        buffer_send.append(command_type)
+        buffer_send.append(0x00)
+        buffer_send.append(0x00)
+        (crcHigh, crcLow) = self.calculateCRC16(buffer_send[0:PROTOCOL_HEADER_SIZE])
+        buffer_send.append(crcHigh)
+        buffer_send.append(crcLow)
 
 
     # Function for creating set command according to protocol
     def createSetCommand(self, command, value, lenByte, command_type = COMMAND_TYPE_REQUEST):
-        global bufferSend
-        bufferSend.clear()
-        bufferSend.append(START_BYTE_SENT)
-        bufferSend.append(command)
-        bufferSend.append(command_type)
+        global buffer_send
+        buffer_send.clear()
+        buffer_send.append(START_BYTE_SENT)
+        buffer_send.append(command)
+        buffer_send.append(command_type)
 
         lenLow = lenByte & 0xFF
         lenHigh = (lenByte >> 8) & 0xFF
 
-        bufferSend.append(lenHigh)
-        bufferSend.append(lenLow)
+        buffer_send.append(lenHigh)
+        buffer_send.append(lenLow)
 
         if(isinstance(value, int)):
             byteArray = value.to_bytes(lenByte,"big")
@@ -230,61 +230,61 @@ class Command:
             print("Wrong parameter for CreateSetComamnd!")
 
         for i in range(lenByte):
-            bufferSend.append(int(byteArray[i]))
+            buffer_send.append(int(byteArray[i]))
 
-        #print(bufferSend)
+        #print(buffer_send)
 
-        (crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE+lenByte])
-        bufferSend.append(crcHigh)
-        bufferSend.append(crcLow)
-        #print(bufferSend)
+        (crcHigh, crcLow) = self.calculateCRC16(buffer_send[0:PROTOCOL_HEADER_SIZE+lenByte])
+        buffer_send.append(crcHigh)
+        buffer_send.append(crcLow)
+        #print(buffer_send)
 
 
     def createFirmwareUpdateCommand(self, packet_count, packet_id, packet, packet_len=FIRMWARE_PACKET_LEN):
 
-        global bufferSend
-        bufferSend.clear()
-        bufferSend.append(START_BYTE_SENT)
-        bufferSend.append(self.PROTOCOL_COMMAND_FIRMWARE_UPDATE)
-        bufferSend.append(COMMAND_TYPE_REQUEST)
+        global buffer_send
+        buffer_send.clear()
+        buffer_send.append(START_BYTE_SENT)
+        buffer_send.append(self.PROTOCOL_COMMAND_FIRMWARE_UPDATE)
+        buffer_send.append(COMMAND_TYPE_REQUEST)
 
         datalen = packet_len + 4    # packet_len + packet_id_len + packet_count_len 
         lenLow = datalen & 0xFF
         lenHigh = (datalen >> 8) & 0xFF
 
-        bufferSend.append(lenHigh)
-        bufferSend.append(lenLow)
+        buffer_send.append(lenHigh)
+        buffer_send.append(lenLow)
 
         packetCountHigh = (packet_count >> 8) & 0xFF
         packetCountLow = packet_count & 0xFF
 
-        bufferSend.append(packetCountHigh)
-        bufferSend.append(packetCountLow)
+        buffer_send.append(packetCountHigh)
+        buffer_send.append(packetCountLow)
 
         packetIdHigh = (packet_id >> 8) & 0xFF
         packetIdLow = packet_id & 0xFF
 
-        bufferSend.append(packetIdHigh)
-        bufferSend.append(packetIdLow)
+        buffer_send.append(packetIdHigh)
+        buffer_send.append(packetIdLow)
 
         for i in range(packet_len):
             try:
-                bufferSend.append(packet[i])
+                buffer_send.append(packet[i])
             except:
                 pass
             
-        #print(bufferSend)
-        (crcHigh, crcLow) = self.calculateCRC16(bufferSend[0:PROTOCOL_HEADER_SIZE+lenLow])
-        bufferSend.append(crcHigh)
-        bufferSend.append(crcLow)
-        #print(bufferSend)
+        #print(buffer_send)
+        (crcHigh, crcLow) = self.calculateCRC16(buffer_send[0:PROTOCOL_HEADER_SIZE+lenLow])
+        buffer_send.append(crcHigh)
+        buffer_send.append(crcLow)
+        #print(buffer_send)
 
     def createClearCommand(self):
-        global bufferSend
-        bufferSend.clear()
+        global buffer_send
+        buffer_send.clear()
         
         for i in range(32):
-            bufferSend.append(0xFF)
+            buffer_send.append(0xFF)
 
 
     # Function for calculating CRC16
