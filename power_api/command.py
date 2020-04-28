@@ -36,7 +36,91 @@ COMMAND_TYPE_RESPONSE = 			0x02
 DEVICE_ADDRESS =                    0x41        #7 bit address (will be left shifted to add the read write bit)
 
 class Command:
+    ''' 
+	Command class for provide i2c communication requirements 
+    of Sixfab Power API.
+	
+    Functions
+    ---------
+    send_command : Function for sending command
+    check_command : Function for checking command according to protocol
+    receive_command : Function for receiving command
+    create_command : Function for creating command according to protocol
+    create_set_command : Function for creating set command according to protocol
+    createFirmwareUpdateCommand : Function for creating firmware command according to protocol
+    calculate_crc16 : Function for calculating CRC16
 
+    Attributes
+    ----------
+    # API ERRORS
+    CRC_CHECK_FAILED
+    BYTE_READ_FAILED
+    BYTE_SEND_FAILED
+	
+    # API COMMANDS
+    PROTOCOL_COMMAND_GET_INPUT_TEMP
+    PROTOCOL_COMMAND_GET_INPUT_VOLTAGE
+    PROTOCOL_COMMAND_GET_INPUT_CURRENT
+    PROTOCOL_COMMAND_GET_INPUT_POWER
+    PROTOCOL_COMMAND_GET_SYSTEM_TEMP
+    PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE
+    PROTOCOL_COMMAND_GET_SYSTEM_CURRENT
+    PROTOCOL_COMMAND_GET_SYSTEM_POWER
+    PROTOCOL_COMMAND_GET_BATTERY_TEMP
+    PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE
+    PROTOCOL_COMMAND_GET_BATTERY_CURRENT
+    PROTOCOL_COMMAND_GET_BATTERY_POWER
+    PROTOCOL_COMMAND_GET_BATTERY_LEVEL
+    PROTOCOL_COMMAND_GET_BATTERY_HEALTH
+    PROTOCOL_COMMAND_GET_FAN_SPEED
+    PROTOCOL_COMMAND_GET_WATCHDOG_STATUS
+    PROTOCOL_COMMAND_SET_WATCHDOG_STATUS
+    PROTOCOL_COMMAND_SET_RGB_ANIMATION
+    PROTOCOL_COMMAND_GET_RGB_ANIMATION
+    PROTOCOL_COMMAND_SET_FAN_SPEED
+    PROTOCOL_COMMAND_SET_FAN_AUTOMATION
+    PROTOCOL_COMMAND_GET_FAN_AUTOMATION
+    PROTOCOL_COMMAND_GET_FAN_HEALTH
+    PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL
+    PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL
+    PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL
+    PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL
+    PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS
+    PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS
+    PROTOCOL_COMMAND_GET_WORKING_MODE
+    PROTOCOL_COMMAND_GET_BUTTON1_STATUS
+    PROTOCOL_COMMAND_GET_BUTTON2_STATUS
+    PROTOCOL_COMMAND_SET_RTC_TIME
+    PROTOCOL_COMMAND_GET_RTC_TIME
+    PROTOCOL_COMMAND_HARD_POWER_OFF
+    PROTOCOL_COMMAND_SOFT_POWER_OFF
+    PROTOCOL_COMMAND_HARD_REBOOT
+    PROTOCOL_COMMAND_SOFT_REBOOT
+    PROTOCOL_COMAMND_WATCHDOG_ALARM
+    PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY
+    PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY
+    PROTOCOL_COMMAND_HARD_POWER_ON
+    PROTOCOL_COMMAND_SOFT_POWER_ON
+    PROTOCOL_COMMAND_IS_ANY_SOFT_ACTION_EXIST
+    # .
+    # .
+    # .
+    PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT
+    PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT
+    PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS
+    PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS
+    # .
+    # .
+    # .
+    PROTOCOL_COMMAND_GET_FIRMWARE_VER
+    PROTOCOL_COMMAND_FIRMWARE_UPDATE
+    PROTOCOL_COMMAND_WRITE_FIRMWARE_TO_FLASH
+    PROTOCOL_COMMAND_RESET_MCU
+    PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE
+    PROTOCOL_COMMAND_CLEAR_PROGRAM_AREA
+    PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE
+    '''
+    
     # API ERRORS
     CRC_CHECK_FAILED = -2
     BYTE_READ_FAILED = -3
@@ -255,17 +339,17 @@ class Command:
         buffer_send.append(len_high)
         buffer_send.append(len_low)
 
-        packetCountHigh = (packet_count >> 8) & 0xFF
-        packetCountLow = packet_count & 0xFF
+        packet_count_high = (packet_count >> 8) & 0xFF
+        packet_count_low = packet_count & 0xFF
 
-        buffer_send.append(packetCountHigh)
-        buffer_send.append(packetCountLow)
+        buffer_send.append(packet_count_high)
+        buffer_send.append(packet_count_low)
 
-        packetIdHigh = (packet_id >> 8) & 0xFF
-        packetIdLow = packet_id & 0xFF
+        packet_id_high = (packet_id >> 8) & 0xFF
+        packet_id_low = packet_id & 0xFF
 
-        buffer_send.append(packetIdHigh)
-        buffer_send.append(packetIdLow)
+        buffer_send.append(packet_id_high)
+        buffer_send.append(packet_id_low)
 
         for i in range(packet_len):
             try:
@@ -278,13 +362,6 @@ class Command:
         buffer_send.append(crc_high)
         buffer_send.append(crc_low)
         #print(buffer_send)
-
-    def createClearCommand(self):
-        global buffer_send
-        buffer_send.clear()
-        
-        for i in range(32):
-            buffer_send.append(0xFF)
 
 
     # Function for calculating CRC16

@@ -57,7 +57,10 @@ def delay_ms(ms):
 ### SIXFAB POWER CLASS ######################################
 #############################################################
 class SixfabPower:
-	''' Sixfab Power Class.'''
+	''' 
+	Sixfab Power Class.
+	
+	'''
 
 	board = "Sixfab Raspberry Pi UPS HAT"
 		
@@ -1399,7 +1402,7 @@ class SixfabPower:
 
 		command.create_command(command.PROTOCOL_COMMAND_RESET_MCU)
 		command.send_command()
-	s
+		
 
 	def reset_for_boot_update(self):
 		'''
