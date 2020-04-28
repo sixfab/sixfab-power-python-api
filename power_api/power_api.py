@@ -79,14 +79,11 @@ class SixfabPower:
 		Function for getting input temperature
 		
 		Parameters
-		-----------
-			
+		-----------		
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		temperature : PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
 		'''
 
@@ -104,14 +101,11 @@ class SixfabPower:
 		Function for getting input voltage
 		
 		Parameters
-		-----------
-			
+		-----------	
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		voltage : input voltage [Volt] 
 		'''
 
@@ -129,14 +123,11 @@ class SixfabPower:
 		Function for getting input current
 		
 		Parameters
-		-----------
-			
+		-----------			
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		current : input current [Ampere] 
 		'''
 
@@ -155,13 +146,10 @@ class SixfabPower:
 		
 		Parameters
 		-----------
-			
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		power : input power [Watt] 
 		'''
 
@@ -179,14 +167,11 @@ class SixfabPower:
 		Function for getting raspberry pi core temperature
 		
 		Parameters
-		-----------
-			
+		-----------	
 		None
-
 
 		Return
 		------- 
-		
 		temperature : raspberry pi core temperature [Celcius] 
 		'''
 		temp = os.popen("vcgencmd measure_temp").readline()
@@ -200,14 +185,11 @@ class SixfabPower:
 		Function for sending raspberry pi core temperature to mcu
 		
 		Parameters
-		-----------
-			
+		-----------	
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		result : 1 for SUCCESS, 2 for FAIL
 		'''
 
@@ -229,13 +211,10 @@ class SixfabPower:
 		
 		Parameters
 		-----------
-			
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		voltage : voltage source that supplies raspberry pi and other peripherals [Volt]
 		'''
 
@@ -253,14 +232,11 @@ class SixfabPower:
 		Function for getting system current
 		
 		Parameters
-		-----------
-			
+		-----------	
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		current : current that supplies raspberry pi and other peripherals [Ampere]
 		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_CURRENT)
@@ -272,24 +248,16 @@ class SixfabPower:
 		return current / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting system power
-	# Parameter : None
-	# Return : float power [Watt]
-	# -----------------------------------------------------------
-	def getSystemPower(self, timeout=50):
+	def get_system_power(self, timeout=50):
 		'''
 		Function for getting system power
 		
 		Parameters
-		-----------
-			
+		-----------	
 		timeout : timeout while receiving the response (*optional)
-
 
 		Return
 		------- 
-		
 		power : power that supplies raspberry pi and other peripherals [Ampere]
 		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_POWER)
@@ -301,12 +269,19 @@ class SixfabPower:
 		return power / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery temperature
-	# Parameter : None
-	# Return : float temp [Celcius]
-	# -----------------------------------------------------------
-	def getBatteryTemp(self, timeout=RESPONSE_DELAY):
+	def get_battery_temp(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery temperature
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		temperature : battery temperature [Celcius]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -316,12 +291,18 @@ class SixfabPower:
 		return temp / 100
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery voltage
-	# Parameter : None
-	# Return : float voltage [Volt]
-	# -----------------------------------------------------------
-	def getBatteryVoltage(self, timeout=RESPONSE_DELAY):
+	def get_battery_voltage(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery voltage
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		voltage : battery voltage [Volt]
+		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -331,12 +312,19 @@ class SixfabPower:
 		return voltage / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery current
-	# Parameter : None
-	# Return : float current [Ampere]
-	# -----------------------------------------------------------
-	def getBatteryCurrent(self, timeout=RESPONSE_DELAY):
+	def get_battery_current(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery current
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		current : battery current [Ampere]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_CURRENT)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -346,12 +334,19 @@ class SixfabPower:
 		return current / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery power
-	# Parameter : None
-	# Return : float power [Watt]
-	# -----------------------------------------------------------
-	def getBatteryPower(self, timeout=RESPONSE_DELAY):
+	def get_battery_power(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery power
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		power : battery power [Watt]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_POWER)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -361,12 +356,19 @@ class SixfabPower:
 		return power / 1000
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery level
-	# Parameter : None
-	# Return : int level [%]
-	# -----------------------------------------------------------
-	def getBatteryLevel(self, timeout=RESPONSE_DELAY):
+	def get_battery_level(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery level
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		level : battery charge of state as percentage [%]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -375,12 +377,20 @@ class SixfabPower:
 		level = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return level
 
-	# -----------------------------------------------------------
-	# Function for getting fan health
-	# Parameter : None
-	# Return : int level [HEALTY, BROKEN]
-	# -----------------------------------------------------------
-	def getFanHealth(self, timeout=RESPONSE_DELAY):
+
+	def get_fan_health(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting fan health
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		health : "1" for HEALTHY, "2" for BROKEN
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_HEALTH)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -390,12 +400,18 @@ class SixfabPower:
 		return health
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery health
-	# Parameter : None
-	# Return : int health [%]
-	# -----------------------------------------------------------
-	def getBatteryHealth(self, timeout=RESPONSE_DELAY):
+	def get_battery_health(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery health
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		health : battery health as percentage [%] 
+		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -405,12 +421,19 @@ class SixfabPower:
 		return health
 
 
-	# -----------------------------------------------------------
-	# Function for getting fan speed
-	# Parameter : None
-	# Return : int speed [RPM]
-	# -----------------------------------------------------------
-	def getFanSpeed(self, timeout=RESPONSE_DELAY):
+	def get_fan_speed(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting fan speed
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		speed : fan speed [RPM] 
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_SPEED)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -420,12 +443,20 @@ class SixfabPower:
 		return rpm
 
 
-	# -----------------------------------------------------------
-	# Function for setting fan speed
-	# Parameter : uint8 status [true, false] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
 	def setFanSpeed(self, status, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting fan speed
+		
+		Parameters
+		-----------
+		status : "1" for START FAN, "2" for STOP FAN
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED 
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -435,12 +466,19 @@ class SixfabPower:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for getting watchdog status
-	# Parameter : None
-	# Return : int8 status [true, false]
-	# -----------------------------------------------------------
-	def getWatchdogStatus(self, timeout=RESPONSE_DELAY):
+	def get_watchdog_status(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting watchdog status
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		status : "1" for WATCHDOG ENABLED, "2" for WATCHDOG DISABLED 
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -450,12 +488,20 @@ class SixfabPower:
 		return status
 
 
-	# -----------------------------------------------------------
-	# Function for setting watchdog status
-	# Parameter : uint8 status [true, false] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setWatchdogStatus(self, status, timeout=RESPONSE_DELAY):
+	def set_watchdog_status(self, status, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting watchdog status
+		
+		Parameters
+		-----------
+		status : "1" for WATCHDOG ENABLED, "2" for WATCHDOG DISABLED
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED 
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS, status, 1)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -465,17 +511,24 @@ class SixfabPower:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for setting RGB animation
-	# Parameter : uint8 type [DISABLED, HEARTBEAT, TEMP_MAP]
-	# Parameter : uint8 color [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
-	# Parameter : uint8 speed [SLOW, NORMAL, FAST] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setRgbAnimation(self, animType, color, speed, timeout=RESPONSE_DELAY):
+	def set_rgb_animation(self, anim_type, color, speed, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting RGB animation
 		
+		Parameters
+		-----------
+		anim_type : [DISABLED, HEARTBEAT, TEMP_MAP]
+		color : [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
+		speed : [SLOW, NORMAL, FAST] 
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED 
+		'''
+
 		value = bytearray()
-		value.append(int(animType))
+		value.append(int(anim_type))
 		value.append(int(color))
 		value.append(int(speed))
 
@@ -488,13 +541,19 @@ class SixfabPower:
 		return result
 
 
+	def get_rgb_animation(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting RGB animation
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
 
-	# -----------------------------------------------------------
-	# Function for getting RGB animation
-	# Parameter : None
-	# Return : byteArray(3) - ledAnimation[animType, color, speed]
-	# -----------------------------------------------------------
-	def getRgbAnimation(self, timeout=RESPONSE_DELAY):
+		Return
+		------- 
+		animation : byteArray(3) [anim_type, color, speed]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_RGB_ANIMATION)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -507,17 +566,23 @@ class SixfabPower:
 		return animation
 
 
-	# -----------------------------------------------------------
-	# Function for setting fan automation
-	# Parameter : uint8 slow-treshold [celcius]
-	# Parameter : uint8 fast-treshold [celcius]
-	# Return : result
-	# -----------------------------------------------------------
-	def setFanAutomation(self, slowTreshold, fastTreshold, timeout=RESPONSE_DELAY):
+	def set_fan_automation(self, slow_threshold, fast_threshold = 100 , timeout=RESPONSE_DELAY):
+		'''
+		Function for setting fan automation
+		
+		Parameters
+		-----------
+		slow_threshold : temperature threshold to decide fan working status
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED 
+		'''
 
 		value = bytearray()
-		value.append(int(slowTreshold))
-		value.append(int(fastTreshold))
+		value.append(int(slow_threshold))
+		value.append(int(fast_threshold))
 
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 2)
 		command.sendCommand()
@@ -528,13 +593,19 @@ class SixfabPower:
 		return result
 
 
+	def get_fan_automation(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting fan automation
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
 
-	# -----------------------------------------------------------
-	# Function for getting fan automation
-	# Parameter : None
-	# Return : byteArray(2) - fanAutomation[slowTreshold, fastTreshold]
-	# -----------------------------------------------------------
-	def getFanAutomation(self, timeout=RESPONSE_DELAY):
+		Return
+		------- 
+		automation : byteArray(2) [slow_threshold, fast_threshold] [Celcius]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -547,13 +618,20 @@ class SixfabPower:
 		return fanAutomation
 
 	
+	def set_battery_max_charge_level(self, level, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting battery max charge level
+		
+		Parameters
+		-----------
+		level : battery is charged up to this level in percentage [%]
+		timeout : timeout while receiving the response (*optional)
 
-	# -----------------------------------------------------------
-	# Function for setting battery max charge level
-	# Parameter : uint8 level [%] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setBatteryMaxChargeLevel(self, level, timeout=RESPONSE_DELAY):
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL, level, 1)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -563,12 +641,19 @@ class SixfabPower:
 		return level
 
 
-	# -----------------------------------------------------------
-	# Function for getting battery max charge level
-	# Parameter : None
-	# Return : int8 level [true, false]
-	# -----------------------------------------------------------
-	def getBatteryMaxChargeLevel(self, timeout=RESPONSE_DELAY):
+	def get_battery_max_charge_level(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery max charge level
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		level : battery max charge level in percentage [%]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -578,12 +663,20 @@ class SixfabPower:
 		return level
 
 	
-	# -----------------------------------------------------------
-	# Function for setting safe shutdown battery level
-	# Parameter : uint8 level [%] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setSafeShutdownBatteryLevel(self, level, timeout=RESPONSE_DELAY):
+	def set_safe_shutdown_battery_level(self, level, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting safe shutdown battery level
+		
+		Parameters
+		-----------
+		level : raspberry pi is turned off if battery falls to this level
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL, level, 1)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -593,12 +686,19 @@ class SixfabPower:
 		return level
 
 
-	# -----------------------------------------------------------
-	# Function for getting safe shutdown battery level
-	# Parameter : None
-	# Return : int8 level [true, false]
-	# -----------------------------------------------------------
-	def getSafeShutdownBatteryLevel(self, timeout=RESPONSE_DELAY):
+	def get_safe_shutdown_battery_level(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting safe shutdown battery level
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		level : safe shutdown level in percentage [%]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -608,12 +708,20 @@ class SixfabPower:
 		return level
 
 
-	# -----------------------------------------------------------
-	# Function for setting safe shutdown status
-	# Parameter : uint8 status [%] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setSafeShutdownBatteryStatus(self, status, timeout=RESPONSE_DELAY):
+	def set_safe_shutdown_battery_status(self, status, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting safe shutdown status
+		
+		Parameters
+		-----------
+		status : "1" for ENABLED, "2" for DISABLED
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET OK, "2" for SET FAILED
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, status, 1)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -623,12 +731,19 @@ class SixfabPower:
 		return status
 
 
-	# -----------------------------------------------------------
-	# Function for setting safe shutdown status
-	# Parameter : None
-	# Return : int8 status [true, false]
-	# -----------------------------------------------------------
-	def getSafeShutdownBatteryStatus(self, timeout=RESPONSE_DELAY):
+	def get_safe_shutdown_battery_status(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting safe shutdown status
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		status : "1" for ENABLEDi "2" for DISABLED
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -638,12 +753,19 @@ class SixfabPower:
 		return status
 
 
-	# -----------------------------------------------------------
-	# Function for getting working mode
-	# Parameter : None
-	# Return : int8 workingMode [charging, Fully Charged - Adapter Powered, Battery Powered ]
-	# -----------------------------------------------------------
-	def getWorkingMode(self, timeout=RESPONSE_DELAY):
+	def get_working_mode(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting working mode
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		working_mode : "1" for CHARGING, "2" for FULLY_CHARGED, "3" for BATTERY POWERED
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_WORKING_MODE)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -653,12 +775,19 @@ class SixfabPower:
 		return mode
 
 
-	# -----------------------------------------------------------
-	# Function for getting button 1
-	# Parameter : None
-	# Return : int8 buttonStatus [pressed, released]
-	# -----------------------------------------------------------
-	def getButton1Status(self, timeout=RESPONSE_DELAY):
+	def get_button1_status(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting button 1
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		status : "1" for SHORT_PRESS, "2" for LONG_PRESS, "3" for RELEASED
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -668,12 +797,19 @@ class SixfabPower:
 		return status
 
 
-	# -----------------------------------------------------------
-	# Function for getting button 2
-	# Parameter : None
-	# Return : int8 buttonStatus [pressed, released]
-	# -----------------------------------------------------------
-	def getButton2Status(self, timeout=RESPONSE_DELAY):
+	def get_button2_status(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting button 2
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		status : "1" for SHORT_PRESS, "2" for LONG_PRESS, "3" for RELEASED
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -683,13 +819,20 @@ class SixfabPower:
 		return status
 
 
+	def set_rtc_time(self, timestamp, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting time of RTC in MCU
+		
+		Parameters
+		-----------
+		time : epoch time
+		timeout : timeout while receiving the response (*optional)
 
-	# -----------------------------------------------------------
-	# Function for setting RTC Time
-	# Parameter : uint64 timestamp [timestamp] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setRtcTime(self, timestamp, timeout=RESPONSE_DELAY):
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 4)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -699,12 +842,24 @@ class SixfabPower:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for getting RTC Time
-	# Parameter : format [Definition -> TIME_FORMAT_EPOCH, TIME_FORMAT_DATE_AND_TIME, TIME_FORMAT_DATE, TIME_FORMAT_TIME]
-	# Return : uint32 timestamp | string date_and_time | string date | string time
-	# -----------------------------------------------------------
-	def getRtcTime(self, format = Definition.TIME_FORMAT_EPOCH, timeout=RESPONSE_DELAY):
+	def get_rtc_time(self, format = Definition.TIME_FORMAT_EPOCH, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting time of RTC in MCU
+		
+		Parameters
+		-----------
+		format : 
+			--> Definition.TIME_FORMAT_EPOCH
+			--> Definition.TIME_FORMAT_DATE_AND_TIME
+			--> Definition.TIME_FORMAT_DATE
+			--> Definition.TIME_FORMAT_TIME
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		timestamp : time in chosen format
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_RTC_TIME)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -725,12 +880,19 @@ class SixfabPower:
 			return time
 
 
-	# -----------------------------------------------------------
-	# Function for hard powering off
-	# Parameter : None 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def hardPowerOff(self, timeout=RESPONSE_DELAY):
+	def hard_power_off(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for raspberry pi hard powering off
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -739,12 +901,22 @@ class SixfabPower:
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 
-	# -----------------------------------------------------------
-	# Function for soft powering off
-	# Parameter : None 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def softPowerOff(self, timeout=RESPONSE_DELAY):
+
+	def soft_power_off(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for checking any soft power off request is exist. If any
+		request exist, raspberry pi turns off by using "sudo shutdown" terminal
+		command in 5 seconds.
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for EXIST, "2" for NOT_EXIST
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_SOFT_POWER_OFF)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -766,12 +938,20 @@ class SixfabPower:
 
 		return Definition.SET_FAILED
 	
-	# -----------------------------------------------------------
-	# Function for hard rebooting
-	# Parameter : None 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def hardReboot(self, timeout=100):
+	
+	def hard_reboot(self, timeout=100):
+		'''
+		Function for hard rebooting
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" SET_OK, "2" for SET_FAILED
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_HARD_REBOOT)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -781,12 +961,21 @@ class SixfabPower:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for soft rebooting
-	# Parameter : None 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def softReboot(self, timeout=RESPONSE_DELAY):
+	def soft_reboot(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for checking any soft reboot request is exist. If any
+		request exist, raspberry pi reboots by using "sudo reboot" terminal
+		command in 5 seconds.
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for EXIST, "2" for NOT_EXIST
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_SOFT_REBOOT)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -810,12 +999,19 @@ class SixfabPower:
 		return Definition.SET_FAILED
 
 
-	# -----------------------------------------------------------
-	# Function for asking watchdog alarm exist
-	# Parameter : None 
-	# Return : uint8 alarm [true, false]
-	# -----------------------------------------------------------
-	def askWatchdogAlarm(self, timeout=RESPONSE_DELAY):
+	def ask_watchdog_alarm(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for asking watchdog alarm is exist
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for EXIST, "2" for NOT_EXIST
+		'''
+
 		command.createCommand(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -824,12 +1020,19 @@ class SixfabPower:
 		alarm_status = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
 		return alarm_status
 
-	# -----------------------------------------------------------
-	# Function for getting battery design capacity
-	# Parameter : None 
-	# Return : uint16 capacity [maH]
-	# -----------------------------------------------------------
-	def getBatteryDesignCapacity(self, timeout=RESPONSE_DELAY):
+
+	def get_battery_design_capacity(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting battery design capacity
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		capacity : battery design capacity in [mAh]
+		'''
 		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -839,12 +1042,20 @@ class SixfabPower:
 		return capacity
 
 
-	# -----------------------------------------------------------
-	# Function for setting battery design capacity
-	# Parameter : int16 cap [maH] 
-	# Return : uint8 result [true, false]
-	# -----------------------------------------------------------
-	def setBatteryDesignCapacity(self, capacity, timeout=RESPONSE_DELAY):
+	def set_battery_design_capacity(self, capacity, timeout=RESPONSE_DELAY):
+		'''
+		Function for setting battery design capacity
+		
+		Parameters
+		-----------
+		capacity : battery design capacity in [mAh]
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED 
+		'''
+
 		command.createSetCommand(command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY, capacity, 2)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -854,46 +1065,64 @@ class SixfabPower:
 		return status
 
 
-	# -----------------------------------------------------------
-	# Function for creating scheduling event
-	# Parameter : uint8 eventID [id]
-	# Parameter : uint8 scheduleType [time, interval]
-	# Parameter : uint8 repeat [once, repeated]
-	# Parameter : uint32 timeOrInterval [exact time[epoch], interval]
-	##################################################################
-	# daily exact_time formula: epoch_time_local % (24*60*60)
-	# daily exact time example: ---> 
-	# ----> Friday, March 27, 2020 11:19:00 PM GMT+03:00
-	# ----> epoch_local = 1585340340 (In this case local : GMT+3)
-	# ----> daily exact_time = 1585340340 % 86400 = 73140
-	##################################################################
-	# Parameter : uint8 interval_type [seconds, minutes, hours]
-	# Parameter : uint8 repeatPeriod [day_factor]  
-	#########################################################################################################								 
-	# [monday] - [tuesday] - [wednesday] - [thursday] - [friday] - [saturday] - [sunday] - [RESERVED as Zero]
-	# Bit 0		 Bit 1	     Bit 2	       Bit 3		Bit 4	   Bit 5		Bit 6	   Bit 7
-	#								 			
-	# *** Example Calculation for every day ***
-	# day_factor = 0b01111111 = 127
-	#
-	# *** Example Calculation for (sunday+monday+tuesday) ***
-	# day_factor = 0b01000011 = 67
-	######################################################################################################### 	
-	# Parameter : uint8 action [start, hard shutdown, soft shutdown, hard reboot, soft reboot]
-	# Return : result
-	# -----------------------------------------------------------
-	def createScheduledEvent(self, eventID, scheduleType, repeat, timeOrInterval, interval_type, repeatPeriod, action, timeout=200):
+	def create_scheduled_event(self, event_id, schedule_type, repeat, time_or_interval, interval_type, repeat_period, action, timeout=200):
+		'''
+		Function for creating scheduling event
+		
+		Parameters
+		-----------
+		event_id : int id
+		schedule_type : "1" for TIME, "2" for INTERVAL
+		repeat : "1" for ONCE, "2" for REPEATED
+
+		time_or_interval : daily_epoch_time in seconds or interval
+			### Calculation of daily_exact_time ##############################
+			# daily exact_time formula: epoch_time_local % (24*60*60)
+			# daily exact time example: ---> 
+			# ----> Friday, March 27, 2020 11:19:00 PM GMT+03:00
+			# ----> epoch_local = 1585340340 (In this case local : GMT+3)
+			# ----> daily exact_time = 1585340340 % 86400 = 73140
+			##################################################################
+
+		interval_type : "1" for SECONDS, "2" for MINUTES, "3" for HOURS 
+
+		repeat_period : day_factor
+			### Calculation of day_factor ###########################################################################								 
+			# [monday] - [tuesday] - [wednesday] - [thursday] - [friday] - [saturday] - [sunday] - [RESERVED as Zero]
+			# Bit 0		 Bit 1	     Bit 2	       Bit 3		Bit 4	   Bit 5		Bit 6	   Bit 7
+			#								 			
+			# *** Example Calculation for every day ***
+			# day_factor = 0b01111111 = 127
+			#
+			# *** Example Calculation for (sunday + monday + tuesday) ***
+			# day_factor = 0b01000011 = 67
+			######################################################################################################### 
+
+		action : 
+			--> "1" for START
+			--> "2" for HARD SHUTDOWN
+			--> "3" for SOFT SHUTDOWN
+			--> "4" for HARD REBOOT
+			--> "5" for SOFT REBOOT
+ 		timeout : timeout while receiving the response (*optional)
+
+
+
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED 
+		'''
 
 		value = bytearray()
-		value.append(eventID)
-		value.append(scheduleType)
+		value.append(event_id)
+		value.append(schedule_type)
 		value.append(repeat)
-		value.append((timeOrInterval >> 24) & 0xFF)
-		value.append((timeOrInterval >> 16) & 0xFF)
-		value.append((timeOrInterval >> 8) & 0xFF)
-		value.append(timeOrInterval & 0xFF)
+		value.append((time_or_interval >> 24) & 0xFF)
+		value.append((time_or_interval >> 16) & 0xFF)
+		value.append((time_or_interval >> 8) & 0xFF)
+		value.append(time_or_interval & 0xFF)
 		value.append(interval_type)
-		value.append(repeatPeriod)
+		value.append(repeat_period)
 		value.append(action)
 
 		command.createSetCommand(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10)
@@ -905,7 +1134,20 @@ class SixfabPower:
 		return result
 
 	
-	def createScheduledEventWithEvent(self, event, timeout=200):
+	def create_scheduled_event_with_event(self, event, timeout=200):
+		'''
+		Function for creating scheduling event
+		
+		Parameters
+		-----------
+		event : instance of Event class
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED 
+		'''
+
 		value = bytearray()
 		value.append(event.id)
 		value.append(event.schedule_type)
@@ -927,12 +1169,19 @@ class SixfabPower:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for getting scheduled event ids
-	# Parameter : None
-	# Return : bytearray --> active ids of scheduled events  
-	# -----------------------------------------------------------
-	def getScheduledEventIds(self, timeout=50):
+	def get_scheduled_event_ids(self, timeout=50):
+		'''
+		Function for getting scheduled event ids
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		ids : byteArray(10) active ids of scheduled events 
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -946,14 +1195,22 @@ class SixfabPower:
 				ids_bytes.append(i+1)
 		return ids_bytes
 
-	# -----------------------------------------------------------
-	# Function for removing scheduling event
-	# Parameter : uint8 eventID [celcius]
-	# Return : result
-	# -----------------------------------------------------------
-	def removeScheduledEvent(self, eventID, timeout=200):
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT, eventID, 1)
+	def remove_scheduled_event(self, event_id, timeout=200):
+		'''
+		Function for removing scheduling event with event id
+		
+		Parameters
+		-----------
+		event_id : event id 
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED
+		'''
+
+		command.createSetCommand(command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT, event_id, 1)
 		command.sendCommand()
 		delay_ms(timeout)
 		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
@@ -961,11 +1218,19 @@ class SixfabPower:
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
 	
-	# -----------------------------------------------------------
-	# Function for removing scheduling event
-	# Return : result
-	# -----------------------------------------------------------
-	def removeAllScheduledEvents(self, timeout=200):
+
+	def remove_all_scheduled_events(self, timeout=200):
+		'''
+		Function for removing all scheduling events
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SET_OK, "2" for SET_FAILED
+		'''
 
 		command.createCommand(command.PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS)
 		command.sendCommand()
@@ -976,12 +1241,19 @@ class SixfabPower:
 		return result
 
 	
-	# -----------------------------------------------------------
-	# Function for getting firmware ver
-	# Parameter : None
-	# Return : char[8] ver [Ex. v1.00.00]
-	# -----------------------------------------------------------
-	def getFirmwareVer(self, timeout=RESPONSE_DELAY):
+	def get_firmware_ver(self, timeout=RESPONSE_DELAY):
+		'''
+		Function for getting firmware version on mcu
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		version : char[8] ver [Ex. v1.00.00]
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_GET_FIRMWARE_VER)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -995,105 +1267,114 @@ class SixfabPower:
 		return ver_str
 
 
-	# ------------------------------------------------------------------------------------------
-	# Function for updating mcu firmware
-	# Parameter : firmware_file [.bin file path]
-	# Parameter : do not pass this parameter
-	# Parameter : timeout (it should be min: 25 ms)
-	# Parameter : update_method ( default --> 0 : boot_mode_update, 1 : firmware_mode_update)
-	# *******************************************************************************************
-	# boot_mode_update (Safe Method) --> MCU goes to bootloader mode. All working features
-	# have stopped for update sequence. 
-	# firmware_mode_update -->  All features continue to work throughout
-	# the update sequence. But i2c communications can disrupt to update. 
-	# So do not use any API function during the update sequence.
-	# *********************************************************************************************
-	# Yield : Process [%] on every step
-	#		  Returns 1 or 2 end of process [SUCCESS, FAILED]
-	# ---------------------------------------------------------------------------------------------
-	def updateFirmware(self, firmware_file, update_method = 0, timeout=25):
-			packet_id = 0
-			requesting_packet_id = 1
-			packet_size = 20
+	def update_firmware(self, firmware_file, update_method = 0, timeout=25):
+		'''
+		Function for updating mcu firmware. Do not make any other api call while update call is running.
+		
+		Parameters
+		-----------
+		firmware_file : [.bin file path]
+		update_method ( default --> 0 : boot_mode_update, 1 : firmware_mode_update) (*optional)
+		timeout : timeout while receiving the response (*optional)
+
+		Yields
+		------
+		process : Process [%] on every step
+
+		Return
+		------- 
+		result : "1" for SUCCESS, "2" for FAIL
+		'''
+
+		packet_id = 0
+		requesting_packet_id = 1
+		packet_size = 20
+		
+		# Calculate packet count
+		f = open(firmware_file, "rb")
+		all_data = f.read()
+		packet_count = int(len(all_data) / packet_size) + 1
+		leap_packet_size = len(all_data) % packet_size
+		f.close()
+
+		# open file
+		f = open(firmware_file, "rb")
+		data = bytes()
+
+		# Clear program storage for saving new program data
+		result = self.clear_program_storage() 
+		#print("Program Storage Clear Result: " + str(result))
+		if(result != 1):
+			return Definition.SET_FAILED
+
+		last_process = 0	# for process bar
+
+		# choose the update_method
+		if(update_method == 0):
+			self.reset_for_boot_update()
+			delay_ms(800)
+
+		# If any data exist
+		while(data or (packet_id == 0)):
+			if(packet_id != requesting_packet_id):
+				data = f.read(packet_size)
+				packet_id += 1
+
+			# calculate the process
+			process = int((packet_id * 100) / packet_count)
+			yielded_value = None
 			
-			# Calculate packet count
-			f = open(firmware_file, "rb")
-			all_data = f.read()
-			packet_count = int(len(all_data) / packet_size) + 1
-			leap_packet_size = len(all_data) % packet_size
-			f.close()
+			if(process != last_process):
+				if yielded_value != process:
+					yielded_value = process
+					yield process
 
-			# open file
-			f = open(firmware_file, "rb")
-			data = bytes()
+				last_process = process
 
-			# Clear program storage for saving new program data
-			result = self.clearProgramStorage() 
-			#print("Program Storage Clear Result: " + str(result))
-			if(result != 1):
-				return Definition.SET_FAILED
+			# send data to MCU
+			if(data):
+				if(packet_id == packet_count):
+					command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data, packet_len = leap_packet_size)
+					command.sendCommand()
+					delay_ms(timeout)
+					raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+				else:
+					command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data)
+					command.sendCommand()
+					delay_ms(timeout)
+					raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)	
 
-			last_process = 0	# for process bar
+				try:
+					requesting_packet_id  = (raw[5] << 8) | (raw[6] & 0xFF)
+					#print("Last Packet Read --> " + str(packet_id))
+					#print("Requesting --> " + str(requesting_packet_id))
 
-			# choose the update_method
-			if(update_method == 0):
-				self.resetForBootUpdate()
-				delay_ms(800)
-
-			# If any data exist
-			while(data or (packet_id == 0)):
-				if(packet_id != requesting_packet_id):
-					data = f.read(packet_size)
-					packet_id += 1
-
-				# calculate the process
-				process = int((packet_id * 100) / packet_count)
-				yielded_value = None
-				
-				if(process != last_process):
-					if yielded_value != process:
-						yielded_value = process
-						yield process
-
-					last_process = process
-
-				# send data to MCU
-				if(data):
-					if(packet_id == packet_count):
-						command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data, packet_len = leap_packet_size)
-						command.sendCommand()
-						delay_ms(timeout)
-						raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
-					else:
-						command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data)
-						command.sendCommand()
-						delay_ms(timeout)
-						raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)	
-
-					try:
-						requesting_packet_id  = (raw[5] << 8) | (raw[6] & 0xFF)
-						#print("Last Packet Read --> " + str(packet_id))
-						#print("Requesting --> " + str(requesting_packet_id))
-
-						# if final packet comes
-						if(requesting_packet_id == 0xFFFF):
-							print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
-							self.resetMCU()
-							yield Definition.SET_OK
-							return
-					except:
-						raise ValueError("None Object Exception")
-			
-			# if firmware update doesn't ended succesfully
-			yield Definition.SET_FAILED
+					# if final packet comes
+					if(requesting_packet_id == 0xFFFF):
+						print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
+						self.reset_mcu()
+						yield Definition.SET_OK
+						return
+				except:
+					raise ValueError("None Object Exception")
+		
+		# if firmware update doesn't ended succesfully
+		yield Definition.SET_FAILED
 
 
-	# -----------------------------------------------------------
-	# Function for clearing firmware storage
-	# Parameter : None
-	# Return : Result [OK, FAIL]
-	# -----------------------------------------------------------
-	def clearProgramStorage(self, timeout=500):
+	def clear_program_storage(self, timeout=500):
+		'''
+		Function for clearing firmware storage
+		
+		Parameters
+		-----------
+		timeout : timeout while receiving the response (*optional)
+
+		Return
+		------- 
+		result : "1" for SUCCESS, "2" for FAIL
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE)
 		command.sendCommand()
 		delay_ms(timeout)
@@ -1103,21 +1384,35 @@ class SixfabPower:
 		return result
 
 
-	# -----------------------------------------------------------
-	# Function for resetting MCU
-	# Parameter : None
-	# Return : None
-	# -----------------------------------------------------------
-	def resetMCU(self, timeout=RESPONSE_DELAY):
+	def reset_mcu(self):
+		'''
+		Function for resetting MCU
+		
+		Parameters
+		-----------
+		None
+
+		Return
+		------- 
+		None
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU)
 		command.sendCommand()
-	
+	s
 
-	# -----------------------------------------------------------
-	# Function for resetting MCU and go to boot mode
-	# Parameter : None
-	# Return : None
-	# -----------------------------------------------------------
-	def resetForBootUpdate(self, timeout=100):
+	def reset_for_boot_update(self):
+		'''
+		Function for resetting MCU and go to boot mode
+		
+		Parameters
+		-----------
+		None
+
+		Return
+		------- 
+		None
+		'''
+
 		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
 		command.sendCommand()
