@@ -87,10 +87,10 @@ class SixfabPower:
 		temperature : PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
 		return temp / 100
@@ -109,10 +109,10 @@ class SixfabPower:
 		voltage : input voltage [Volt] 
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return voltage / 1000
@@ -131,10 +131,10 @@ class SixfabPower:
 		current : input current [Ampere] 
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_CURRENT)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_CURRENT)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return current / 1000
@@ -153,10 +153,10 @@ class SixfabPower:
 		power : input power [Watt] 
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_INPUT_POWER)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_POWER)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return power / 1000
@@ -196,10 +196,10 @@ class SixfabPower:
 		temp = self.getSystemTemp()
 		tempInt = int(temp*100)
 		
-		command.createSetCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -218,10 +218,10 @@ class SixfabPower:
 		voltage : voltage source that supplies raspberry pi and other peripherals [Volt]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return voltage / 1000
@@ -239,10 +239,10 @@ class SixfabPower:
 		------- 
 		current : current that supplies raspberry pi and other peripherals [Ampere]
 		'''
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_CURRENT)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_SYSTEM_CURRENT)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return current / 1000
@@ -260,10 +260,10 @@ class SixfabPower:
 		------- 
 		power : power that supplies raspberry pi and other peripherals [Ampere]
 		'''
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SYSTEM_POWER)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_SYSTEM_POWER)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return power / 1000
@@ -282,10 +282,10 @@ class SixfabPower:
 		temperature : battery temperature [Celcius]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		temp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE:COMMAND_SIZE_FOR_INT32 - 2], "big")
 		return temp / 100
@@ -303,10 +303,10 @@ class SixfabPower:
 		------- 
 		voltage : battery voltage [Volt]
 		'''
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		voltage = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return voltage / 1000
@@ -325,10 +325,10 @@ class SixfabPower:
 		current : battery current [Ampere]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_CURRENT)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_CURRENT)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		current = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big", signed=True)
 		return current / 1000
@@ -347,10 +347,10 @@ class SixfabPower:
 		power : battery power [Watt]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_POWER)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_POWER)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		power = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big", signed=True)
 		return power / 1000
@@ -369,10 +369,10 @@ class SixfabPower:
 		level : battery charge of state as percentage [%]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		level = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return level
@@ -391,10 +391,10 @@ class SixfabPower:
 		health : "1" for HEALTHY, "2" for BROKEN
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_HEALTH)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_FAN_HEALTH)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return health
@@ -412,10 +412,10 @@ class SixfabPower:
 		------- 
 		health : battery health as percentage [%] 
 		'''
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		health = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return health
@@ -434,10 +434,10 @@ class SixfabPower:
 		speed : fan speed [RPM] 
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_SPEED)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_FAN_SPEED)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		rpm = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2 ], "big")
 		return rpm
@@ -457,10 +457,10 @@ class SixfabPower:
 		result : "1" for SET OK, "2" for SET FAILED 
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -479,10 +479,10 @@ class SixfabPower:
 		status : "1" for WATCHDOG ENABLED, "2" for WATCHDOG DISABLED 
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
@@ -502,10 +502,10 @@ class SixfabPower:
 		result : "1" for SET OK, "2" for SET FAILED 
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS, status, 1)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS, status, 1)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -532,10 +532,10 @@ class SixfabPower:
 		value.append(int(color))
 		value.append(int(speed))
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RGB_ANIMATION, value, 3)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_RGB_ANIMATION, value, 3)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -554,10 +554,10 @@ class SixfabPower:
 		animation : byteArray(3) [anim_type, color, speed]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_RGB_ANIMATION)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_RGB_ANIMATION)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(10)
+		raw = command.receive_command(10)
 
 		animation = bytearray()
 		for i in range(3):
@@ -584,10 +584,10 @@ class SixfabPower:
 		value.append(int(slow_threshold))
 		value.append(int(fast_threshold))
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 2)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 2)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -606,10 +606,10 @@ class SixfabPower:
 		automation : byteArray(2) [slow_threshold, fast_threshold] [Celcius]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(9)
+		raw = command.receive_command(9)
 
 		fanAutomation = bytearray()
 		for i in range(2):
@@ -632,10 +632,10 @@ class SixfabPower:
 		result : "1" for SET OK, "2" for SET FAILED
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL, level, 1)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL, level, 1)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
@@ -654,10 +654,10 @@ class SixfabPower:
 		level : battery max charge level in percentage [%]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
@@ -677,10 +677,10 @@ class SixfabPower:
 		result : "1" for SET OK, "2" for SET FAILED
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL, level, 1)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL, level, 1)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
@@ -699,10 +699,10 @@ class SixfabPower:
 		level : safe shutdown level in percentage [%]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		level = raw[PROTOCOL_HEADER_SIZE]
 		return level
@@ -722,10 +722,10 @@ class SixfabPower:
 		result : "1" for SET OK, "2" for SET FAILED
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, status, 1)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, status, 1)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
@@ -744,10 +744,10 @@ class SixfabPower:
 		status : "1" for ENABLEDi "2" for DISABLED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
@@ -766,10 +766,10 @@ class SixfabPower:
 		working_mode : "1" for CHARGING, "2" for FULLY_CHARGED, "3" for BATTERY POWERED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_WORKING_MODE)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_WORKING_MODE)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		mode = raw[PROTOCOL_HEADER_SIZE]
 		return mode
@@ -788,10 +788,10 @@ class SixfabPower:
 		status : "1" for SHORT_PRESS, "2" for LONG_PRESS, "3" for RELEASED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
@@ -810,10 +810,10 @@ class SixfabPower:
 		status : "1" for SHORT_PRESS, "2" for LONG_PRESS, "3" for RELEASED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
@@ -833,10 +833,10 @@ class SixfabPower:
 		result : "1" for SET_OK, "2" for SET_FAILED
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 4)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 4)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -860,10 +860,10 @@ class SixfabPower:
 		timestamp : time in chosen format
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_RTC_TIME)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_RTC_TIME)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT32)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
 
 		timestamp = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big")
 
@@ -893,10 +893,10 @@ class SixfabPower:
 		result : "1" for SET_OK, "2" for SET_FAILED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -917,18 +917,18 @@ class SixfabPower:
 		result : "1" for EXIST, "2" for NOT_EXIST
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_SOFT_POWER_OFF)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_SOFT_POWER_OFF)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 		result2 = 0
 		result = raw[PROTOCOL_HEADER_SIZE]
 
 		if(result == Definition.SET_OK):
-			command.createSetCommand(command.PROTOCOL_COMMAND_SOFT_POWER_OFF, 1, 1)
-			command.sendCommand()
+			command.create_set_command(command.PROTOCOL_COMMAND_SOFT_POWER_OFF, 1, 1)
+			command.send_command()
 			delay_ms(timeout)
-			raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+			raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 			result2 = raw[PROTOCOL_HEADER_SIZE]
 
 			if(result2 == Definition.SET_OK):
@@ -952,10 +952,10 @@ class SixfabPower:
 		result : "1" SET_OK, "2" for SET_FAILED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_HARD_REBOOT)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_HARD_REBOOT)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -976,19 +976,19 @@ class SixfabPower:
 		result : "1" for EXIST, "2" for NOT_EXIST
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_SOFT_REBOOT)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_SOFT_REBOOT)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result2 = 0
 		result = raw[PROTOCOL_HEADER_SIZE]
 
 		if(result == Definition.SET_OK):
-			command.createSetCommand(command.PROTOCOL_COMMAND_SOFT_REBOOT, 1, 1)
-			command.sendCommand()
+			command.create_set_command(command.PROTOCOL_COMMAND_SOFT_REBOOT, 1, 1)
+			command.send_command()
 			delay_ms(timeout)
-			raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+			raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 			result2 = raw[PROTOCOL_HEADER_SIZE]
 
 			if(result2 == Definition.SET_OK):
@@ -1012,10 +1012,10 @@ class SixfabPower:
 		result : "1" for EXIST, "2" for NOT_EXIST
 		'''
 
-		command.createCommand(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
 
 		alarm_status = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
 		return alarm_status
@@ -1033,10 +1033,10 @@ class SixfabPower:
 		------- 
 		capacity : battery design capacity in [mAh]
 		'''
-		command.createCommand(command.PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
 
 		capacity = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")
 		return capacity
@@ -1056,10 +1056,10 @@ class SixfabPower:
 		result : "1" for SET_OK, "2" for SET_FAILED 
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY, capacity, 2)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY, capacity, 2)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		status = raw[PROTOCOL_HEADER_SIZE]
 		return status
@@ -1125,10 +1125,10 @@ class SixfabPower:
 		value.append(repeat_period)
 		value.append(action)
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -1160,10 +1160,10 @@ class SixfabPower:
 		value.append(event.day)
 		value.append(event.action)
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -1182,10 +1182,10 @@ class SixfabPower:
 		ids : byteArray(10) active ids of scheduled events 
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+		raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
 
 		ids = int.from_bytes(raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2 ], "big")	
 		ids_bytes = bytearray()
@@ -1210,10 +1210,10 @@ class SixfabPower:
 		result : "1" for SET_OK, "2" for SET_FAILED
 		'''
 
-		command.createSetCommand(command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT, event_id, 1)
-		command.sendCommand()
+		command.create_set_command(command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT, event_id, 1)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -1232,10 +1232,10 @@ class SixfabPower:
 		result : "1" for SET_OK, "2" for SET_FAILED
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -1254,10 +1254,10 @@ class SixfabPower:
 		version : char[8] ver [Ex. v1.00.00]
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_GET_FIRMWARE_VER)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_GET_FIRMWARE_VER)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(15)
+		raw = command.receive_command(15)
 		ver = bytearray(8)
 		
 		for i in range(8):
@@ -1334,15 +1334,15 @@ class SixfabPower:
 			# send data to MCU
 			if(data):
 				if(packet_id == packet_count):
-					command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data, packet_len = leap_packet_size)
-					command.sendCommand()
+					command.create_firmware_update_command(packet_count, requesting_packet_id, data, packet_len = leap_packet_size)
+					command.send_command()
 					delay_ms(timeout)
-					raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)
+					raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
 				else:
-					command.createFirmwareUpdateCommand(packet_count, requesting_packet_id, data)
-					command.sendCommand()
+					command.create_firmware_update_command(packet_count, requesting_packet_id, data)
+					command.send_command()
 					delay_ms(timeout)
-					raw = command.recieveCommand(COMMAND_SIZE_FOR_INT16)	
+					raw = command.receive_command(COMMAND_SIZE_FOR_INT16)	
 
 				try:
 					requesting_packet_id  = (raw[5] << 8) | (raw[6] & 0xFF)
@@ -1375,10 +1375,10 @@ class SixfabPower:
 		result : "1" for SUCCESS, "2" for FAIL
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE)
+		command.send_command()
 		delay_ms(timeout)
-		raw = command.recieveCommand(COMMAND_SIZE_FOR_UINT8)
+		raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
 		result = raw[PROTOCOL_HEADER_SIZE]
 		return result
@@ -1397,8 +1397,8 @@ class SixfabPower:
 		None
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_RESET_MCU)
+		command.send_command()
 	s
 
 	def reset_for_boot_update(self):
@@ -1414,5 +1414,5 @@ class SixfabPower:
 		None
 		'''
 
-		command.createCommand(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
-		command.sendCommand()
+		command.create_command(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
+		command.send_command()

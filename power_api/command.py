@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from .exceptions import CRCCheckFailed
+from .exceptions import crc_check_failed
 
 import smbus2
 import time
@@ -14,7 +14,7 @@ bus = smbus2.SMBus(1)
 #############################################################
 buffer_send = list()
 buffer_receive = list()
-buffer_recieve_index = 0
+buffer_receive_index = 0
 
 
 START_BYTE_RECIEVED = 				0xDC 		# Start Byte Recieved
@@ -121,7 +121,7 @@ class Command:
 	#############################################################
 	
 	# Function for sending command
-    def sendCommand(self):
+    def send_command(self):
         global buffer_send
         #print("Sent Command:")
         #print('[{}]'.format(', '.join(hex(x) for x in buffer_send)))
@@ -134,47 +134,47 @@ class Command:
 		
 
 	# Function for checking command according to protocol
-    def checkCommand(self, recievedByte):
+    def check_command(self, received_byte):
         global buffer_receive
-        global buffer_recieve_index
+        global buffer_receive_index
         datalen = 0
 
-        if(buffer_recieve_index == 0 and recievedByte != START_BYTE_RECIEVED):
+        if(buffer_receive_index == 0 and received_byte != START_BYTE_RECIEVED):
             return -1
             
-        buffer_receive.append(recievedByte)
-        buffer_recieve_index += 1
+        buffer_receive.append(received_byte)
+        buffer_receive_index += 1
         
-        if(buffer_recieve_index < PROTOCOL_HEADER_SIZE):
+        if(buffer_receive_index < PROTOCOL_HEADER_SIZE):
             return -1
         
         datalen = (buffer_receive[3] << 8) | buffer_receive[4]
 
-        if(buffer_recieve_index == (PROTOCOL_FRAME_SIZE + datalen)):
+        if(buffer_receive_index == (PROTOCOL_FRAME_SIZE + datalen)):
             
-            crcRecieved = (buffer_receive[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | buffer_receive[PROTOCOL_FRAME_SIZE + datalen - 1]
-            #print("CRC Received: " + str(crcRecieved))
+            crc_received = (buffer_receive[PROTOCOL_FRAME_SIZE + datalen -2] << 8) | buffer_receive[PROTOCOL_FRAME_SIZE + datalen - 1]
+            #print("CRC Received: " + str(crc_received))
             
-            crcCalculated = self.calculateCRC16(buffer_receive[0:PROTOCOL_HEADER_SIZE+datalen], 1)
-            #print("CRC Calculated: " + str(crcCalculated))
+            crc_calculated = self.calculate_crc16(buffer_receive[0:PROTOCOL_HEADER_SIZE+datalen], 1)
+            #print("CRC Calculated: " + str(crc_calculated))
 
-            if(crcCalculated == crcRecieved):
+            if(crc_calculated == crc_received):
                 #print("CRC Check OK")
                 #print('[{}]'.format(', '.join(hex(x) for x in buffer_receive)))
-                buffer_recieve_index = 0
+                buffer_receive_index = 0
                 return buffer_receive[0:PROTOCOL_FRAME_SIZE + datalen]
             else:
                 print("CRC Check FAILED!")
-                buffer_recieve_index = 0
-                raise CRCCheckFailed("CRC check failed!")
+                buffer_receive_index = 0
+                raise crc_check_failed("CRC check failed!")
             
 
 
-    # Function for recieving command
-    def recieveCommand(self, lenOfResponse):
+    # Function for receiving command
+    def receive_command(self, len_of_response):
         global buffer_receive
 
-        for i in range(lenOfResponse):
+        for i in range(len_of_response):
 
             try:
                 c = bus.read_byte(DEVICE_ADDRESS)
@@ -183,19 +183,19 @@ class Command:
                 return self.BYTE_READ_FAILED
         
             #print("Recieved byte: " + str(hex(c)))
-            msg = self.checkCommand(c)
+            msg = self.check_command(c)
 
         if(msg != None and msg != -1 and msg != self.CRC_CHECK_FAILED):
             buffer_receive.clear()
             return msg
         elif(msg == self.CRC_CHECK_FAILED):
-            raise CRCCheckFailed("CRC check failed!")
+            raise crc_check_failed("CRC check failed!")
         else:
             return None
 
 
     # Function for creating command according to protocol
-    def createCommand(self, command, command_type = COMMAND_TYPE_REQUEST):
+    def create_command(self, command, command_type = COMMAND_TYPE_REQUEST):
         global buffer_send
         buffer_send.clear()
         buffer_send.append(START_BYTE_SENT)
@@ -203,40 +203,40 @@ class Command:
         buffer_send.append(command_type)
         buffer_send.append(0x00)
         buffer_send.append(0x00)
-        (crcHigh, crcLow) = self.calculateCRC16(buffer_send[0:PROTOCOL_HEADER_SIZE])
-        buffer_send.append(crcHigh)
-        buffer_send.append(crcLow)
+        (crc_high, crc_low) = self.calculate_crc16(buffer_send[0:PROTOCOL_HEADER_SIZE])
+        buffer_send.append(crc_high)
+        buffer_send.append(crc_low)
 
 
     # Function for creating set command according to protocol
-    def createSetCommand(self, command, value, lenByte, command_type = COMMAND_TYPE_REQUEST):
+    def create_set_command(self, command, value, len_byte, command_type = COMMAND_TYPE_REQUEST):
         global buffer_send
         buffer_send.clear()
         buffer_send.append(START_BYTE_SENT)
         buffer_send.append(command)
         buffer_send.append(command_type)
 
-        lenLow = lenByte & 0xFF
-        lenHigh = (lenByte >> 8) & 0xFF
+        len_low = len_byte & 0xFF
+        len_high = (len_byte >> 8) & 0xFF
 
-        buffer_send.append(lenHigh)
-        buffer_send.append(lenLow)
+        buffer_send.append(len_high)
+        buffer_send.append(len_low)
 
         if(isinstance(value, int)):
-            byteArray = value.to_bytes(lenByte,"big")
+            byte_array = value.to_bytes(len_byte,"big")
         elif(isinstance(value, bytearray)):
-            byteArray = value
+            byte_array = value
         else:
             print("Wrong parameter for CreateSetComamnd!")
 
-        for i in range(lenByte):
-            buffer_send.append(int(byteArray[i]))
+        for i in range(len_byte):
+            buffer_send.append(int(byte_array[i]))
 
         #print(buffer_send)
 
-        (crcHigh, crcLow) = self.calculateCRC16(buffer_send[0:PROTOCOL_HEADER_SIZE+lenByte])
-        buffer_send.append(crcHigh)
-        buffer_send.append(crcLow)
+        (crc_high, crc_low) = self.calculate_crc16(buffer_send[0:PROTOCOL_HEADER_SIZE+len_byte])
+        buffer_send.append(crc_high)
+        buffer_send.append(crc_low)
         #print(buffer_send)
 
 
@@ -249,11 +249,11 @@ class Command:
         buffer_send.append(COMMAND_TYPE_REQUEST)
 
         datalen = packet_len + 4    # packet_len + packet_id_len + packet_count_len 
-        lenLow = datalen & 0xFF
-        lenHigh = (datalen >> 8) & 0xFF
+        len_low = datalen & 0xFF
+        len_high = (datalen >> 8) & 0xFF
 
-        buffer_send.append(lenHigh)
-        buffer_send.append(lenLow)
+        buffer_send.append(len_high)
+        buffer_send.append(len_low)
 
         packetCountHigh = (packet_count >> 8) & 0xFF
         packetCountLow = packet_count & 0xFF
@@ -274,9 +274,9 @@ class Command:
                 pass
             
         #print(buffer_send)
-        (crcHigh, crcLow) = self.calculateCRC16(buffer_send[0:PROTOCOL_HEADER_SIZE+lenLow])
-        buffer_send.append(crcHigh)
-        buffer_send.append(crcLow)
+        (crc_high, crc_low) = self.calculate_crc16(buffer_send[0:PROTOCOL_HEADER_SIZE+len_low])
+        buffer_send.append(crc_high)
+        buffer_send.append(crc_low)
         #print(buffer_send)
 
     def createClearCommand(self):
@@ -288,13 +288,13 @@ class Command:
 
 
     # Function for calculating CRC16
-    def calculateCRC16(self, command, returnType = 0):
-        calCRC = crc16.crc16xmodem(bytes(command))
-        crcHigh = (calCRC >> 8) & 0xFF
-        crcLow = calCRC & 0xFF
-        #print("CRC16: " + str(calCRC) + "\t" + "CRC16 High: " + str(crcHigh) + "\t" + "CRC16 Low: " + str(crcLow))
+    def calculate_crc16(self, command, return_type = 0):
+        cal_crc = crc16.crc16xmodem(bytes(command))
+        crc_high = (cal_crc >> 8) & 0xFF
+        crc_low = cal_crc & 0xFF
+        #print("CRC16: " + str(cal_crc) + "\t" + "CRC16 High: " + str(crc_high) + "\t" + "CRC16 Low: " + str(crc_low))
         
-        if(returnType == 0):
-            return (crcHigh, crcLow)
+        if(return_type == 0):
+            return (crc_high, crc_low)
         else:
-            return calCRC
+            return cal_crc

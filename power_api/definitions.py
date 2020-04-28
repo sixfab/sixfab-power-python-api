@@ -57,7 +57,7 @@ class Definition:
 	RGB_NORMAL = 			2
 	RGB_FAST =				3					
 
-	# Workin Mode
+	# Working Mode
 	ADAPTER_POWERED_AND_CHARGING =				1
 	ADAPTER_POWERED_AND_FULLY_CHARGED = 		2 			
 	BATTERY_POWERED =							3							
