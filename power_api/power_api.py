@@ -492,7 +492,7 @@ class SixfabPower:
         )
         return rpm
 
-    def setFanSpeed(self, status, timeout=RESPONSE_DELAY):
+    def set_fan_speed(self, status, timeout=RESPONSE_DELAY):
         """
         Function for setting fan speed
         
@@ -1251,8 +1251,14 @@ class SixfabPower:
         --> daily exact_time = 1585340340 % 86400 = 73140
         
         2) Calculation of day_factor 								 
-        [monday] - [tuesday] - [wednesday] - [thursday] - [friday] - [saturday] - [sunday] - [RESERVED as Zero]
-        Bit 0		 Bit 1	     Bit 2	       Bit 3		Bit 4	   Bit 5		Bit 6	   Bit 7
+        [monday] --> Bit 0
+        [tuesday] --> Bit 1
+        [wednesday] --> Bit 2
+        [thursday] --> Bit 3
+        [friday] --> Bit 4
+        [saturday] --> Bit 5
+        [sunday] --> Bit 6
+        [RESERVED] --> Bit 7 (Default 0)
                                                      
         Example Calculation for every day : 
         day_factor = 0b01111111 = 127

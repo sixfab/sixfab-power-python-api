@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module power_api</title>
+<html><head><title>Python: module power_api.power_api</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>power_api</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="power_api.html"><font color="#ffffff">power_api</font></a>.power_api</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/pi/sixfab_dev/sixfab-power-python-api/power_api/power_api.py">/home/pi/sixfab_dev/sixfab-power-python-api/power_api/power_api.py</a></font></td></tr></table>
     <p></p>
@@ -31,7 +31,7 @@
 <dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="power_api.html#SixfabPower">SixfabPower</a>
+<dt><font face="helvetica, arial"><a href="power_api.power_api.html#SixfabPower">SixfabPower</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -121,8 +121,14 @@ daily&nbsp;exact&nbsp;time&nbsp;example:&nbsp;<br>
 --&gt;&nbsp;daily&nbsp;exact_time&nbsp;=&nbsp;1585340340&nbsp;%&nbsp;86400&nbsp;=&nbsp;73140<br>
 &nbsp;<br>
 2)&nbsp;Calculation&nbsp;of&nbsp;day_factor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-[monday]&nbsp;-&nbsp;[tuesday]&nbsp;-&nbsp;[wednesday]&nbsp;-&nbsp;[thursday]&nbsp;-&nbsp;[friday]&nbsp;-&nbsp;[saturday]&nbsp;-&nbsp;[sunday]&nbsp;-&nbsp;[RESERVED&nbsp;as&nbsp;Zero]<br>
-Bit&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bit&nbsp;7<br>
+[monday]&nbsp;--&gt;&nbsp;Bit&nbsp;0<br>
+[tuesday]&nbsp;--&gt;&nbsp;Bit&nbsp;1<br>
+[wednesday]&nbsp;--&gt;&nbsp;Bit&nbsp;2<br>
+[thursday]&nbsp;--&gt;&nbsp;Bit&nbsp;3<br>
+[friday]&nbsp;--&gt;&nbsp;Bit&nbsp;4<br>
+[saturday]&nbsp;--&gt;&nbsp;Bit&nbsp;5<br>
+[sunday]&nbsp;--&gt;&nbsp;Bit&nbsp;6<br>
+[RESERVED]&nbsp;--&gt;&nbsp;Bit&nbsp;7&nbsp;(Default&nbsp;0)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 Example&nbsp;Calculation&nbsp;for&nbsp;every&nbsp;day&nbsp;:&nbsp;<br>
 day_factor&nbsp;=&nbsp;0b01111111&nbsp;=&nbsp;127<br>
@@ -605,19 +611,6 @@ Returns<br>
 result&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;"1"&nbsp;for&nbsp;SUCCESS,&nbsp;"2"&nbsp;for&nbsp;FAIL</tt></dd></dl>
 
-<dl><dt><a name="SixfabPower-setFanSpeed"><strong>setFanSpeed</strong></a>(self, status, timeout=10)</dt><dd><tt>Function&nbsp;for&nbsp;setting&nbsp;fan&nbsp;speed<br>
-&nbsp;<br>
-Parameters<br>
------------<br>
-status&nbsp;:&nbsp;"1"&nbsp;for&nbsp;START&nbsp;FAN,&nbsp;"2"&nbsp;for&nbsp;STOP&nbsp;FAN<br>
-timeout&nbsp;:&nbsp;int&nbsp;(optional)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout&nbsp;while&nbsp;receiving&nbsp;the&nbsp;response&nbsp;(default&nbsp;is&nbsp;RESPONSE_DELAY)<br>
-&nbsp;<br>
-Returns<br>
--------&nbsp;<br>
-result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;"1"&nbsp;for&nbsp;SET&nbsp;OK,&nbsp;"2"&nbsp;for&nbsp;SET&nbsp;FAILED</tt></dd></dl>
-
 <dl><dt><a name="SixfabPower-set_battery_design_capacity"><strong>set_battery_design_capacity</strong></a>(self, capacity, timeout=10)</dt><dd><tt>Function&nbsp;for&nbsp;setting&nbsp;battery&nbsp;design&nbsp;capacity<br>
 &nbsp;<br>
 Parameters<br>
@@ -654,6 +647,19 @@ slow_threshold&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;temperature&nbsp;threshold&nbsp;to&nbsp;decide&nbsp;fan&nbsp;working&nbsp;status<br>
 fast_threshold&nbsp;:&nbsp;int&nbsp;(optional)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;temperature&nbsp;threshold&nbsp;to&nbsp;decide&nbsp;fan&nbsp;working&nbsp;status&nbsp;(default&nbsp;is&nbsp;100)<br>
+timeout&nbsp;:&nbsp;int&nbsp;(optional)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout&nbsp;while&nbsp;receiving&nbsp;the&nbsp;response&nbsp;(default&nbsp;is&nbsp;RESPONSE_DELAY)<br>
+&nbsp;<br>
+Returns<br>
+-------&nbsp;<br>
+result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"1"&nbsp;for&nbsp;SET&nbsp;OK,&nbsp;"2"&nbsp;for&nbsp;SET&nbsp;FAILED</tt></dd></dl>
+
+<dl><dt><a name="SixfabPower-set_fan_speed"><strong>set_fan_speed</strong></a>(self, status, timeout=10)</dt><dd><tt>Function&nbsp;for&nbsp;setting&nbsp;fan&nbsp;speed<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+status&nbsp;:&nbsp;"1"&nbsp;for&nbsp;START&nbsp;FAN,&nbsp;"2"&nbsp;for&nbsp;STOP&nbsp;FAN<br>
 timeout&nbsp;:&nbsp;int&nbsp;(optional)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout&nbsp;while&nbsp;receiving&nbsp;the&nbsp;response&nbsp;(default&nbsp;is&nbsp;RESPONSE_DELAY)<br>
 &nbsp;<br>
