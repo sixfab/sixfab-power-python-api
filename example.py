@@ -3,5 +3,5 @@ import time
 
 api = SixfabPower()
 
-print("RTC.....DT: " + str(api.getRtcTime(Definition.TIME_FORMAT_DATE_AND_TIME, 100)))
+print("RTC.....DT: " + str(api.get_rtc_time(Definition.TIME_FORMAT_DATE_AND_TIME, 100)))
 
