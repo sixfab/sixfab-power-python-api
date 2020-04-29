@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from .exceptions import crc_check_failed
+from power_api.exceptions import crc_check_failed
 
 import smbus2
 import time
