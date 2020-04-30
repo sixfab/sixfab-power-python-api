@@ -1,12 +1,14 @@
-from pms_api import SixfabPMS, Definition
+from power_api import SixfabPower, Definition
 import time
 
-pms = SixfabPMS()
+api = SixfabPower()
 
 result = 2 # failed by default
 
+firmware_path = "pms-firmware.bin"
+
 try:
-    for step in pms.updateFirmware("pms-firmware.bin"):
+    for step in api.update_firmware(firmware_path):
         print(f"{step}%")
 
     print(f"Process ended with status code {result}")

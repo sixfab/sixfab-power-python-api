@@ -1,2 +1,0 @@
-class CRCCheckFailed(Exception):
-    pass
