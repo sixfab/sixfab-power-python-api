@@ -11,4 +11,4 @@
 * [update_firmware.py](./example/update_firmware.py) 
 
 ## API Docs
-[api docs](./docs/power_api_doc.txt)
+[API Docs](https://htmlpreview.github.io/?https://github.com/sixfab/sixfab-power-python-api/blob/master/docs/index.html)
