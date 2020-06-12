@@ -981,15 +981,15 @@ class SixfabPower:
         if format == Definition.TIME_FORMAT_EPOCH:
             return timestamp
         elif format == Definition.TIME_FORMAT_DATE_AND_TIME:
-            date_and_time = datetime.datetime.fromtimestamp(timestamp).strftime(
+            date_and_time = datetime.datetime.utcfromtimestamp(timestamp).strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
             return date_and_time
         elif format == Definition.TIME_FORMAT_DATE:
-            date = datetime.datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+            date = datetime.datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
             return date
         elif format == Definition.TIME_FORMAT_TIME:
-            time = datetime.datetime.fromtimestamp(timestamp).strftime("%H:%M:%S")
+            time = datetime.datetime.utcfromtimestamp(timestamp).strftime("%H:%M:%S")
             return time
 
     def hard_power_off(self, timeout=RESPONSE_DELAY):
