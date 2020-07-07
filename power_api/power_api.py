@@ -210,7 +210,7 @@ class SixfabPower:
             "1" for SUCCESS, "2" for FAIL
         """
 
-        temp = self.getSystemTemp()
+        temp = self.get_system_temp()
         tempInt = int(temp * 100)
 
         command.create_set_command(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
@@ -1471,8 +1471,12 @@ class SixfabPower:
         # Calculate packet count
         f = open(firmware_file, "rb")
         all_data = f.read()
-        packet_count = int(len(all_data) / packet_size) + 1
         leap_packet_size = len(all_data) % packet_size
+        packet_count = int(len(all_data) / packet_size) + 1
+        
+        if leap_packet_size == 0:
+             packet_count = int(len(all_data) / packet_size)
+
         f.close()
 
         # open file
