@@ -160,6 +160,12 @@ class Command:
 
         datalen = (buffer_receive[3] << 8) | buffer_receive[4]
 
+        if datalen > 32:
+            # print("="*50)
+            # print('[{}]'.format(', '.join(hex(x) for x in buffer_receive)))
+            buffer_receive_index = 0
+            buffer_receive.clear()
+
         if buffer_receive_index == (PROTOCOL_FRAME_SIZE + datalen):
 
             crc_received = (
