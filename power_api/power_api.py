@@ -1604,3 +1604,107 @@ class SixfabPower:
 
         command.create_command(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
         command.send_command()
+
+    
+    def get_lpm_status(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting low power mode status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            "1" for LPM ENABLED, "2" for LPM DISABLED 
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_edm_status(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting easy deployment mode status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            "1" for EDM ENABLED, "2" for EDM DISABLED 
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
+        """
+        Function for setting low power mode status
+        
+        Parameters
+        -----------
+        status : int
+            "1" for ENABLED, "2" for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_edm_status(self, status, timeout=RESPONSE_DELAY):
+        """
+        Function for setting easy deployment mode status
+        
+        Parameters
+        -----------
+        status : int
+            "1" for ENABLED, "2" for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
