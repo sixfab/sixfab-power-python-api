@@ -1540,7 +1540,8 @@ class SixfabPower:
 
                     # if final packet comes
                     if requesting_packet_id == 0xFFFF:
-                        print("FIRMWARE UPDATE SUCCESSFULLY ENDED")
+                        print("Firmware packages are being writen to flash...")
+                        print("Please wait until the application starts!")
                         self.reset_mcu()
                         yield Definition.SET_OK
                         return
