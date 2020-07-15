@@ -236,7 +236,7 @@ class SixfabPower:
             &#34;1&#34; for SUCCESS, &#34;2&#34; for FAIL
         &#34;&#34;&#34;
 
-        temp = self.getSystemTemp()
+        temp = self.get_system_temp()
         tempInt = int(temp * 100)
 
         command.create_set_command(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
@@ -1007,15 +1007,15 @@ class SixfabPower:
         if format == Definition.TIME_FORMAT_EPOCH:
             return timestamp
         elif format == Definition.TIME_FORMAT_DATE_AND_TIME:
-            date_and_time = datetime.datetime.fromtimestamp(timestamp).strftime(
+            date_and_time = datetime.datetime.utcfromtimestamp(timestamp).strftime(
                 &#34;%Y-%m-%d %H:%M:%S&#34;
             )
             return date_and_time
         elif format == Definition.TIME_FORMAT_DATE:
-            date = datetime.datetime.fromtimestamp(timestamp).strftime(&#34;%Y-%m-%d&#34;)
+            date = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%Y-%m-%d&#34;)
             return date
         elif format == Definition.TIME_FORMAT_TIME:
-            time = datetime.datetime.fromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
+            time = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
             return time
 
     def hard_power_off(self, timeout=RESPONSE_DELAY):
@@ -1497,8 +1497,12 @@ class SixfabPower:
         # Calculate packet count
         f = open(firmware_file, &#34;rb&#34;)
         all_data = f.read()
-        packet_count = int(len(all_data) / packet_size) + 1
         leap_packet_size = len(all_data) % packet_size
+        packet_count = int(len(all_data) / packet_size) + 1
+        
+        if leap_packet_size == 0:
+             packet_count = int(len(all_data) / packet_size)
+
         f.close()
 
         # open file
@@ -1562,7 +1566,8 @@ class SixfabPower:
 
                     # if final packet comes
                     if requesting_packet_id == 0xFFFF:
-                        print(&#34;FIRMWARE UPDATE SUCCESSFULLY ENDED&#34;)
+                        print(&#34;Firmware packages are being writen to flash...&#34;)
+                        print(&#34;Please wait until the application starts!&#34;)
                         self.reset_mcu()
                         yield Definition.SET_OK
                         return
@@ -1625,7 +1630,111 @@ class SixfabPower:
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
-        command.send_command()</code></pre>
+        command.send_command()
+
+    
+    def get_lpm_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting low power mode status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for LPM ENABLED, &#34;2&#34; for LPM DISABLED 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_edm_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting easy deployment mode status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for EDM ENABLED, &#34;2&#34; for EDM DISABLED 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting low power mode status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_edm_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting easy deployment mode status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status</code></pre>
 </details>
 </section>
 <section>
@@ -1843,7 +1952,7 @@ class SixfabPower:
             &#34;1&#34; for SUCCESS, &#34;2&#34; for FAIL
         &#34;&#34;&#34;
 
-        temp = self.getSystemTemp()
+        temp = self.get_system_temp()
         tempInt = int(temp * 100)
 
         command.create_set_command(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
@@ -2614,15 +2723,15 @@ class SixfabPower:
         if format == Definition.TIME_FORMAT_EPOCH:
             return timestamp
         elif format == Definition.TIME_FORMAT_DATE_AND_TIME:
-            date_and_time = datetime.datetime.fromtimestamp(timestamp).strftime(
+            date_and_time = datetime.datetime.utcfromtimestamp(timestamp).strftime(
                 &#34;%Y-%m-%d %H:%M:%S&#34;
             )
             return date_and_time
         elif format == Definition.TIME_FORMAT_DATE:
-            date = datetime.datetime.fromtimestamp(timestamp).strftime(&#34;%Y-%m-%d&#34;)
+            date = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%Y-%m-%d&#34;)
             return date
         elif format == Definition.TIME_FORMAT_TIME:
-            time = datetime.datetime.fromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
+            time = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
             return time
 
     def hard_power_off(self, timeout=RESPONSE_DELAY):
@@ -3104,8 +3213,12 @@ class SixfabPower:
         # Calculate packet count
         f = open(firmware_file, &#34;rb&#34;)
         all_data = f.read()
-        packet_count = int(len(all_data) / packet_size) + 1
         leap_packet_size = len(all_data) % packet_size
+        packet_count = int(len(all_data) / packet_size) + 1
+        
+        if leap_packet_size == 0:
+             packet_count = int(len(all_data) / packet_size)
+
         f.close()
 
         # open file
@@ -3169,7 +3282,8 @@ class SixfabPower:
 
                     # if final packet comes
                     if requesting_packet_id == 0xFFFF:
-                        print(&#34;FIRMWARE UPDATE SUCCESSFULLY ENDED&#34;)
+                        print(&#34;Firmware packages are being writen to flash...&#34;)
+                        print(&#34;Please wait until the application starts!&#34;)
                         self.reset_mcu()
                         yield Definition.SET_OK
                         return
@@ -3232,7 +3346,111 @@ class SixfabPower:
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
-        command.send_command()</code></pre>
+        command.send_command()
+
+    
+    def get_lpm_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting low power mode status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for LPM ENABLED, &#34;2&#34; for LPM DISABLED 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_edm_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting easy deployment mode status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for EDM ENABLED, &#34;2&#34; for EDM DISABLED 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting low power mode status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_edm_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting easy deployment mode status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -3972,6 +4190,47 @@ battery voltage [Volt]</p></div>
     return status</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.get_edm_status"><code class="name flex">
+<span>def <span class="ident">get_edm_status</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting easy deployment mode status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for EDM ENABLED, "2" for EDM DISABLED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_edm_status(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting easy deployment mode status
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for EDM ENABLED, &#34;2&#34; for EDM DISABLED 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.get_fan_automation"><code class="name flex">
 <span>def <span class="ident">get_fan_automation</span></span>(<span>self, timeout=10)</span>
 </code></dt>
@@ -4312,6 +4571,47 @@ input voltage [Volt]</p></div>
     return voltage / 1000</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.get_lpm_status"><code class="name flex">
+<span>def <span class="ident">get_lpm_status</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting low power mode status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for LPM ENABLED, "2" for LPM DISABLED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_lpm_status(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting low power mode status
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for LPM ENABLED, &#34;2&#34; for LPM DISABLED 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.get_rgb_animation"><code class="name flex">
 <span>def <span class="ident">get_rgb_animation</span></span>(<span>self, timeout=10)</span>
 </code></dt>
@@ -4450,15 +4750,15 @@ time in chosen format</p></div>
     if format == Definition.TIME_FORMAT_EPOCH:
         return timestamp
     elif format == Definition.TIME_FORMAT_DATE_AND_TIME:
-        date_and_time = datetime.datetime.fromtimestamp(timestamp).strftime(
+        date_and_time = datetime.datetime.utcfromtimestamp(timestamp).strftime(
             &#34;%Y-%m-%d %H:%M:%S&#34;
         )
         return date_and_time
     elif format == Definition.TIME_FORMAT_DATE:
-        date = datetime.datetime.fromtimestamp(timestamp).strftime(&#34;%Y-%m-%d&#34;)
+        date = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%Y-%m-%d&#34;)
         return date
     elif format == Definition.TIME_FORMAT_TIME:
-        time = datetime.datetime.fromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
+        time = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
         return time</code></pre>
 </details>
 </dd>
@@ -5095,7 +5395,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
         &#34;1&#34; for SUCCESS, &#34;2&#34; for FAIL
     &#34;&#34;&#34;
 
-    temp = self.getSystemTemp()
+    temp = self.get_system_temp()
     tempInt = int(temp * 100)
 
     command.create_set_command(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
@@ -5201,6 +5501,53 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return level</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.set_edm_status"><code class="name flex">
+<span>def <span class="ident">set_edm_status</span></span>(<span>self, status, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting easy deployment mode status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for ENABLED, "2" for DISABLED</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_edm_status(self, status, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting easy deployment mode status
+    
+    Parameters
+    -----------
+    status : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.set_fan_automation"><code class="name flex">
 <span>def <span class="ident">set_fan_automation</span></span>(<span>self, slow_threshold, fast_threshold=100, timeout=10)</span>
 </code></dt>
@@ -5300,6 +5647,53 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 
     result = raw[PROTOCOL_HEADER_SIZE]
     return result</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.set_lpm_status"><code class="name flex">
+<span>def <span class="ident">set_lpm_status</span></span>(<span>self, status, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting low power mode status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for ENABLED, "2" for DISABLED</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting low power mode status
+    
+    Parameters
+    -----------
+    status : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE, status, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.set_rgb_animation"><code class="name flex">
@@ -5716,8 +6110,12 @@ command in 5 seconds.</p>
     # Calculate packet count
     f = open(firmware_file, &#34;rb&#34;)
     all_data = f.read()
-    packet_count = int(len(all_data) / packet_size) + 1
     leap_packet_size = len(all_data) % packet_size
+    packet_count = int(len(all_data) / packet_size) + 1
+    
+    if leap_packet_size == 0:
+         packet_count = int(len(all_data) / packet_size)
+
     f.close()
 
     # open file
@@ -5781,7 +6179,8 @@ command in 5 seconds.</p>
 
                 # if final packet comes
                 if requesting_packet_id == 0xFFFF:
-                    print(&#34;FIRMWARE UPDATE SUCCESSFULLY ENDED&#34;)
+                    print(&#34;Firmware packages are being writen to flash...&#34;)
+                    print(&#34;Please wait until the application starts!&#34;)
                     self.reset_mcu()
                     yield Definition.SET_OK
                     return
@@ -5835,6 +6234,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_voltage" href="#power_api.power_api.SixfabPower.get_battery_voltage">get_battery_voltage</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button1_status" href="#power_api.power_api.SixfabPower.get_button1_status">get_button1_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button2_status" href="#power_api.power_api.SixfabPower.get_button2_status">get_button2_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_edm_status" href="#power_api.power_api.SixfabPower.get_edm_status">get_edm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_automation" href="#power_api.power_api.SixfabPower.get_fan_automation">get_fan_automation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_health" href="#power_api.power_api.SixfabPower.get_fan_health">get_fan_health</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_speed" href="#power_api.power_api.SixfabPower.get_fan_speed">get_fan_speed</a></code></li>
@@ -5843,6 +6243,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_power" href="#power_api.power_api.SixfabPower.get_input_power">get_input_power</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_temp" href="#power_api.power_api.SixfabPower.get_input_temp">get_input_temp</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_voltage" href="#power_api.power_api.SixfabPower.get_input_voltage">get_input_voltage</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_lpm_status" href="#power_api.power_api.SixfabPower.get_lpm_status">get_lpm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_rgb_animation" href="#power_api.power_api.SixfabPower.get_rgb_animation">get_rgb_animation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_rtc_time" href="#power_api.power_api.SixfabPower.get_rtc_time">get_rtc_time</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_safe_shutdown_battery_level" href="#power_api.power_api.SixfabPower.get_safe_shutdown_battery_level">get_safe_shutdown_battery_level</a></code></li>
@@ -5863,8 +6264,10 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.send_system_temp" href="#power_api.power_api.SixfabPower.send_system_temp">send_system_temp</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_design_capacity" href="#power_api.power_api.SixfabPower.set_battery_design_capacity">set_battery_design_capacity</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_max_charge_level" href="#power_api.power_api.SixfabPower.set_battery_max_charge_level">set_battery_max_charge_level</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_edm_status" href="#power_api.power_api.SixfabPower.set_edm_status">set_edm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_automation" href="#power_api.power_api.SixfabPower.set_fan_automation">set_fan_automation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_speed" href="#power_api.power_api.SixfabPower.set_fan_speed">set_fan_speed</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_lpm_status" href="#power_api.power_api.SixfabPower.set_lpm_status">set_lpm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_rgb_animation" href="#power_api.power_api.SixfabPower.set_rgb_animation">set_rgb_animation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_rtc_time" href="#power_api.power_api.SixfabPower.set_rtc_time">set_rtc_time</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_safe_shutdown_battery_level" href="#power_api.power_api.SixfabPower.set_safe_shutdown_battery_level">set_safe_shutdown_battery_level</a></code></li>

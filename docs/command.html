@@ -128,6 +128,10 @@ class Command:
     PROTOCOL_COMMAND_HARD_POWER_ON = 42
     PROTOCOL_COMMAND_SOFT_POWER_ON = 43
     PROTOCOL_COMMAND_IS_ANY_SOFT_ACTION_EXIST = 44
+    PROTOCOL_COMMAND_GET_LOW_POWER_MODE = 45
+    PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
+    PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
+    PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
     # .
     # .
     # .
@@ -185,6 +189,12 @@ class Command:
             return -1
 
         datalen = (buffer_receive[3] &lt;&lt; 8) | buffer_receive[4]
+
+        if datalen &gt; 32:
+            # print(&#34;=&#34;*50)
+            # print(&#39;[{}]&#39;.format(&#39;, &#39;.join(hex(x) for x in buffer_receive)))
+            buffer_receive_index = 0
+            buffer_receive.clear()
 
         if buffer_receive_index == (PROTOCOL_FRAME_SIZE + datalen):
 
@@ -428,6 +438,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
     PROTOCOL_COMMAND_HARD_POWER_ON = 42
     PROTOCOL_COMMAND_SOFT_POWER_ON = 43
     PROTOCOL_COMMAND_IS_ANY_SOFT_ACTION_EXIST = 44
+    PROTOCOL_COMMAND_GET_LOW_POWER_MODE = 45
+    PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
+    PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
+    PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
     # .
     # .
     # .
@@ -485,6 +499,12 @@ calculate_crc16 : Function for calculating CRC16</p></div>
             return -1
 
         datalen = (buffer_receive[3] &lt;&lt; 8) | buffer_receive[4]
+
+        if datalen &gt; 32:
+            # print(&#34;=&#34;*50)
+            # print(&#39;[{}]&#39;.format(&#39;, &#39;.join(hex(x) for x in buffer_receive)))
+            buffer_receive_index = 0
+            buffer_receive.clear()
 
         if buffer_receive_index == (PROTOCOL_FRAME_SIZE + datalen):
 
@@ -708,6 +728,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_FAN_AUTOMATION</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -737,6 +761,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_INPUT_VOLTAGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_LOW_POWER_MODE</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -824,11 +852,19 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_FAN_SPEED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_LOW_POWER_MODE</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -916,6 +952,12 @@ calculate_crc16 : Function for calculating CRC16</p></div>
         return -1
 
     datalen = (buffer_receive[3] &lt;&lt; 8) | buffer_receive[4]
+
+    if datalen &gt; 32:
+        # print(&#34;=&#34;*50)
+        # print(&#39;[{}]&#39;.format(&#39;, &#39;.join(hex(x) for x in buffer_receive)))
+        buffer_receive_index = 0
+        buffer_receive.clear()
 
     if buffer_receive_index == (PROTOCOL_FRAME_SIZE + datalen):
 
@@ -1147,6 +1189,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE">PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS">PROTOCOL_COMMAND_GET_BUTTON1_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS">PROTOCOL_COMMAND_GET_BUTTON2_STATUS</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION">PROTOCOL_COMMAND_GET_FAN_AUTOMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH">PROTOCOL_COMMAND_GET_FAN_HEALTH</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED">PROTOCOL_COMMAND_GET_FAN_SPEED</a></code></li>
@@ -1155,6 +1198,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_POWER" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_POWER">PROTOCOL_COMMAND_GET_INPUT_POWER</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_TEMP" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_TEMP">PROTOCOL_COMMAND_GET_INPUT_TEMP</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE">PROTOCOL_COMMAND_GET_INPUT_VOLTAGE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE">PROTOCOL_COMMAND_GET_LOW_POWER_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_RGB_ANIMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_RGB_ANIMATION">PROTOCOL_COMMAND_GET_RGB_ANIMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_RTC_TIME" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_RTC_TIME">PROTOCOL_COMMAND_GET_RTC_TIME</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL">PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL</a></code></li>
@@ -1176,8 +1220,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE" href="#power_api.command.Command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE">PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY">PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL">PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED">PROTOCOL_COMMAND_SET_FAN_SPEED</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE">PROTOCOL_COMMAND_SET_LOW_POWER_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_RGB_ANIMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_RGB_ANIMATION">PROTOCOL_COMMAND_SET_RGB_ANIMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_RTC_TIME" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_RTC_TIME">PROTOCOL_COMMAND_SET_RTC_TIME</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL">PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL</a></code></li>
