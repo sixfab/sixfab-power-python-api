@@ -1543,13 +1543,12 @@ class SixfabPower:
                         print("Firmware packages are being writen to flash...")
                         print("Please wait until the application starts!")
                         self.reset_mcu()
-                        yield Definition.SET_OK
                         return
                 except:
                     raise ValueError("None Object Exception")
 
         # if firmware update doesn't ended succesfully
-        yield Definition.SET_FAILED
+        raise RuntimeError("Unidentified Runtime Exception")
 
     def clear_program_storage(self, timeout=500):
         """
