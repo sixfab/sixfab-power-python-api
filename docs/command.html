@@ -64,9 +64,9 @@ DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read wri
 
 class Command:
     &#34;&#34;&#34; 
-        Command class for provide i2c communication requirements 
+    Command class for provide i2c communication requirements 
     of Sixfab Power API.
-        
+    
     Methods
     -------
     send_command : Function for sending command
@@ -132,6 +132,8 @@ class Command:
     PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
     PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
     PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
+    PROTOCOL_COMMAND_SET_FAN_MODE = 49
+    PROTOCOL_COMMAND_GET_FAN_MODE = 50
     # .
     # .
     # .
@@ -374,9 +376,9 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 </summary>
 <pre><code class="python">class Command:
     &#34;&#34;&#34; 
-        Command class for provide i2c communication requirements 
+    Command class for provide i2c communication requirements 
     of Sixfab Power API.
-        
+    
     Methods
     -------
     send_command : Function for sending command
@@ -442,6 +444,8 @@ calculate_crc16 : Function for calculating CRC16</p></div>
     PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
     PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
     PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
+    PROTOCOL_COMMAND_SET_FAN_MODE = 49
+    PROTOCOL_COMMAND_GET_FAN_MODE = 50
     # .
     # .
     # .
@@ -740,6 +744,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_FAN_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_FAN_SPEED</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -857,6 +865,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_FAN_MODE</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1192,6 +1204,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION">PROTOCOL_COMMAND_GET_FAN_AUTOMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH">PROTOCOL_COMMAND_GET_FAN_HEALTH</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE">PROTOCOL_COMMAND_GET_FAN_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED">PROTOCOL_COMMAND_GET_FAN_SPEED</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FIRMWARE_VER" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FIRMWARE_VER">PROTOCOL_COMMAND_GET_FIRMWARE_VER</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_CURRENT" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_CURRENT">PROTOCOL_COMMAND_GET_INPUT_CURRENT</a></code></li>
@@ -1222,6 +1235,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL">PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE">PROTOCOL_COMMAND_SET_FAN_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED">PROTOCOL_COMMAND_SET_FAN_SPEED</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE">PROTOCOL_COMMAND_SET_LOW_POWER_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_RGB_ANIMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_RGB_ANIMATION">PROTOCOL_COMMAND_SET_RGB_ANIMATION</a></code></li>

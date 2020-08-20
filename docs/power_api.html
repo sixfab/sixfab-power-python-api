@@ -1074,7 +1074,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo shutdown -h now&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo shutdown -h now&#34;)
                 return result2
 
         return Definition.SET_FAILED
@@ -1136,7 +1136,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo reboot&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo reboot&#34;)
                 return result2
 
         return Definition.SET_FAILED
@@ -1569,13 +1569,12 @@ class SixfabPower:
                         print(&#34;Firmware packages are being writen to flash...&#34;)
                         print(&#34;Please wait until the application starts!&#34;)
                         self.reset_mcu()
-                        yield Definition.SET_OK
                         return
                 except:
                     raise ValueError(&#34;None Object Exception&#34;)
 
         # if firmware update doesn&#39;t ended succesfully
-        yield Definition.SET_FAILED
+        raise RuntimeError(&#34;Unidentified Runtime Exception&#34;)
 
     def clear_program_storage(self, timeout=500):
         &#34;&#34;&#34;
@@ -1729,6 +1728,58 @@ class SixfabPower:
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
         )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+    
+    
+    def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting fan mode
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_fan_mode(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting fan mode
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
         command.send_command()
         delay_ms(timeout)
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
@@ -2790,7 +2841,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo shutdown -h now&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo shutdown -h now&#34;)
                 return result2
 
         return Definition.SET_FAILED
@@ -2852,7 +2903,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo reboot&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo reboot&#34;)
                 return result2
 
         return Definition.SET_FAILED
@@ -3285,13 +3336,12 @@ class SixfabPower:
                         print(&#34;Firmware packages are being writen to flash...&#34;)
                         print(&#34;Please wait until the application starts!&#34;)
                         self.reset_mcu()
-                        yield Definition.SET_OK
                         return
                 except:
                     raise ValueError(&#34;None Object Exception&#34;)
 
         # if firmware update doesn&#39;t ended succesfully
-        yield Definition.SET_FAILED
+        raise RuntimeError(&#34;Unidentified Runtime Exception&#34;)
 
     def clear_program_storage(self, timeout=500):
         &#34;&#34;&#34;
@@ -3445,6 +3495,58 @@ class SixfabPower:
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
         )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+    
+    
+    def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting fan mode
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_fan_mode(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting fan mode
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
         command.send_command()
         delay_ms(timeout)
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
@@ -4316,6 +4418,47 @@ battery voltage [Volt]</p></div>
         raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], &#34;big&#34;
     )
     return health</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_fan_mode"><code class="name flex">
+<span>def <span class="ident">get_fan_mode</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting fan mode</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_fan_mode(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting fan mode
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.get_fan_speed"><code class="name flex">
@@ -5605,6 +5748,53 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return result</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.set_fan_mode"><code class="name flex">
+<span>def <span class="ident">set_fan_mode</span></span>(<span>self, mode, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting fan mode</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting fan mode
+    
+    Parameters
+    -----------
+    status : int
+        &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.set_fan_speed"><code class="name flex">
 <span>def <span class="ident">set_fan_speed</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
@@ -5988,7 +6178,7 @@ command in 5 seconds.</p>
 
         if result2 == Definition.SET_OK:
             print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-            os.system(&#34;sleep 5 &amp; sudo shutdown -h now&#34;)
+            os.system(&#34;sleep 5 &amp;&amp; sudo shutdown -h now&#34;)
             return result2
 
     return Definition.SET_FAILED</code></pre>
@@ -6047,7 +6237,7 @@ command in 5 seconds.</p>
 
         if result2 == Definition.SET_OK:
             print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-            os.system(&#34;sleep 5 &amp; sudo reboot&#34;)
+            os.system(&#34;sleep 5 &amp;&amp; sudo reboot&#34;)
             return result2
 
     return Definition.SET_FAILED</code></pre>
@@ -6182,13 +6372,12 @@ command in 5 seconds.</p>
                     print(&#34;Firmware packages are being writen to flash...&#34;)
                     print(&#34;Please wait until the application starts!&#34;)
                     self.reset_mcu()
-                    yield Definition.SET_OK
                     return
             except:
                 raise ValueError(&#34;None Object Exception&#34;)
 
     # if firmware update doesn&#39;t ended succesfully
-    yield Definition.SET_FAILED</code></pre>
+    raise RuntimeError(&#34;Unidentified Runtime Exception&#34;)</code></pre>
 </details>
 </dd>
 </dl>
@@ -6237,6 +6426,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_edm_status" href="#power_api.power_api.SixfabPower.get_edm_status">get_edm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_automation" href="#power_api.power_api.SixfabPower.get_fan_automation">get_fan_automation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_health" href="#power_api.power_api.SixfabPower.get_fan_health">get_fan_health</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_fan_mode" href="#power_api.power_api.SixfabPower.get_fan_mode">get_fan_mode</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_speed" href="#power_api.power_api.SixfabPower.get_fan_speed">get_fan_speed</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_firmware_ver" href="#power_api.power_api.SixfabPower.get_firmware_ver">get_firmware_ver</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_current" href="#power_api.power_api.SixfabPower.get_input_current">get_input_current</a></code></li>
@@ -6266,6 +6456,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_max_charge_level" href="#power_api.power_api.SixfabPower.set_battery_max_charge_level">set_battery_max_charge_level</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_edm_status" href="#power_api.power_api.SixfabPower.set_edm_status">set_edm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_automation" href="#power_api.power_api.SixfabPower.set_fan_automation">set_fan_automation</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_fan_mode" href="#power_api.power_api.SixfabPower.set_fan_mode">set_fan_mode</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_speed" href="#power_api.power_api.SixfabPower.set_fan_speed">set_fan_speed</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_lpm_status" href="#power_api.power_api.SixfabPower.set_lpm_status">set_lpm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_rgb_animation" href="#power_api.power_api.SixfabPower.set_rgb_animation">set_rgb_animation</a></code></li>
