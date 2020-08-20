@@ -38,9 +38,9 @@ DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read wri
 
 class Command:
     """ 
-	Command class for provide i2c communication requirements 
+    Command class for provide i2c communication requirements 
     of Sixfab Power API.
-	
+    
     Methods
     -------
     send_command : Function for sending command
@@ -106,6 +106,8 @@ class Command:
     PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
     PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
     PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
+    PROTOCOL_COMMAND_SET_FAN_MODE = 49
+    PROTOCOL_COMMAND_GET_FAN_MODE = 50
     # .
     # .
     # .

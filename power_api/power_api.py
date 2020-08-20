@@ -1708,3 +1708,55 @@ class SixfabPower:
 
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
+    
+    
+    def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+        """
+        Function for setting fan mode
+        
+        Parameters
+        -----------
+        status : int
+            "1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE 
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_fan_mode(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting fan mode
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            "1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE 
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
