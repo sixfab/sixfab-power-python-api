@@ -1048,7 +1048,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print("Raspberry Pi will shutdown in 5 seconds!")
-                os.system("sleep 5 & sudo shutdown -h now")
+                os.system("sleep 5 && sudo shutdown -h now")
                 return result2
 
         return Definition.SET_FAILED
@@ -1110,7 +1110,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print("Raspberry Pi will shutdown in 5 seconds!")
-                os.system("sleep 5 & sudo reboot")
+                os.system("sleep 5 && sudo reboot")
                 return result2
 
         return Definition.SET_FAILED
