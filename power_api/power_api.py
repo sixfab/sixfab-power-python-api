@@ -492,29 +492,6 @@ class SixfabPower:
         )
         return rpm
 
-    def set_fan_speed(self, status, timeout=RESPONSE_DELAY):
-        """
-        Function for setting fan speed
-        
-        Parameters
-        -----------
-        status : "1" for START FAN, "2" for STOP FAN
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED 
-        """
-
-        command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def get_watchdog_status(self, timeout=RESPONSE_DELAY):
         """
@@ -654,8 +631,6 @@ class SixfabPower:
         -----------
         slow_threshold : int
             temperature threshold to decide fan working status
-        fast_threshold : int (optional)
-            temperature threshold to decide fan working status (default is 100)
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -805,7 +780,7 @@ class SixfabPower:
         level = raw[PROTOCOL_HEADER_SIZE]
         return level
 
-    def set_safe_shutdown_battery_status(self, status, timeout=RESPONSE_DELAY):
+    def set_safe_shutdown_status(self, status, timeout=RESPONSE_DELAY):
         """
         Function for setting safe shutdown status
         
@@ -832,9 +807,9 @@ class SixfabPower:
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
 
-    def get_safe_shutdown_battery_status(self, timeout=RESPONSE_DELAY):
+    def get_safe_shutdown_status(self, timeout=RESPONSE_DELAY):
         """
-        Function for setting safe shutdown status
+        Function for getting safe shutdown status
         
         Parameters
         -----------
