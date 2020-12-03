@@ -34,7 +34,7 @@ COMMAND_TYPE_REQUEST = 0x01
 COMMAND_TYPE_RESPONSE = 0x02
 
 DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read write bit)
-
+BATTERY_TEMP_ADDRESS = 0x48 # This one uses when the battery holder is seperated from HAT.
 
 class Command:
     """ 
@@ -319,3 +319,11 @@ class Command:
             return (crc_high, crc_low)
         else:
             return cal_crc
+
+    def read_word_data(self, address):
+        try:
+            word = bus.read_i2c_block_data(address, 0, 2)
+        except:
+            return -1
+        else:
+            return word

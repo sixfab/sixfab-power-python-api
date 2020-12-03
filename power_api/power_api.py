@@ -33,7 +33,7 @@ COMMAND_TYPE_REQUEST = 0x01
 COMMAND_TYPE_RESPONSE = 0x02
 
 DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read write bit)
-
+BATTERY_TEMP_ADDRESS = 0x48 # This one uses when the battery holder is seperated from HAT.
 
 ###########################################
 ### Private Methods #######################
@@ -318,6 +318,37 @@ class SixfabPower:
             raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
         )
         return temp / 100
+
+
+    def get_battery_temp_qwiic(self):
+        """
+        Function for getting battery temperature
+        
+        Parameters
+        -----------
+        None
+
+        Returns
+        ------- 
+        temperature : float
+            battery temperature [Celcius]
+        """
+
+        word = command.read_word_data(BATTERY_TEMP_ADDRESS)
+        high=word[0]
+        low=word[1] 
+
+        rawTemp = (high << 8 ) | (low & 0xFF)
+        rawTemp = rawTemp >> 5
+
+        if (rawTemp & 0x400):
+            rawTemp = ((~rawTemp) & 0x7FF) + 1
+            temp = rawTemp * -0.125
+        else:
+            temp = rawTemp * 0.125
+            
+        return temp
+
 
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
         """
