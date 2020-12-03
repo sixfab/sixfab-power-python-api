@@ -1775,7 +1775,7 @@ class SixfabPower:
         Parameters
         -----------
         interval : int
-            time in minutes to trigger recovery actions
+            time in minutes to trigger recovery actions (min : 2 , max : 255)
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1784,6 +1784,10 @@ class SixfabPower:
         result : int
             "1" for SET OK, "2" for SET FAILED
         """
+
+        if(interval < 2) or (interval > 255):
+            print("Wrong argument. min:2 max:255")
+            return 2
 
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL, interval, 1
