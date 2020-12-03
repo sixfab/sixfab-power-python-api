@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='sixfab-power-python-api',
-    version='0.1.0',
+    version='0.1.1',
     author='Yasin Kaya',
     author_email='yasinkaya.121@gmail.com',
     description='Sixfab power management service python api',
