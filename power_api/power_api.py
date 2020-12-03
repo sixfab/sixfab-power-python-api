@@ -1121,9 +1121,9 @@ class SixfabPower:
 
         return Definition.SET_FAILED
 
-    def ask_watchdog_alarm(self, timeout=RESPONSE_DELAY):
+    def watchdog_signal(self, timeout=RESPONSE_DELAY):
         """
-        Function for asking watchdog alarm is exist
+        Function for sending watchdog signal
             
         Parameters
         -----------
@@ -1133,18 +1133,18 @@ class SixfabPower:
         Returns
         ------- 
         result : int
-            "1" for EXIST, "2" for NOT_EXIST
+            "1" for SET_OK, "2" for SET_FAILED
         """
 
-        command.create_command(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL, 1, 1
+        )
         command.send_command()
         delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
-        alarm_status = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
-        )
-        return alarm_status
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
 
     def get_battery_design_capacity(self, timeout=RESPONSE_DELAY):
         """
@@ -1766,3 +1766,55 @@ class SixfabPower:
 
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
+
+
+    def set_watchdog_interval(self, interval, timeout=RESPONSE_DELAY):
+        """
+        Function for setting watchdog interval
+        
+        Parameters
+        -----------
+        interval : int
+            time in minutes to trigger recovery actions
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL, interval, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_watchdog_interval(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting watchdog interval
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            time in minutes to trigger recovery actions
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        interval = raw[PROTOCOL_HEADER_SIZE]
+        return interval
