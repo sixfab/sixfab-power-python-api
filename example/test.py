@@ -33,6 +33,16 @@ print( "Battery Separation: " + str(api.get_battery_separation_status()))
 print( "Return: " + str(api.set_rgb_animation(2,7,3)))
 print( "RGB Anim: " + str(api.get_rgb_animation()))
 """
-
+"""
 print( "Return: " + str(api.set_fan_automation(50)))
 print( "Fan Automation: " + str(api.get_fan_automation()))
+"""
+# Setter limit test
+print( "WDT: " + str(api.set_watchdog_status(3)))
+print( "RGB: " + str(api.set_rgb_animation(1,9,3)))
+print( "FAN: " + str(api.set_fan_automation(110)))
+print( "BAT. MAX: " + str(api.set_battery_max_charge_level(50)))
+print( "BAT. SAFE: " + str(api.set_safe_shutdown_battery_level(100)))
+print( "BAT SAFE STAT: " + str(api.set_safe_shutdown_status(3)))
+print( "SEPARATION: " + str(api.set_battery_separation_status(3)))
+print( "BAT CAP: " + str(api.set_battery_design_capacity(50)))

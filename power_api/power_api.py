@@ -742,7 +742,7 @@ class SixfabPower:
         Parameters
         -----------
         level : int
-            battery is charged up to this level in percentage [%]
+            battery is charged up to this level in percentage [%] [min : 60 , max : 100]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -792,7 +792,7 @@ class SixfabPower:
         Parameters
         -----------
         level : int
-            raspberry pi is turned off if battery falls to this level
+            raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1253,7 +1253,7 @@ class SixfabPower:
         Parameters
         -----------
         capacity : int
-            battery design capacity in [mAh]
+            battery design capacity in [mAh] [min : 100 , max : 10000]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
