@@ -350,6 +350,33 @@ class SixfabPower:
         return temp
 
 
+    def send_battery_temp(self, timeout=10):
+        """
+        Function for sending battery temperature in battery separated state
+        
+        Parameters
+        -----------	
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SUCCESS, "2" for FAIL
+        """
+
+        temp = self.get_battery_temp_qwiic()
+        tempInt = int(temp * 100)
+        time.sleep(0.05)
+        command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        result = raw[PROTOCOL_HEADER_SIZE]
+        return result
+
+
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
         """
         Function for getting battery voltage
