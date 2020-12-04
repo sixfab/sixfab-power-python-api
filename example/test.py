@@ -33,12 +33,12 @@ print( "Battery Separation: " + str(api.get_battery_separation_status()))
 print( "Return: " + str(api.set_rgb_animation(2,7,3)))
 print( "RGB Anim: " + str(api.get_rgb_animation()))
 """
-
+"""
 print( "Return: " + str(api.set_fan_automation(50)))
 
 fan = api.get_fan_automation()
 print( "Fan Automation: " + str(fan[0]))
-
+"""
 """
 # Setter limit test
 print( "WDT: " + str(api.set_watchdog_status(1)))

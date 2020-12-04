@@ -1076,28 +1076,6 @@ class SixfabPower:
             time = datetime.datetime.utcfromtimestamp(timestamp).strftime("%H:%M:%S")
             return time
 
-    def hard_power_off(self, timeout=RESPONSE_DELAY):
-        """
-        Function for raspberry pi hard powering off
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET_OK, "2" for SET_FAILED
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def soft_power_off(self, timeout=RESPONSE_DELAY):
         """
