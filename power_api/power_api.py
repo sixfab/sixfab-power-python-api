@@ -606,9 +606,9 @@ class SixfabPower:
         
         Parameters
         -----------
-        anim_type : [DISABLED, HEARTBEAT, TEMP_MAP]
-        color : [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
-        speed : [SLOW, NORMAL, FAST] 
+        anim_type : [1 for DISABLED, 2 for HEARTBEAT, 3 for TEMP_MAP]
+        color : [1 for RED, 2 for GREEN, 3 for BLUE, 4 for YELLOW, 5 for CYAN, 6 for MAGENTA, 7 for WHITE, 8 for BLACK]
+        speed : [1 for SLOW, 2 for NORMAL, 3 for FAST] 
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -688,7 +688,7 @@ class SixfabPower:
         Parameters
         -----------
         slow_threshold : int
-            temperature threshold to decide fan working status
+            temperature threshold to decide fan working status [min : 0 , max : 100]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -723,8 +723,8 @@ class SixfabPower:
 
         Returns
         ------- 
-        automation : byteArray(2) 
-            [slow_threshold, fast_threshold] [Celcius]
+        automation : int 
+            temp_threshold [Celcius]
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -732,10 +732,7 @@ class SixfabPower:
         delay_ms(timeout)
         raw = command.receive_command(9)
 
-        fanAutomation = bytearray()
-        for i in range(2):
-            fanAutomation.append(raw[PROTOCOL_HEADER_SIZE + i])
-
+        fanAutomation = int(raw[PROTOCOL_HEADER_SIZE])
         return fanAutomation
 
     def set_battery_max_charge_level(self, level, timeout=RESPONSE_DELAY):

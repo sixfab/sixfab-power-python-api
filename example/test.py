@@ -27,4 +27,12 @@ print( "Return: " + str(api.set_battery_separation_status(1)))
 print( "Battery Separation: " + str(api.get_battery_separation_status()))
 """
 
-print( "Battery Separation --> Send battery temp result: " + str(api.send_battery_temp()))
+#print( "Battery Separation --> Send battery temp result: " + str(api.send_battery_temp()))
+
+"""
+print( "Return: " + str(api.set_rgb_animation(2,7,3)))
+print( "RGB Anim: " + str(api.get_rgb_animation()))
+"""
+
+print( "Return: " + str(api.set_fan_automation(50)))
+print( "Fan Automation: " + str(api.get_fan_automation()))
