@@ -720,11 +720,10 @@ class SixfabPower:
         -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
-
         Returns
         ------- 
-        automation : int 
-            temp_threshold [Celcius]
+        automation : byteArray(2)
+            [slow_threshold, fast_threshold] [Celcius]
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -732,7 +731,10 @@ class SixfabPower:
         delay_ms(timeout)
         raw = command.receive_command(9)
 
-        fanAutomation = int(raw[PROTOCOL_HEADER_SIZE])
+        fanAutomation = bytearray()
+        for i in range(2):
+            fanAutomation.append(raw[PROTOCOL_HEADER_SIZE + i])
+
         return fanAutomation
 
     def set_battery_max_charge_level(self, level, timeout=RESPONSE_DELAY):
@@ -1851,7 +1853,7 @@ class SixfabPower:
         Parameters
         -----------
         interval : int
-            time in minutes to trigger recovery actions (min : 2 , max : 255)
+            time in minutes to trigger recovery actions (min : 2 , max : 180)
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
