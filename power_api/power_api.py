@@ -861,6 +861,58 @@ class SixfabPower:
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
 
+
+    def set_battery_separation_status(self, status, timeout=RESPONSE_DELAY):
+        """
+        Function for setting battery separation status
+        
+        Parameters
+        -----------
+        status : int
+            "1" for SEPARETED, "2" for NOT SEPARATED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    def get_battery_separation_status(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting battery separation status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            "1" for SEPARATED "2" for NOT SEPARATED
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
     def get_working_mode(self, timeout=RESPONSE_DELAY):
         """
         Function for getting working mode
