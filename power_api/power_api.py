@@ -364,17 +364,20 @@ class SixfabPower:
         result : int
             "1" for SUCCESS, "2" for FAIL
         """
+        try:    
+            temp = self.get_battery_temp_qwiic()
+        except:
+            return 2
+        else:
+            tempInt = int(temp * 100)
+            time.sleep(0.05)
+            command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
+            command.send_command()
+            delay_ms(timeout)
+            raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
-        temp = self.get_battery_temp_qwiic()
-        tempInt = int(temp * 100)
-        time.sleep(0.05)
-        command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
 
 
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
