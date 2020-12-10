@@ -27,7 +27,7 @@ print( "Fan Mode: " + str(api.get_fan_mode()))
 #print( "Return: " + str(api.set_battery_separation_status(1)))
 #print( "Battery Separation: " + str(api.get_battery_separation_status()))
 
-print( "Battery Separation --> Send battery temp result: " + str(api.send_battery_temp()))
+#print( "Battery Separation --> Send battery temp result: " + str(api.send_battery_temp()))
 
 """
 print( "Return: " + str(api.set_rgb_animation(2,7,3)))
@@ -52,3 +52,10 @@ print( "SEPARATION: " + str(api.set_battery_separation_status(1)))
 print( "BAT CAP: " + str(api.set_battery_design_capacity(2500)))
 print( "BAT CAP: " + str(api.set_watchdog_interval(2)))
 """
+
+
+print( "Return: " + str(api.set_power_outage_event_status(1)))
+print( "POWER OUT. STAT: " + str(api.get_power_outage_event_status()))
+
+print( "Return: " + str(api.set_power_outage_params(5,30)))
+print( "POWER OUT. PARAMS: " + str(api.get_power_outage_params()))

@@ -1881,3 +1881,117 @@ class SixfabPower:
 
         interval = raw[PROTOCOL_HEADER_SIZE]
         return interval
+
+    def get_power_outage_params(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting params on power outage
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+        Returns
+        ------- 
+        sleep_time : int
+            time in [minutes]
+        """
+        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
+
+        sleep_time = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 4], "big"
+        )
+
+        run_time = int.from_bytes(
+            raw[COMMAND_SIZE_FOR_INT32 - 4 : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        )
+        return (sleep_time, run_time)
+
+
+    def set_power_outage_params(self, sleep_time, run_time, timeout=RESPONSE_DELAY):
+        """
+        Function for setting params on power outage
+        
+        Parameters
+        -----------
+        sleep_time : int
+            time in [minutes]   ( min : 2 , max : 1440 )
+        run_time : int
+            time in [minutes]   ( min : 2 , max : 1440 )   
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+        Returns
+        ------- 
+        result : int
+            "1" for SET_OK, "2" for SET_FAILED 
+        """
+
+        params = bytearray()
+        params.append((sleep_time >> 8) & 0xFF)
+        params.append(sleep_time & 0xFF)
+        params.append((run_time >> 8) & 0xFF)
+        params.append(run_time & 0xFF)
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS, params, 4
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_power_outage_event_status(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting power outage event status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            "1" for ENABLED, "2" for DISABLED 
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_power_outage_event_status(self, status, timeout=RESPONSE_DELAY):
+        """
+        Function for setting power outage event status
+        
+        Parameters
+        -----------
+        status : int
+            "1" for ENABLED, "2" for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
