@@ -33,7 +33,7 @@ COMMAND_TYPE_REQUEST = 0x01
 COMMAND_TYPE_RESPONSE = 0x02
 
 DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read write bit)
-
+BATTERY_TEMP_ADDRESS = 0x48 # This one uses when the battery holder is seperated from HAT.
 
 ###########################################
 ### Private Methods #######################
@@ -319,6 +319,37 @@ class SixfabPower:
         )
         return temp / 100
 
+
+    def get_battery_temp_qwiic(self):
+        """
+        Function for getting battery temperature
+        
+        Parameters
+        -----------
+        None
+
+        Returns
+        ------- 
+        temperature : float
+            battery temperature [Celcius]
+        """
+
+        word = command.read_word_data(BATTERY_TEMP_ADDRESS)
+        high=word[0]
+        low=word[1] 
+
+        rawTemp = (high << 8 ) | (low & 0xFF)
+        rawTemp = rawTemp >> 5
+
+        if (rawTemp & 0x400):
+            rawTemp = ((~rawTemp) & 0x7FF) + 1
+            temp = rawTemp * -0.125
+        else:
+            temp = rawTemp * 0.125
+            
+        return temp
+
+
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
         """
         Function for getting battery voltage
@@ -492,29 +523,6 @@ class SixfabPower:
         )
         return rpm
 
-    def set_fan_speed(self, status, timeout=RESPONSE_DELAY):
-        """
-        Function for setting fan speed
-        
-        Parameters
-        -----------
-        status : "1" for START FAN, "2" for STOP FAN
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED 
-        """
-
-        command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def get_watchdog_status(self, timeout=RESPONSE_DELAY):
         """
@@ -654,8 +662,6 @@ class SixfabPower:
         -----------
         slow_threshold : int
             temperature threshold to decide fan working status
-        fast_threshold : int (optional)
-            temperature threshold to decide fan working status (default is 100)
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -805,7 +811,7 @@ class SixfabPower:
         level = raw[PROTOCOL_HEADER_SIZE]
         return level
 
-    def set_safe_shutdown_battery_status(self, status, timeout=RESPONSE_DELAY):
+    def set_safe_shutdown_status(self, status, timeout=RESPONSE_DELAY):
         """
         Function for setting safe shutdown status
         
@@ -832,9 +838,9 @@ class SixfabPower:
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
 
-    def get_safe_shutdown_battery_status(self, timeout=RESPONSE_DELAY):
+    def get_safe_shutdown_status(self, timeout=RESPONSE_DELAY):
         """
-        Function for setting safe shutdown status
+        Function for getting safe shutdown status
         
         Parameters
         -----------
@@ -1702,6 +1708,58 @@ class SixfabPower:
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
         )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+    
+    
+    def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+        """
+        Function for setting fan mode
+        
+        Parameters
+        -----------
+        status : int
+            "1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE 
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET OK, "2" for SET FAILED
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_fan_mode(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting fan mode
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            "1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE 
+        """
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
         command.send_command()
         delay_ms(timeout)
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)

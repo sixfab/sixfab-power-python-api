@@ -34,13 +34,13 @@ COMMAND_TYPE_REQUEST = 0x01
 COMMAND_TYPE_RESPONSE = 0x02
 
 DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read write bit)
-
+BATTERY_TEMP_ADDRESS = 0x48 # This one uses when the battery holder is seperated from HAT.
 
 class Command:
     """ 
-	Command class for provide i2c communication requirements 
+    Command class for provide i2c communication requirements 
     of Sixfab Power API.
-	
+    
     Methods
     -------
     send_command : Function for sending command
@@ -106,6 +106,8 @@ class Command:
     PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
     PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
     PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
+    PROTOCOL_COMMAND_SET_FAN_MODE = 49
+    PROTOCOL_COMMAND_GET_FAN_MODE = 50
     # .
     # .
     # .
@@ -317,3 +319,11 @@ class Command:
             return (crc_high, crc_low)
         else:
             return cal_crc
+
+    def read_word_data(self, address):
+        try:
+            word = bus.read_i2c_block_data(address, 0, 2)
+        except:
+            return -1
+        else:
+            return word
