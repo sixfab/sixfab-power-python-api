@@ -53,9 +53,13 @@ print( "BAT CAP: " + str(api.set_battery_design_capacity(2500)))
 print( "BAT CAP: " + str(api.set_watchdog_interval(2)))
 """
 
-
+"""
 print( "Return: " + str(api.set_power_outage_event_status(1)))
 print( "POWER OUT. STAT: " + str(api.get_power_outage_event_status()))
 
 print( "Return: " + str(api.set_power_outage_params(5,30)))
 print( "POWER OUT. PARAMS: " + str(api.get_power_outage_params()))
+"""
+print( "Alive Threshold: " + str(api.get_end_device_alive_threshold()))
+print( "Return: " + str(api.set_end_device_alive_threshold(250)))
+print( "Alive Threshold: " + str(api.get_end_device_alive_threshold()))

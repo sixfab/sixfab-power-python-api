@@ -1995,3 +1995,55 @@ class SixfabPower:
 
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
+
+    
+    def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+        """
+        Function for getting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        threshold : int
+            current threshold [mA]
+        """
+        command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+        threshold = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+        )
+        return threshold
+
+    def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+        """
+        Function for setting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        threshold : int
+            current threshold in [mA] [min : 0 , max : 3000]
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            "1" for SET_OK, "2" for SET_FAILED 
+        """
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
