@@ -2080,6 +2080,58 @@ class SixfabPower:
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
         status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_debug_config(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting debugging configuration
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_debug_config(self, config, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting debugging configuration
+        
+        Parameters
+        -----------
+        config : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
         return status</code></pre>
 </details>
 </section>
@@ -4140,6 +4192,58 @@ class SixfabPower:
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
         status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_debug_config(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting debugging configuration
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_debug_config(self, config, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting debugging configuration
+        
+        Parameters
+        -----------
+        config : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
         return status</code></pre>
 </details>
 <h3>Class variables</h3>
@@ -4917,6 +5021,47 @@ battery voltage [Volt]</p></div>
     &#34;&#34;&#34;
 
     command.create_command(command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_debug_config"><code class="name flex">
+<span>def <span class="ident">get_debug_config</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting debugging configuration</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for ENABLED, "2" for DISABLED, "3" for ENABLED_WITH_TIMESTAMP</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_debug_config(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting debugging configuration
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
     command.send_command()
     delay_ms(timeout)
     raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
@@ -6503,6 +6648,53 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return status</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.set_debug_config"><code class="name flex">
+<span>def <span class="ident">set_debug_config</span></span>(<span>self, config, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting debugging configuration</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for ENABLED, "2" for DISABLED, "3" for ENABLED_WITH_TIMESTAMP</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_debug_config(self, config, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting debugging configuration
+    
+    Parameters
+    -----------
+    config : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.set_edm_status"><code class="name flex">
 <span>def <span class="ident">set_edm_status</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
@@ -7487,6 +7679,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_voltage" href="#power_api.power_api.SixfabPower.get_battery_voltage">get_battery_voltage</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button1_status" href="#power_api.power_api.SixfabPower.get_button1_status">get_button1_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button2_status" href="#power_api.power_api.SixfabPower.get_button2_status">get_button2_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_debug_config" href="#power_api.power_api.SixfabPower.get_debug_config">get_debug_config</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_edm_status" href="#power_api.power_api.SixfabPower.get_edm_status">get_edm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_end_device_alive_threshold" href="#power_api.power_api.SixfabPower.get_end_device_alive_threshold">get_end_device_alive_threshold</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_automation" href="#power_api.power_api.SixfabPower.get_fan_automation">get_fan_automation</a></code></li>
@@ -7523,6 +7716,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_design_capacity" href="#power_api.power_api.SixfabPower.set_battery_design_capacity">set_battery_design_capacity</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_max_charge_level" href="#power_api.power_api.SixfabPower.set_battery_max_charge_level">set_battery_max_charge_level</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_separation_status" href="#power_api.power_api.SixfabPower.set_battery_separation_status">set_battery_separation_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_debug_config" href="#power_api.power_api.SixfabPower.set_debug_config">set_debug_config</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_edm_status" href="#power_api.power_api.SixfabPower.set_edm_status">set_edm_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_end_device_alive_threshold" href="#power_api.power_api.SixfabPower.set_end_device_alive_threshold">set_end_device_alive_threshold</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_automation" href="#power_api.power_api.SixfabPower.set_fan_automation">set_fan_automation</a></code></li>
