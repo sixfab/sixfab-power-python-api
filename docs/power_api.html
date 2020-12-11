@@ -1701,7 +1701,8 @@ class SixfabPower:
     
     def get_lpm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting low power mode status
+        Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -1725,7 +1726,9 @@ class SixfabPower:
 
     def get_edm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting easy deployment mode status
+        Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
         
         Parameters
         -----------
@@ -1749,7 +1752,8 @@ class SixfabPower:
 
     def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting low power mode status
+        Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -1777,7 +1781,9 @@ class SixfabPower:
 
     def set_edm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting easy deployment mode status
+        Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
         
         Parameters
         -----------
@@ -2016,6 +2022,58 @@ class SixfabPower:
 
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        threshold : int
+            current threshold [mA]
+        &#34;&#34;&#34;
+        command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+        threshold = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
+        )
+        return threshold
+
+    def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        threshold : int
+            current threshold in [mA] [min : 0 , max : 3000]
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
         )
         command.send_command()
         delay_ms(timeout)
@@ -3703,7 +3761,8 @@ class SixfabPower:
     
     def get_lpm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting low power mode status
+        Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -3727,7 +3786,9 @@ class SixfabPower:
 
     def get_edm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting easy deployment mode status
+        Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
         
         Parameters
         -----------
@@ -3751,7 +3812,8 @@ class SixfabPower:
 
     def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting low power mode status
+        Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -3779,7 +3841,9 @@ class SixfabPower:
 
     def set_edm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting easy deployment mode status
+        Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
         
         Parameters
         -----------
@@ -4018,6 +4082,58 @@ class SixfabPower:
 
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        threshold : int
+            current threshold [mA]
+        &#34;&#34;&#34;
+        command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+        threshold = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
+        )
+        return threshold
+
+    def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        threshold : int
+            current threshold in [mA] [min : 0 , max : 3000]
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
         )
         command.send_command()
         delay_ms(timeout)
@@ -4813,7 +4929,10 @@ battery voltage [Volt]</p></div>
 <span>def <span class="ident">get_edm_status</span></span>(<span>self, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for getting easy deployment mode status</p>
+<div class="desc"><p>Function for getting easy deployment mode status. The EDM mode provides ulta power saving
+by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
+</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
@@ -4828,7 +4947,9 @@ battery voltage [Volt]</p></div>
 </summary>
 <pre><code class="python">def get_edm_status(self, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for getting easy deployment mode status
+    Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+    by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+    transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
     
     Parameters
     -----------
@@ -4848,6 +4969,48 @@ battery voltage [Volt]</p></div>
 
     status = raw[PROTOCOL_HEADER_SIZE]
     return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_end_device_alive_threshold"><code class="name flex">
+<span>def <span class="ident">get_end_device_alive_threshold</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting current threshold for the end device is accepted alive</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>threshold : int
+current threshold [mA]</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting current threshold for the end device is accepted alive
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    threshold : int
+        current threshold [mA]
+    &#34;&#34;&#34;
+    command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+    threshold = int.from_bytes(
+        raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
+    )
+    return threshold</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.get_fan_automation"><code class="name flex">
@@ -5234,7 +5397,8 @@ input voltage [Volt]</p></div>
 <span>def <span class="ident">get_lpm_status</span></span>(<span>self, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for getting low power mode status</p>
+<div class="desc"><p>Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+L2 LED blinks very 10 seconds for a short time to indicate battery percentage.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
@@ -5249,7 +5413,8 @@ input voltage [Volt]</p></div>
 </summary>
 <pre><code class="python">def get_lpm_status(self, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for getting low power mode status
+    Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+    L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
     
     Parameters
     -----------
@@ -6342,7 +6507,9 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <span>def <span class="ident">set_edm_status</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for setting easy deployment mode status</p>
+<div class="desc"><p>Function for setting easy deployment mode status. The EDM mode provides ulta power saving
+by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
@@ -6359,7 +6526,9 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 </summary>
 <pre><code class="python">def set_edm_status(self, status, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for setting easy deployment mode status
+    Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+    by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+    transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
     
     Parameters
     -----------
@@ -6376,6 +6545,53 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 
     command.create_set_command(
         command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.set_end_device_alive_threshold"><code class="name flex">
+<span>def <span class="ident">set_end_device_alive_threshold</span></span>(<span>self, threshold, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting current threshold for the end device is accepted alive</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>int</code></dt>
+<dd>current threshold in [mA] [min : 0 , max : 3000]</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET_OK, "2" for SET_FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting current threshold for the end device is accepted alive
+    
+    Parameters
+    -----------
+    threshold : int
+        current threshold in [mA] [min : 0 , max : 3000]
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
     )
     command.send_command()
     delay_ms(timeout)
@@ -6489,7 +6705,8 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <span>def <span class="ident">set_lpm_status</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for setting low power mode status</p>
+<div class="desc"><p>Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+L2 LED blinks very 10 seconds for a short time to indicate battery percentage.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
@@ -6506,7 +6723,8 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 </summary>
 <pre><code class="python">def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for setting low power mode status
+    Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+    L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
     
     Parameters
     -----------
@@ -7270,6 +7488,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_button1_status" href="#power_api.power_api.SixfabPower.get_button1_status">get_button1_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button2_status" href="#power_api.power_api.SixfabPower.get_button2_status">get_button2_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_edm_status" href="#power_api.power_api.SixfabPower.get_edm_status">get_edm_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_end_device_alive_threshold" href="#power_api.power_api.SixfabPower.get_end_device_alive_threshold">get_end_device_alive_threshold</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_automation" href="#power_api.power_api.SixfabPower.get_fan_automation">get_fan_automation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_health" href="#power_api.power_api.SixfabPower.get_fan_health">get_fan_health</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_mode" href="#power_api.power_api.SixfabPower.get_fan_mode">get_fan_mode</a></code></li>
@@ -7305,6 +7524,7 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_max_charge_level" href="#power_api.power_api.SixfabPower.set_battery_max_charge_level">set_battery_max_charge_level</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_separation_status" href="#power_api.power_api.SixfabPower.set_battery_separation_status">set_battery_separation_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_edm_status" href="#power_api.power_api.SixfabPower.set_edm_status">set_edm_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_end_device_alive_threshold" href="#power_api.power_api.SixfabPower.set_end_device_alive_threshold">set_end_device_alive_threshold</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_automation" href="#power_api.power_api.SixfabPower.set_fan_automation">set_fan_automation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_mode" href="#power_api.power_api.SixfabPower.set_fan_mode">set_fan_mode</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_lpm_status" href="#power_api.power_api.SixfabPower.set_lpm_status">set_lpm_status</a></code></li>

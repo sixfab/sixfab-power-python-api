@@ -145,6 +145,8 @@ class Command:
     PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS=57
     PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS=58
     PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS=59
+    PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD=60
+    PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD=61
     # .
     # .
     # .
@@ -474,6 +476,8 @@ calculate_crc16 : Function for calculating CRC16</p></div>
     PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS=57
     PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS=58
     PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS=59
+    PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD=60
+    PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD=61
     # .
     # .
     # .
@@ -772,6 +776,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_FAN_AUTOMATION</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -917,6 +925,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1292,6 +1304,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS">PROTOCOL_COMMAND_GET_BUTTON1_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS">PROTOCOL_COMMAND_GET_BUTTON2_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD">PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION">PROTOCOL_COMMAND_GET_FAN_AUTOMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH">PROTOCOL_COMMAND_GET_FAN_HEALTH</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE">PROTOCOL_COMMAND_GET_FAN_MODE</a></code></li>
@@ -1329,6 +1342,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL">PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS">PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD">PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE">PROTOCOL_COMMAND_SET_FAN_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED">PROTOCOL_COMMAND_SET_FAN_SPEED</a></code></li>

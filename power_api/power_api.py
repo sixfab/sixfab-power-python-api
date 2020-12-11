@@ -1673,7 +1673,8 @@ class SixfabPower:
     
     def get_lpm_status(self, timeout=RESPONSE_DELAY):
         """
-        Function for getting low power mode status
+        Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -1697,7 +1698,9 @@ class SixfabPower:
 
     def get_edm_status(self, timeout=RESPONSE_DELAY):
         """
-        Function for getting easy deployment mode status
+        Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
         
         Parameters
         -----------
@@ -1721,7 +1724,8 @@ class SixfabPower:
 
     def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
         """
-        Function for setting low power mode status
+        Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -1749,7 +1753,9 @@ class SixfabPower:
 
     def set_edm_status(self, status, timeout=RESPONSE_DELAY):
         """
-        Function for setting easy deployment mode status
+        Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
         
         Parameters
         -----------
