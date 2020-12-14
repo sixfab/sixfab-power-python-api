@@ -62,7 +62,7 @@ setup(
     license='MIT',
     url='https://github.com/sixfab/sixfab-power-python-api',
     dependency_links  = [],
-    install_requires  = ['smbus2==0.3.0', 'crc16==0.1.1'],
+    install_requires  = ['smbus2==0.3.0', 'crc16==0.1.1', 'vcgencmd==0.1.1'],
 	packages=find_packages()
 )
 
