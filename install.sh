@@ -43,18 +43,21 @@ fi
 
 print_info "Updating package index..."
 sudo apt-get update > /dev/null 2>&1
+
+print_info "Enabling i2c..."
+sudo raspi-config nonint do_i2c 0   > /dev/null 2>&1
   
 print_info "Looking for dependencies..."
 # Check if git installed
 if ! [ -x "$(command -v git)" ]; then
   print_info 'Git is not installed, installing...'
-  apt-get install git -y >/dev/null
+  apt-get install git -y  > /dev/null 2>&1
 fi
 
 # Check if pip3 installed
 if ! [ -x "$(command -v pip3)" ]; then
   print_info 'Pip for python3 is not installed, installing...'
-  apt-get install python3-pip -y >/dev/null
+  apt-get install python3-pip -y  > /dev/null 2>&1
 fi
 
 
@@ -75,9 +78,9 @@ fi
 
 if [ ! -d "/opt/sixfab/pms/api" ]; then
     print_info "Downloading service source"
-    git clone https://github.com/sixfab/power_distribution-service.git /opt/sixfab/pms/api
+    git clone https://github.com/sixfab/power_distribution-service.git /opt/sixfab/pms/api > /dev/null 2>&1
     print_info "Installing service dependencies"
-    pip3 install -r /opt/sixfab/pms/api/requirements.txt
+    pip3 install -r /opt/sixfab/pms/api/requirements.txt > /dev/null 2>&1
 else
     print_info "Updating service source"
     cd /opt/sixfab/pms/api && git pull > /dev/null 2>&1 && cd - > /dev/null 2>&1
