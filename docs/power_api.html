@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.8.1" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>power_api.power_api API documentation</title>
 <meta name="description" content="" />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
 <style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -59,7 +61,7 @@ COMMAND_TYPE_REQUEST = 0x01
 COMMAND_TYPE_RESPONSE = 0x02
 
 DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read write bit)
-
+BATTERY_TEMP_ADDRESS = 0x48 # This one uses when the battery holder is seperated from HAT.
 
 ###########################################
 ### Private Methods #######################
@@ -345,6 +347,67 @@ class SixfabPower:
         )
         return temp / 100
 
+
+    def get_battery_temp_qwiic(self):
+        &#34;&#34;&#34;
+        Function for getting battery temperature
+        
+        Parameters
+        -----------
+        None
+
+        Returns
+        ------- 
+        temperature : float
+            battery temperature [Celcius]
+        &#34;&#34;&#34;
+
+        word = command.read_word_data(BATTERY_TEMP_ADDRESS)
+        high=word[0]
+        low=word[1] 
+
+        rawTemp = (high &lt;&lt; 8 ) | (low &amp; 0xFF)
+        rawTemp = rawTemp &gt;&gt; 5
+
+        if (rawTemp &amp; 0x400):
+            rawTemp = ((~rawTemp) &amp; 0x7FF) + 1
+            temp = rawTemp * -0.125
+        else:
+            temp = rawTemp * 0.125
+            
+        return temp
+
+
+    def send_battery_temp(self, timeout=10):
+        &#34;&#34;&#34;
+        Function for sending battery temperature in battery separated state
+        
+        Parameters
+        -----------     
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SUCCESS, &#34;2&#34; for FAIL
+        &#34;&#34;&#34;
+        try:    
+            temp = self.get_battery_temp_qwiic()
+        except:
+            return 2
+        else:
+            tempInt = int(temp * 100)
+            time.sleep(0.05)
+            command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
+            command.send_command()
+            delay_ms(timeout)
+            raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+
+
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
         Function for getting battery voltage
@@ -518,29 +581,6 @@ class SixfabPower:
         )
         return rpm
 
-    def set_fan_speed(self, status, timeout=RESPONSE_DELAY):
-        &#34;&#34;&#34;
-        Function for setting fan speed
-        
-        Parameters
-        -----------
-        status : &#34;1&#34; for START FAN, &#34;2&#34; for STOP FAN
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED 
-        &#34;&#34;&#34;
-
-        command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def get_watchdog_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -597,9 +637,9 @@ class SixfabPower:
         
         Parameters
         -----------
-        anim_type : [DISABLED, HEARTBEAT, TEMP_MAP]
-        color : [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
-        speed : [SLOW, NORMAL, FAST] 
+        anim_type : [1 for DISABLED, 2 for HEARTBEAT, 3 for TEMP_MAP]
+        color : [1 for RED, 2 for GREEN, 3 for BLUE, 4 for YELLOW, 5 for CYAN, 6 for MAGENTA, 7 for WHITE, 8 for BLACK]
+        speed : [1 for SLOW, 2 for NORMAL, 3 for FAST] 
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -679,9 +719,7 @@ class SixfabPower:
         Parameters
         -----------
         slow_threshold : int
-            temperature threshold to decide fan working status
-        fast_threshold : int (optional)
-            temperature threshold to decide fan working status (default is 100)
+            temperature threshold to decide fan working status [min : 0 , max : 100]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -713,10 +751,9 @@ class SixfabPower:
         -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
-
         Returns
         ------- 
-        automation : byteArray(2) 
+        automation : byteArray(2)
             [slow_threshold, fast_threshold] [Celcius]
         &#34;&#34;&#34;
 
@@ -738,7 +775,7 @@ class SixfabPower:
         Parameters
         -----------
         level : int
-            battery is charged up to this level in percentage [%]
+            battery is charged up to this level in percentage [%] [min : 60 , max : 100]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -788,7 +825,7 @@ class SixfabPower:
         Parameters
         -----------
         level : int
-            raspberry pi is turned off if battery falls to this level
+            raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -831,7 +868,7 @@ class SixfabPower:
         level = raw[PROTOCOL_HEADER_SIZE]
         return level
 
-    def set_safe_shutdown_battery_status(self, status, timeout=RESPONSE_DELAY):
+    def set_safe_shutdown_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
         Function for setting safe shutdown status
         
@@ -858,9 +895,9 @@ class SixfabPower:
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
 
-    def get_safe_shutdown_battery_status(self, timeout=RESPONSE_DELAY):
+    def get_safe_shutdown_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting safe shutdown status
+        Function for getting safe shutdown status
         
         Parameters
         -----------
@@ -880,6 +917,58 @@ class SixfabPower:
 
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
+
+
+    def set_battery_separation_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting battery separation status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for SEPARETED, &#34;2&#34; for NOT SEPARATED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    def get_battery_separation_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting battery separation status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for SEPARATED &#34;2&#34; for NOT SEPARATED
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
 
     def get_working_mode(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -1018,28 +1107,6 @@ class SixfabPower:
             time = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
             return time
 
-    def hard_power_off(self, timeout=RESPONSE_DELAY):
-        &#34;&#34;&#34;
-        Function for raspberry pi hard powering off
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED
-        &#34;&#34;&#34;
-
-        command.create_command(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def soft_power_off(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -1074,7 +1141,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo shutdown -h now&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo shutdown -h now&#34;)
                 return result2
 
         return Definition.SET_FAILED
@@ -1136,14 +1203,14 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo reboot&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo reboot&#34;)
                 return result2
 
         return Definition.SET_FAILED
 
-    def ask_watchdog_alarm(self, timeout=RESPONSE_DELAY):
+    def watchdog_signal(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for asking watchdog alarm is exist
+        Function for sending watchdog signal
             
         Parameters
         -----------
@@ -1153,18 +1220,18 @@ class SixfabPower:
         Returns
         ------- 
         result : int
-            &#34;1&#34; for EXIST, &#34;2&#34; for NOT_EXIST
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED
         &#34;&#34;&#34;
 
-        command.create_command(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL, 1, 1
+        )
         command.send_command()
         delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
-        alarm_status = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
-        )
-        return alarm_status
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
 
     def get_battery_design_capacity(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -1197,7 +1264,7 @@ class SixfabPower:
         Parameters
         -----------
         capacity : int
-            battery design capacity in [mAh]
+            battery design capacity in [mAh] [min : 100 , max : 10000]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1569,13 +1636,12 @@ class SixfabPower:
                         print(&#34;Firmware packages are being writen to flash...&#34;)
                         print(&#34;Please wait until the application starts!&#34;)
                         self.reset_mcu()
-                        yield Definition.SET_OK
                         return
                 except:
                     raise ValueError(&#34;None Object Exception&#34;)
 
         # if firmware update doesn&#39;t ended succesfully
-        yield Definition.SET_FAILED
+        raise RuntimeError(&#34;Unidentified Runtime Exception&#34;)
 
     def clear_program_storage(self, timeout=500):
         &#34;&#34;&#34;
@@ -1635,7 +1701,8 @@ class SixfabPower:
     
     def get_lpm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting low power mode status
+        Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -1659,7 +1726,9 @@ class SixfabPower:
 
     def get_edm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting easy deployment mode status
+        Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
         
         Parameters
         -----------
@@ -1683,7 +1752,8 @@ class SixfabPower:
 
     def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting low power mode status
+        Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -1711,7 +1781,9 @@ class SixfabPower:
 
     def set_edm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting easy deployment mode status
+        Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
         
         Parameters
         -----------
@@ -1728,6 +1800,332 @@ class SixfabPower:
 
         command.create_set_command(
             command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+    
+    
+    def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting fan mode
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_fan_mode(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting fan mode
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_watchdog_interval(self, interval, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting watchdog interval
+        
+        Parameters
+        -----------
+        interval : int
+            time in minutes to trigger recovery actions (min : 2 , max : 180)
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        if(interval &lt; 2) or (interval &gt; 255):
+            print(&#34;Wrong argument. min:2 max:255&#34;)
+            return 2
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL, interval, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_watchdog_interval(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting watchdog interval
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            time in minutes to trigger recovery actions
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        interval = raw[PROTOCOL_HEADER_SIZE]
+        return interval
+
+    def get_power_outage_params(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting params on power outage
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+        Returns
+        ------- 
+        sleep_time : int
+            time in [minutes]
+        &#34;&#34;&#34;
+        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
+
+        sleep_time = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 4], &#34;big&#34;
+        )
+
+        run_time = int.from_bytes(
+            raw[COMMAND_SIZE_FOR_INT32 - 4 : COMMAND_SIZE_FOR_INT32 - 2], &#34;big&#34;
+        )
+        return (sleep_time, run_time)
+
+
+    def set_power_outage_params(self, sleep_time, run_time, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting params on power outage
+        
+        Parameters
+        -----------
+        sleep_time : int
+            time in [minutes]   ( min : 2 , max : 1440 )
+        run_time : int
+            time in [minutes]   ( min : 2 , max : 1440 )   
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+        &#34;&#34;&#34;
+
+        params = bytearray()
+        params.append((sleep_time &gt;&gt; 8) &amp; 0xFF)
+        params.append(sleep_time &amp; 0xFF)
+        params.append((run_time &gt;&gt; 8) &amp; 0xFF)
+        params.append(run_time &amp; 0xFF)
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS, params, 4
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_power_outage_event_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting power outage event status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_power_outage_event_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting power outage event status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        threshold : int
+            current threshold [mA]
+        &#34;&#34;&#34;
+        command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+        threshold = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
+        )
+        return threshold
+
+    def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        threshold : int
+            current threshold in [mA] [min : 0 , max : 3000]
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_debug_config(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting debugging configuration
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_debug_config(self, config, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting debugging configuration
+        
+        Parameters
+        -----------
+        config : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
         )
         command.send_command()
         delay_ms(timeout)
@@ -2061,6 +2459,67 @@ class SixfabPower:
         )
         return temp / 100
 
+
+    def get_battery_temp_qwiic(self):
+        &#34;&#34;&#34;
+        Function for getting battery temperature
+        
+        Parameters
+        -----------
+        None
+
+        Returns
+        ------- 
+        temperature : float
+            battery temperature [Celcius]
+        &#34;&#34;&#34;
+
+        word = command.read_word_data(BATTERY_TEMP_ADDRESS)
+        high=word[0]
+        low=word[1] 
+
+        rawTemp = (high &lt;&lt; 8 ) | (low &amp; 0xFF)
+        rawTemp = rawTemp &gt;&gt; 5
+
+        if (rawTemp &amp; 0x400):
+            rawTemp = ((~rawTemp) &amp; 0x7FF) + 1
+            temp = rawTemp * -0.125
+        else:
+            temp = rawTemp * 0.125
+            
+        return temp
+
+
+    def send_battery_temp(self, timeout=10):
+        &#34;&#34;&#34;
+        Function for sending battery temperature in battery separated state
+        
+        Parameters
+        -----------     
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SUCCESS, &#34;2&#34; for FAIL
+        &#34;&#34;&#34;
+        try:    
+            temp = self.get_battery_temp_qwiic()
+        except:
+            return 2
+        else:
+            tempInt = int(temp * 100)
+            time.sleep(0.05)
+            command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
+            command.send_command()
+            delay_ms(timeout)
+            raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+
+
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
         Function for getting battery voltage
@@ -2234,29 +2693,6 @@ class SixfabPower:
         )
         return rpm
 
-    def set_fan_speed(self, status, timeout=RESPONSE_DELAY):
-        &#34;&#34;&#34;
-        Function for setting fan speed
-        
-        Parameters
-        -----------
-        status : &#34;1&#34; for START FAN, &#34;2&#34; for STOP FAN
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED 
-        &#34;&#34;&#34;
-
-        command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def get_watchdog_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -2313,9 +2749,9 @@ class SixfabPower:
         
         Parameters
         -----------
-        anim_type : [DISABLED, HEARTBEAT, TEMP_MAP]
-        color : [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
-        speed : [SLOW, NORMAL, FAST] 
+        anim_type : [1 for DISABLED, 2 for HEARTBEAT, 3 for TEMP_MAP]
+        color : [1 for RED, 2 for GREEN, 3 for BLUE, 4 for YELLOW, 5 for CYAN, 6 for MAGENTA, 7 for WHITE, 8 for BLACK]
+        speed : [1 for SLOW, 2 for NORMAL, 3 for FAST] 
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -2395,9 +2831,7 @@ class SixfabPower:
         Parameters
         -----------
         slow_threshold : int
-            temperature threshold to decide fan working status
-        fast_threshold : int (optional)
-            temperature threshold to decide fan working status (default is 100)
+            temperature threshold to decide fan working status [min : 0 , max : 100]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -2429,10 +2863,9 @@ class SixfabPower:
         -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
-
         Returns
         ------- 
-        automation : byteArray(2) 
+        automation : byteArray(2)
             [slow_threshold, fast_threshold] [Celcius]
         &#34;&#34;&#34;
 
@@ -2454,7 +2887,7 @@ class SixfabPower:
         Parameters
         -----------
         level : int
-            battery is charged up to this level in percentage [%]
+            battery is charged up to this level in percentage [%] [min : 60 , max : 100]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -2504,7 +2937,7 @@ class SixfabPower:
         Parameters
         -----------
         level : int
-            raspberry pi is turned off if battery falls to this level
+            raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -2547,7 +2980,7 @@ class SixfabPower:
         level = raw[PROTOCOL_HEADER_SIZE]
         return level
 
-    def set_safe_shutdown_battery_status(self, status, timeout=RESPONSE_DELAY):
+    def set_safe_shutdown_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
         Function for setting safe shutdown status
         
@@ -2574,9 +3007,9 @@ class SixfabPower:
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
 
-    def get_safe_shutdown_battery_status(self, timeout=RESPONSE_DELAY):
+    def get_safe_shutdown_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting safe shutdown status
+        Function for getting safe shutdown status
         
         Parameters
         -----------
@@ -2596,6 +3029,58 @@ class SixfabPower:
 
         status = raw[PROTOCOL_HEADER_SIZE]
         return status
+
+
+    def set_battery_separation_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting battery separation status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for SEPARETED, &#34;2&#34; for NOT SEPARATED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    def get_battery_separation_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting battery separation status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for SEPARATED &#34;2&#34; for NOT SEPARATED
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
 
     def get_working_mode(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -2734,28 +3219,6 @@ class SixfabPower:
             time = datetime.datetime.utcfromtimestamp(timestamp).strftime(&#34;%H:%M:%S&#34;)
             return time
 
-    def hard_power_off(self, timeout=RESPONSE_DELAY):
-        &#34;&#34;&#34;
-        Function for raspberry pi hard powering off
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED
-        &#34;&#34;&#34;
-
-        command.create_command(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
 
     def soft_power_off(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -2790,7 +3253,7 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo shutdown -h now&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo shutdown -h now&#34;)
                 return result2
 
         return Definition.SET_FAILED
@@ -2852,14 +3315,14 @@ class SixfabPower:
 
             if result2 == Definition.SET_OK:
                 print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-                os.system(&#34;sleep 5 &amp; sudo reboot&#34;)
+                os.system(&#34;sleep 5 &amp;&amp; sudo reboot&#34;)
                 return result2
 
         return Definition.SET_FAILED
 
-    def ask_watchdog_alarm(self, timeout=RESPONSE_DELAY):
+    def watchdog_signal(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for asking watchdog alarm is exist
+        Function for sending watchdog signal
             
         Parameters
         -----------
@@ -2869,18 +3332,18 @@ class SixfabPower:
         Returns
         ------- 
         result : int
-            &#34;1&#34; for EXIST, &#34;2&#34; for NOT_EXIST
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED
         &#34;&#34;&#34;
 
-        command.create_command(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL, 1, 1
+        )
         command.send_command()
         delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
-        alarm_status = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
-        )
-        return alarm_status
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
 
     def get_battery_design_capacity(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
@@ -2913,7 +3376,7 @@ class SixfabPower:
         Parameters
         -----------
         capacity : int
-            battery design capacity in [mAh]
+            battery design capacity in [mAh] [min : 100 , max : 10000]
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -3285,13 +3748,12 @@ class SixfabPower:
                         print(&#34;Firmware packages are being writen to flash...&#34;)
                         print(&#34;Please wait until the application starts!&#34;)
                         self.reset_mcu()
-                        yield Definition.SET_OK
                         return
                 except:
                     raise ValueError(&#34;None Object Exception&#34;)
 
         # if firmware update doesn&#39;t ended succesfully
-        yield Definition.SET_FAILED
+        raise RuntimeError(&#34;Unidentified Runtime Exception&#34;)
 
     def clear_program_storage(self, timeout=500):
         &#34;&#34;&#34;
@@ -3351,7 +3813,8 @@ class SixfabPower:
     
     def get_lpm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting low power mode status
+        Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -3375,7 +3838,9 @@ class SixfabPower:
 
     def get_edm_status(self, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for getting easy deployment mode status
+        Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
         
         Parameters
         -----------
@@ -3399,7 +3864,8 @@ class SixfabPower:
 
     def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting low power mode status
+        Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
         
         Parameters
         -----------
@@ -3427,7 +3893,9 @@ class SixfabPower:
 
     def set_edm_status(self, status, timeout=RESPONSE_DELAY):
         &#34;&#34;&#34;
-        Function for setting easy deployment mode status
+        Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
         
         Parameters
         -----------
@@ -3450,6 +3918,332 @@ class SixfabPower:
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
         status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+    
+    
+    def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting fan mode
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_fan_mode(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting fan mode
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_watchdog_interval(self, interval, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting watchdog interval
+        
+        Parameters
+        -----------
+        interval : int
+            time in minutes to trigger recovery actions (min : 2 , max : 180)
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        if(interval &lt; 2) or (interval &gt; 255):
+            print(&#34;Wrong argument. min:2 max:255&#34;)
+            return 2
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL, interval, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_watchdog_interval(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting watchdog interval
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            time in minutes to trigger recovery actions
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        interval = raw[PROTOCOL_HEADER_SIZE]
+        return interval
+
+    def get_power_outage_params(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting params on power outage
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+        Returns
+        ------- 
+        sleep_time : int
+            time in [minutes]
+        &#34;&#34;&#34;
+        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
+
+        sleep_time = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 4], &#34;big&#34;
+        )
+
+        run_time = int.from_bytes(
+            raw[COMMAND_SIZE_FOR_INT32 - 4 : COMMAND_SIZE_FOR_INT32 - 2], &#34;big&#34;
+        )
+        return (sleep_time, run_time)
+
+
+    def set_power_outage_params(self, sleep_time, run_time, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting params on power outage
+        
+        Parameters
+        -----------
+        sleep_time : int
+            time in [minutes]   ( min : 2 , max : 1440 )
+        run_time : int
+            time in [minutes]   ( min : 2 , max : 1440 )   
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+        &#34;&#34;&#34;
+
+        params = bytearray()
+        params.append((sleep_time &gt;&gt; 8) &amp; 0xFF)
+        params.append(sleep_time &amp; 0xFF)
+        params.append((run_time &gt;&gt; 8) &amp; 0xFF)
+        params.append(run_time &amp; 0xFF)
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS, params, 4
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_power_outage_event_status(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting power outage event status
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_power_outage_event_status(self, status, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting power outage event status
+        
+        Parameters
+        -----------
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+    
+    def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        threshold : int
+            current threshold [mA]
+        &#34;&#34;&#34;
+        command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+        threshold = int.from_bytes(
+            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
+        )
+        return threshold
+
+    def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting current threshold for the end device is accepted alive
+        
+        Parameters
+        -----------
+        threshold : int
+            current threshold in [mA] [min : 0 , max : 3000]
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def get_debug_config(self, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for getting debugging configuration
+        
+        Parameters
+        -----------
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        status : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP 
+        &#34;&#34;&#34;
+
+        command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
+        return status
+
+
+    def set_debug_config(self, config, timeout=RESPONSE_DELAY):
+        &#34;&#34;&#34;
+        Function for setting debugging configuration
+        
+        Parameters
+        -----------
+        config : int
+            &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP
+        timeout : int (optional)
+            timeout while receiving the response (default is RESPONSE_DELAY)
+
+        Returns
+        ------- 
+        result : int
+            &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+        &#34;&#34;&#34;
+
+        command.create_set_command(
+            command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
+        )
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        status = raw[PROTOCOL_HEADER_SIZE]
         return status</code></pre>
 </details>
 <h3>Class variables</h3>
@@ -3461,49 +4255,6 @@ class SixfabPower:
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="power_api.power_api.SixfabPower.ask_watchdog_alarm"><code class="name flex">
-<span>def <span class="ident">ask_watchdog_alarm</span></span>(<span>self, timeout=10)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function for asking watchdog alarm is exist</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
-<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<p>result : int
-"1" for EXIST, "2" for NOT_EXIST</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def ask_watchdog_alarm(self, timeout=RESPONSE_DELAY):
-    &#34;&#34;&#34;
-    Function for asking watchdog alarm is exist
-        
-    Parameters
-    -----------
-    timeout : int (optional)
-        timeout while receiving the response (default is RESPONSE_DELAY)
-
-    Returns
-    ------- 
-    result : int
-        &#34;1&#34; for EXIST, &#34;2&#34; for NOT_EXIST
-    &#34;&#34;&#34;
-
-    command.create_command(command.PROTOCOL_COMAMND_WATCHDOG_ALARM)
-    command.send_command()
-    delay_ms(timeout)
-    raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
-
-    alarm_status = int.from_bytes(
-        raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
-    )
-    return alarm_status</code></pre>
-</details>
-</dd>
 <dt id="power_api.power_api.SixfabPower.clear_program_storage"><code class="name flex">
 <span>def <span class="ident">clear_program_storage</span></span>(<span>self, timeout=500)</span>
 </code></dt>
@@ -4023,6 +4774,47 @@ battery power [Watt]</p></div>
     return power / 1000</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.get_battery_separation_status"><code class="name flex">
+<span>def <span class="ident">get_battery_separation_status</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting battery separation status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for SEPARATED "2" for NOT SEPARATED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_battery_separation_status(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting battery separation status
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for SEPARATED &#34;2&#34; for NOT SEPARATED
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.get_battery_temp"><code class="name flex">
 <span>def <span class="ident">get_battery_temp</span></span>(<span>self, timeout=10)</span>
 </code></dt>
@@ -4064,6 +4856,53 @@ battery temperature [Celcius]</p></div>
         raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], &#34;big&#34;
     )
     return temp / 100</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_battery_temp_qwiic"><code class="name flex">
+<span>def <span class="ident">get_battery_temp_qwiic</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting battery temperature</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>None</code></strong></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>temperature : float
+battery temperature [Celcius]</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_battery_temp_qwiic(self):
+    &#34;&#34;&#34;
+    Function for getting battery temperature
+    
+    Parameters
+    -----------
+    None
+
+    Returns
+    ------- 
+    temperature : float
+        battery temperature [Celcius]
+    &#34;&#34;&#34;
+
+    word = command.read_word_data(BATTERY_TEMP_ADDRESS)
+    high=word[0]
+    low=word[1] 
+
+    rawTemp = (high &lt;&lt; 8 ) | (low &amp; 0xFF)
+    rawTemp = rawTemp &gt;&gt; 5
+
+    if (rawTemp &amp; 0x400):
+        rawTemp = ((~rawTemp) &amp; 0x7FF) + 1
+        temp = rawTemp * -0.125
+    else:
+        temp = rawTemp * 0.125
+        
+    return temp</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.get_battery_voltage"><code class="name flex">
@@ -4190,11 +5029,55 @@ battery voltage [Volt]</p></div>
     return status</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.get_debug_config"><code class="name flex">
+<span>def <span class="ident">get_debug_config</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting debugging configuration</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for ENABLED, "2" for DISABLED, "3" for ENABLED_WITH_TIMESTAMP</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_debug_config(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting debugging configuration
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.get_edm_status"><code class="name flex">
 <span>def <span class="ident">get_edm_status</span></span>(<span>self, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for getting easy deployment mode status</p>
+<div class="desc"><p>Function for getting easy deployment mode status. The EDM mode provides ulta power saving
+by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
+</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
@@ -4209,7 +5092,9 @@ battery voltage [Volt]</p></div>
 </summary>
 <pre><code class="python">def get_edm_status(self, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for getting easy deployment mode status
+    Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
+    by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+    transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
     
     Parameters
     -----------
@@ -4229,6 +5114,48 @@ battery voltage [Volt]</p></div>
 
     status = raw[PROTOCOL_HEADER_SIZE]
     return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_end_device_alive_threshold"><code class="name flex">
+<span>def <span class="ident">get_end_device_alive_threshold</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting current threshold for the end device is accepted alive</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>threshold : int
+current threshold [mA]</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting current threshold for the end device is accepted alive
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    threshold : int
+        current threshold [mA]
+    &#34;&#34;&#34;
+    command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
+
+    threshold = int.from_bytes(
+        raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], &#34;big&#34;
+    )
+    return threshold</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.get_fan_automation"><code class="name flex">
@@ -4256,10 +5183,9 @@ battery voltage [Volt]</p></div>
     -----------
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
-
     Returns
     ------- 
-    automation : byteArray(2) 
+    automation : byteArray(2)
         [slow_threshold, fast_threshold] [Celcius]
     &#34;&#34;&#34;
 
@@ -4316,6 +5242,47 @@ battery voltage [Volt]</p></div>
         raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], &#34;big&#34;
     )
     return health</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_fan_mode"><code class="name flex">
+<span>def <span class="ident">get_fan_mode</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting fan mode</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_fan_mode(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting fan mode
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.get_fan_speed"><code class="name flex">
@@ -4575,7 +5542,8 @@ input voltage [Volt]</p></div>
 <span>def <span class="ident">get_lpm_status</span></span>(<span>self, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for getting low power mode status</p>
+<div class="desc"><p>Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+L2 LED blinks very 10 seconds for a short time to indicate battery percentage.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
@@ -4590,7 +5558,8 @@ input voltage [Volt]</p></div>
 </summary>
 <pre><code class="python">def get_lpm_status(self, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for getting low power mode status
+    Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
+    L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
     
     Parameters
     -----------
@@ -4610,6 +5579,92 @@ input voltage [Volt]</p></div>
 
     status = raw[PROTOCOL_HEADER_SIZE]
     return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_power_outage_event_status"><code class="name flex">
+<span>def <span class="ident">get_power_outage_event_status</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting power outage event status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+"1" for ENABLED, "2" for DISABLED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_power_outage_event_status(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting power outage event status
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED 
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.get_power_outage_params"><code class="name flex">
+<span>def <span class="ident">get_power_outage_params</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting params on power outage</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>sleep_time : int
+time in [minutes]</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_power_outage_params(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting params on power outage
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+    Returns
+    ------- 
+    sleep_time : int
+        time in [minutes]
+    &#34;&#34;&#34;
+    command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
+
+    sleep_time = int.from_bytes(
+        raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 4], &#34;big&#34;
+    )
+
+    run_time = int.from_bytes(
+        raw[COMMAND_SIZE_FOR_INT32 - 4 : COMMAND_SIZE_FOR_INT32 - 2], &#34;big&#34;
+    )
+    return (sleep_time, run_time)</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.get_rgb_animation"><code class="name flex">
@@ -4803,11 +5858,11 @@ safe shutdown level in percentage [%]</p></div>
     return level</code></pre>
 </details>
 </dd>
-<dt id="power_api.power_api.SixfabPower.get_safe_shutdown_battery_status"><code class="name flex">
-<span>def <span class="ident">get_safe_shutdown_battery_status</span></span>(<span>self, timeout=10)</span>
+<dt id="power_api.power_api.SixfabPower.get_safe_shutdown_status"><code class="name flex">
+<span>def <span class="ident">get_safe_shutdown_status</span></span>(<span>self, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for setting safe shutdown status</p>
+<div class="desc"><p>Function for getting safe shutdown status</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
@@ -4820,9 +5875,9 @@ safe shutdown level in percentage [%]</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_safe_shutdown_battery_status(self, timeout=RESPONSE_DELAY):
+<pre><code class="python">def get_safe_shutdown_status(self, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for setting safe shutdown status
+    Function for getting safe shutdown status
     
     Parameters
     -----------
@@ -5047,6 +6102,47 @@ voltage source that supplies raspberry pi and other peripherals [Volt]</p></div>
     return voltage / 1000</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.get_watchdog_interval"><code class="name flex">
+<span>def <span class="ident">get_watchdog_interval</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for getting watchdog interval</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>status : int
+time in minutes to trigger recovery actions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_watchdog_interval(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for getting watchdog interval
+    
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    status : int
+        time in minutes to trigger recovery actions
+    &#34;&#34;&#34;
+
+    command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL)
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    interval = raw[PROTOCOL_HEADER_SIZE]
+    return interval</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.get_watchdog_status"><code class="name flex">
 <span>def <span class="ident">get_watchdog_status</span></span>(<span>self, timeout=10)</span>
 </code></dt>
@@ -5127,47 +6223,6 @@ voltage source that supplies raspberry pi and other peripherals [Volt]</p></div>
 
     mode = raw[PROTOCOL_HEADER_SIZE]
     return mode</code></pre>
-</details>
-</dd>
-<dt id="power_api.power_api.SixfabPower.hard_power_off"><code class="name flex">
-<span>def <span class="ident">hard_power_off</span></span>(<span>self, timeout=10)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function for raspberry pi hard powering off</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
-<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<p>result : int
-"1" for SET_OK, "2" for SET_FAILED</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def hard_power_off(self, timeout=RESPONSE_DELAY):
-    &#34;&#34;&#34;
-    Function for raspberry pi hard powering off
-    
-    Parameters
-    -----------
-    timeout : int (optional)
-        timeout while receiving the response (default is RESPONSE_DELAY)
-
-    Returns
-    ------- 
-    result : int
-        &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED
-    &#34;&#34;&#34;
-
-    command.create_command(command.PROTOCOL_COMMAND_HARD_POWER_OFF)
-    command.send_command()
-    delay_ms(timeout)
-    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-    result = raw[PROTOCOL_HEADER_SIZE]
-    return result</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.hard_reboot"><code class="name flex">
@@ -5365,6 +6420,51 @@ voltage source that supplies raspberry pi and other peripherals [Volt]</p></div>
     command.send_command()</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.send_battery_temp"><code class="name flex">
+<span>def <span class="ident">send_battery_temp</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for sending battery temperature in battery separated state</p>
+<h2 id="parameters">Parameters</h2>
+<p>timeout : int (optional)
+timeout while receiving the response (default is RESPONSE_DELAY)</p>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SUCCESS, "2" for FAIL</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_battery_temp(self, timeout=10):
+    &#34;&#34;&#34;
+    Function for sending battery temperature in battery separated state
+    
+    Parameters
+    -----------     
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SUCCESS, &#34;2&#34; for FAIL
+    &#34;&#34;&#34;
+    try:    
+        temp = self.get_battery_temp_qwiic()
+    except:
+        return 2
+    else:
+        tempInt = int(temp * 100)
+        time.sleep(0.05)
+        command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
+        command.send_command()
+        delay_ms(timeout)
+        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+        result = raw[PROTOCOL_HEADER_SIZE]
+        return result</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.send_system_temp"><code class="name flex">
 <span>def <span class="ident">send_system_temp</span></span>(<span>self, timeout=10)</span>
 </code></dt>
@@ -5415,7 +6515,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>capacity</code></strong> :&ensp;<code>int</code></dt>
-<dd>battery design capacity in [mAh]</dd>
+<dd>battery design capacity in [mAh] [min : 100 , max : 10000]</dd>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
 <dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
 </dl>
@@ -5433,7 +6533,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     Parameters
     -----------
     capacity : int
-        battery design capacity in [mAh]
+        battery design capacity in [mAh] [min : 100 , max : 10000]
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -5462,7 +6562,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>level</code></strong> :&ensp;<code>int</code></dt>
-<dd>battery is charged up to this level in percentage [%]</dd>
+<dd>battery is charged up to this level in percentage [%] [min : 60 , max : 100]</dd>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
 <dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
 </dl>
@@ -5480,7 +6580,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     Parameters
     -----------
     level : int
-        battery is charged up to this level in percentage [%]
+        battery is charged up to this level in percentage [%] [min : 60 , max : 100]
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -5501,11 +6601,107 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return level</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.set_battery_separation_status"><code class="name flex">
+<span>def <span class="ident">set_battery_separation_status</span></span>(<span>self, status, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting battery separation status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for SEPARETED, "2" for NOT SEPARATED</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_battery_separation_status(self, status, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting battery separation status
+    
+    Parameters
+    -----------
+    status : int
+        &#34;1&#34; for SEPARETED, &#34;2&#34; for NOT SEPARATED
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS, status, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.set_debug_config"><code class="name flex">
+<span>def <span class="ident">set_debug_config</span></span>(<span>self, config, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting debugging configuration</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for ENABLED, "2" for DISABLED, "3" for ENABLED_WITH_TIMESTAMP</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_debug_config(self, config, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting debugging configuration
+    
+    Parameters
+    -----------
+    config : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED, &#34;3&#34; for ENABLED_WITH_TIMESTAMP
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.set_edm_status"><code class="name flex">
 <span>def <span class="ident">set_edm_status</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for setting easy deployment mode status</p>
+<div class="desc"><p>Function for setting easy deployment mode status. The EDM mode provides ulta power saving
+by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
@@ -5522,7 +6718,9 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 </summary>
 <pre><code class="python">def set_edm_status(self, status, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for setting easy deployment mode status
+    Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
+    by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
+    transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
     
     Parameters
     -----------
@@ -5548,6 +6746,53 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return status</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.set_end_device_alive_threshold"><code class="name flex">
+<span>def <span class="ident">set_end_device_alive_threshold</span></span>(<span>self, threshold, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting current threshold for the end device is accepted alive</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>int</code></dt>
+<dd>current threshold in [mA] [min : 0 , max : 3000]</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET_OK, "2" for SET_FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting current threshold for the end device is accepted alive
+    
+    Parameters
+    -----------
+    threshold : int
+        current threshold in [mA] [min : 0 , max : 3000]
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.set_fan_automation"><code class="name flex">
 <span>def <span class="ident">set_fan_automation</span></span>(<span>self, slow_threshold, fast_threshold=100, timeout=10)</span>
 </code></dt>
@@ -5556,9 +6801,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>slow_threshold</code></strong> :&ensp;<code>int</code></dt>
-<dd>temperature threshold to decide fan working status</dd>
-<dt><strong><code>fast_threshold</code></strong> :&ensp;<code>int (optional)</code></dt>
-<dd>temperature threshold to decide fan working status (default is 100)</dd>
+<dd>temperature threshold to decide fan working status [min : 0 , max : 100]</dd>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
 <dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
 </dl>
@@ -5578,9 +6821,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     Parameters
     -----------
     slow_threshold : int
-        temperature threshold to decide fan working status
-    fast_threshold : int (optional)
-        temperature threshold to decide fan working status (default is 100)
+        temperature threshold to decide fan working status [min : 0 , max : 100]
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -5605,15 +6846,15 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return result</code></pre>
 </details>
 </dd>
-<dt id="power_api.power_api.SixfabPower.set_fan_speed"><code class="name flex">
-<span>def <span class="ident">set_fan_speed</span></span>(<span>self, status, timeout=10)</span>
+<dt id="power_api.power_api.SixfabPower.set_fan_mode"><code class="name flex">
+<span>def <span class="ident">set_fan_mode</span></span>(<span>self, mode, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for setting fan speed</p>
+<div class="desc"><p>Function for setting fan mode</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>status</code></strong> :&ensp;<code>"1" for START FAN, "2" for STOP FAN</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE</dd>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
 <dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
 </dl>
@@ -5624,36 +6865,40 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_fan_speed(self, status, timeout=RESPONSE_DELAY):
+<pre><code class="python">def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for setting fan speed
+    Function for setting fan mode
     
     Parameters
     -----------
-    status : &#34;1&#34; for START FAN, &#34;2&#34; for STOP FAN
+    status : int
+        &#34;1&#34; for FAN ON MODE, &#34;2&#34; for FAN OFF MODE, &#34;3&#34; for FAN AUTO MODE 
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
     Returns
     ------- 
     result : int
-        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED 
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
     &#34;&#34;&#34;
 
-    command.create_set_command(command.PROTOCOL_COMMAND_SET_FAN_SPEED, status, 1)
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+    )
     command.send_command()
     delay_ms(timeout)
     raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
-    result = raw[PROTOCOL_HEADER_SIZE]
-    return result</code></pre>
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
 </details>
 </dd>
 <dt id="power_api.power_api.SixfabPower.set_lpm_status"><code class="name flex">
 <span>def <span class="ident">set_lpm_status</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function for setting low power mode status</p>
+<div class="desc"><p>Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+L2 LED blinks very 10 seconds for a short time to indicate battery percentage.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
@@ -5670,7 +6915,8 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 </summary>
 <pre><code class="python">def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
-    Function for setting low power mode status
+    Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
+    L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
     
     Parameters
     -----------
@@ -5696,6 +6942,111 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return status</code></pre>
 </details>
 </dd>
+<dt id="power_api.power_api.SixfabPower.set_power_outage_event_status"><code class="name flex">
+<span>def <span class="ident">set_power_outage_event_status</span></span>(<span>self, status, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting power outage event status</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>"1" for ENABLED, "2" for DISABLED</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_power_outage_event_status(self, status, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting power outage event status
+    
+    Parameters
+    -----------
+    status : int
+        &#34;1&#34; for ENABLED, &#34;2&#34; for DISABLED
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.set_power_outage_params"><code class="name flex">
+<span>def <span class="ident">set_power_outage_params</span></span>(<span>self, sleep_time, run_time, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting params on power outage</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>sleep_time</code></strong> :&ensp;<code>int</code></dt>
+<dd>time in [minutes]
+( min : 2 , max : 1440 )</dd>
+<dt><strong><code>run_time</code></strong> :&ensp;<code>int</code></dt>
+<dd>time in [minutes]
+( min : 2 , max : 1440 )</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET_OK, "2" for SET_FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_power_outage_params(self, sleep_time, run_time, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting params on power outage
+    
+    Parameters
+    -----------
+    sleep_time : int
+        time in [minutes]   ( min : 2 , max : 1440 )
+    run_time : int
+        time in [minutes]   ( min : 2 , max : 1440 )   
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED 
+    &#34;&#34;&#34;
+
+    params = bytearray()
+    params.append((sleep_time &gt;&gt; 8) &amp; 0xFF)
+    params.append(sleep_time &amp; 0xFF)
+    params.append((run_time &gt;&gt; 8) &amp; 0xFF)
+    params.append(run_time &amp; 0xFF)
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS, params, 4
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
 <dt id="power_api.power_api.SixfabPower.set_rgb_animation"><code class="name flex">
 <span>def <span class="ident">set_rgb_animation</span></span>(<span>self, anim_type, color, speed, timeout=10)</span>
 </code></dt>
@@ -5703,11 +7054,11 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <div class="desc"><p>Function for setting RGB animation</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>anim_type</code></strong> :&ensp;<code>[DISABLED, HEARTBEAT, TEMP_MAP]</code></dt>
+<dt><strong><code>anim_type</code></strong> :&ensp;<code>[1 for DISABLED, 2 for HEARTBEAT, 3 for TEMP_MAP]</code></dt>
 <dd>&nbsp;</dd>
-<dt><strong><code>color</code></strong> :&ensp;<code>[GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]</code></dt>
+<dt><strong><code>color</code></strong> :&ensp;<code>[1 for RED, 2 for GREEN, 3 for BLUE, 4 for YELLOW, 5 for CYAN, 6 for MAGENTA, 7 for WHITE, 8 for BLACK]</code></dt>
 <dd>&nbsp;</dd>
-<dt><strong><code>speed</code></strong> :&ensp;<code>[SLOW, NORMAL, FAST] </code></dt>
+<dt><strong><code>speed</code></strong> :&ensp;<code>[1 for SLOW, 2 for NORMAL, 3 for FAST] </code></dt>
 <dd>&nbsp;</dd>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
 <dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
@@ -5725,9 +7076,9 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     
     Parameters
     -----------
-    anim_type : [DISABLED, HEARTBEAT, TEMP_MAP]
-    color : [GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, WHITE]
-    speed : [SLOW, NORMAL, FAST] 
+    anim_type : [1 for DISABLED, 2 for HEARTBEAT, 3 for TEMP_MAP]
+    color : [1 for RED, 2 for GREEN, 3 for BLUE, 4 for YELLOW, 5 for CYAN, 6 for MAGENTA, 7 for WHITE, 8 for BLACK]
+    speed : [1 for SLOW, 2 for NORMAL, 3 for FAST] 
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -5804,7 +7155,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>level</code></strong> :&ensp;<code>int</code></dt>
-<dd>raspberry pi is turned off if battery falls to this level</dd>
+<dd>raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]</dd>
 <dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
 <dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
 </dl>
@@ -5822,7 +7173,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     Parameters
     -----------
     level : int
-        raspberry pi is turned off if battery falls to this level
+        raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]
     timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -5843,8 +7194,8 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
     return level</code></pre>
 </details>
 </dd>
-<dt id="power_api.power_api.SixfabPower.set_safe_shutdown_battery_status"><code class="name flex">
-<span>def <span class="ident">set_safe_shutdown_battery_status</span></span>(<span>self, status, timeout=10)</span>
+<dt id="power_api.power_api.SixfabPower.set_safe_shutdown_status"><code class="name flex">
+<span>def <span class="ident">set_safe_shutdown_status</span></span>(<span>self, status, timeout=10)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Function for setting safe shutdown status</p>
@@ -5862,7 +7213,7 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_safe_shutdown_battery_status(self, status, timeout=RESPONSE_DELAY):
+<pre><code class="python">def set_safe_shutdown_status(self, status, timeout=RESPONSE_DELAY):
     &#34;&#34;&#34;
     Function for setting safe shutdown status
     
@@ -5881,6 +7232,57 @@ timeout while receiving the response (default is RESPONSE_DELAY)</p>
 
     command.create_set_command(
         command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, status, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.set_watchdog_interval"><code class="name flex">
+<span>def <span class="ident">set_watchdog_interval</span></span>(<span>self, interval, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for setting watchdog interval</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>interval</code></strong> :&ensp;<code>int</code></dt>
+<dd>time in minutes to trigger recovery actions (min : 2 , max : 180)</dd>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET OK, "2" for SET FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_watchdog_interval(self, interval, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for setting watchdog interval
+    
+    Parameters
+    -----------
+    interval : int
+        time in minutes to trigger recovery actions (min : 2 , max : 180)
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET OK, &#34;2&#34; for SET FAILED
+    &#34;&#34;&#34;
+
+    if(interval &lt; 2) or (interval &gt; 255):
+        print(&#34;Wrong argument. min:2 max:255&#34;)
+        return 2
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL, interval, 1
     )
     command.send_command()
     delay_ms(timeout)
@@ -5988,7 +7390,7 @@ command in 5 seconds.</p>
 
         if result2 == Definition.SET_OK:
             print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-            os.system(&#34;sleep 5 &amp; sudo shutdown -h now&#34;)
+            os.system(&#34;sleep 5 &amp;&amp; sudo shutdown -h now&#34;)
             return result2
 
     return Definition.SET_FAILED</code></pre>
@@ -6047,7 +7449,7 @@ command in 5 seconds.</p>
 
         if result2 == Definition.SET_OK:
             print(&#34;Raspberry Pi will shutdown in 5 seconds!&#34;)
-            os.system(&#34;sleep 5 &amp; sudo reboot&#34;)
+            os.system(&#34;sleep 5 &amp;&amp; sudo reboot&#34;)
             return result2
 
     return Definition.SET_FAILED</code></pre>
@@ -6182,13 +7584,55 @@ command in 5 seconds.</p>
                     print(&#34;Firmware packages are being writen to flash...&#34;)
                     print(&#34;Please wait until the application starts!&#34;)
                     self.reset_mcu()
-                    yield Definition.SET_OK
                     return
             except:
                 raise ValueError(&#34;None Object Exception&#34;)
 
     # if firmware update doesn&#39;t ended succesfully
-    yield Definition.SET_FAILED</code></pre>
+    raise RuntimeError(&#34;Unidentified Runtime Exception&#34;)</code></pre>
+</details>
+</dd>
+<dt id="power_api.power_api.SixfabPower.watchdog_signal"><code class="name flex">
+<span>def <span class="ident">watchdog_signal</span></span>(<span>self, timeout=10)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function for sending watchdog signal</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>timeout</code></strong> :&ensp;<code>int (optional)</code></dt>
+<dd>timeout while receiving the response (default is RESPONSE_DELAY)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>result : int
+"1" for SET_OK, "2" for SET_FAILED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def watchdog_signal(self, timeout=RESPONSE_DELAY):
+    &#34;&#34;&#34;
+    Function for sending watchdog signal
+        
+    Parameters
+    -----------
+    timeout : int (optional)
+        timeout while receiving the response (default is RESPONSE_DELAY)
+
+    Returns
+    ------- 
+    result : int
+        &#34;1&#34; for SET_OK, &#34;2&#34; for SET_FAILED
+    &#34;&#34;&#34;
+
+    command.create_set_command(
+        command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL, 1, 1
+    )
+    command.send_command()
+    delay_ms(timeout)
+    raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
+
+    status = raw[PROTOCOL_HEADER_SIZE]
+    return status</code></pre>
 </details>
 </dd>
 </dl>
@@ -6219,7 +7663,6 @@ command in 5 seconds.</p>
 <li>
 <h4><code><a title="power_api.power_api.SixfabPower" href="#power_api.power_api.SixfabPower">SixfabPower</a></code></h4>
 <ul class="">
-<li><code><a title="power_api.power_api.SixfabPower.ask_watchdog_alarm" href="#power_api.power_api.SixfabPower.ask_watchdog_alarm">ask_watchdog_alarm</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.board" href="#power_api.power_api.SixfabPower.board">board</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.clear_program_storage" href="#power_api.power_api.SixfabPower.clear_program_storage">clear_program_storage</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.create_scheduled_event" href="#power_api.power_api.SixfabPower.create_scheduled_event">create_scheduled_event</a></code></li>
@@ -6230,13 +7673,18 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_level" href="#power_api.power_api.SixfabPower.get_battery_level">get_battery_level</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_max_charge_level" href="#power_api.power_api.SixfabPower.get_battery_max_charge_level">get_battery_max_charge_level</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_power" href="#power_api.power_api.SixfabPower.get_battery_power">get_battery_power</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_battery_separation_status" href="#power_api.power_api.SixfabPower.get_battery_separation_status">get_battery_separation_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_temp" href="#power_api.power_api.SixfabPower.get_battery_temp">get_battery_temp</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_battery_temp_qwiic" href="#power_api.power_api.SixfabPower.get_battery_temp_qwiic">get_battery_temp_qwiic</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_battery_voltage" href="#power_api.power_api.SixfabPower.get_battery_voltage">get_battery_voltage</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button1_status" href="#power_api.power_api.SixfabPower.get_button1_status">get_button1_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_button2_status" href="#power_api.power_api.SixfabPower.get_button2_status">get_button2_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_debug_config" href="#power_api.power_api.SixfabPower.get_debug_config">get_debug_config</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_edm_status" href="#power_api.power_api.SixfabPower.get_edm_status">get_edm_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_end_device_alive_threshold" href="#power_api.power_api.SixfabPower.get_end_device_alive_threshold">get_end_device_alive_threshold</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_automation" href="#power_api.power_api.SixfabPower.get_fan_automation">get_fan_automation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_health" href="#power_api.power_api.SixfabPower.get_fan_health">get_fan_health</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_fan_mode" href="#power_api.power_api.SixfabPower.get_fan_mode">get_fan_mode</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_fan_speed" href="#power_api.power_api.SixfabPower.get_fan_speed">get_fan_speed</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_firmware_ver" href="#power_api.power_api.SixfabPower.get_firmware_ver">get_firmware_ver</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_current" href="#power_api.power_api.SixfabPower.get_input_current">get_input_current</a></code></li>
@@ -6244,38 +7692,48 @@ command in 5 seconds.</p>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_temp" href="#power_api.power_api.SixfabPower.get_input_temp">get_input_temp</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_input_voltage" href="#power_api.power_api.SixfabPower.get_input_voltage">get_input_voltage</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_lpm_status" href="#power_api.power_api.SixfabPower.get_lpm_status">get_lpm_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_power_outage_event_status" href="#power_api.power_api.SixfabPower.get_power_outage_event_status">get_power_outage_event_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_power_outage_params" href="#power_api.power_api.SixfabPower.get_power_outage_params">get_power_outage_params</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_rgb_animation" href="#power_api.power_api.SixfabPower.get_rgb_animation">get_rgb_animation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_rtc_time" href="#power_api.power_api.SixfabPower.get_rtc_time">get_rtc_time</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_safe_shutdown_battery_level" href="#power_api.power_api.SixfabPower.get_safe_shutdown_battery_level">get_safe_shutdown_battery_level</a></code></li>
-<li><code><a title="power_api.power_api.SixfabPower.get_safe_shutdown_battery_status" href="#power_api.power_api.SixfabPower.get_safe_shutdown_battery_status">get_safe_shutdown_battery_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_safe_shutdown_status" href="#power_api.power_api.SixfabPower.get_safe_shutdown_status">get_safe_shutdown_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_scheduled_event_ids" href="#power_api.power_api.SixfabPower.get_scheduled_event_ids">get_scheduled_event_ids</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_system_current" href="#power_api.power_api.SixfabPower.get_system_current">get_system_current</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_system_power" href="#power_api.power_api.SixfabPower.get_system_power">get_system_power</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_system_temp" href="#power_api.power_api.SixfabPower.get_system_temp">get_system_temp</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_system_voltage" href="#power_api.power_api.SixfabPower.get_system_voltage">get_system_voltage</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.get_watchdog_interval" href="#power_api.power_api.SixfabPower.get_watchdog_interval">get_watchdog_interval</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_watchdog_status" href="#power_api.power_api.SixfabPower.get_watchdog_status">get_watchdog_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.get_working_mode" href="#power_api.power_api.SixfabPower.get_working_mode">get_working_mode</a></code></li>
-<li><code><a title="power_api.power_api.SixfabPower.hard_power_off" href="#power_api.power_api.SixfabPower.hard_power_off">hard_power_off</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.hard_reboot" href="#power_api.power_api.SixfabPower.hard_reboot">hard_reboot</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.remove_all_scheduled_events" href="#power_api.power_api.SixfabPower.remove_all_scheduled_events">remove_all_scheduled_events</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.remove_scheduled_event" href="#power_api.power_api.SixfabPower.remove_scheduled_event">remove_scheduled_event</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.reset_for_boot_update" href="#power_api.power_api.SixfabPower.reset_for_boot_update">reset_for_boot_update</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.reset_mcu" href="#power_api.power_api.SixfabPower.reset_mcu">reset_mcu</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.send_battery_temp" href="#power_api.power_api.SixfabPower.send_battery_temp">send_battery_temp</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.send_system_temp" href="#power_api.power_api.SixfabPower.send_system_temp">send_system_temp</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_design_capacity" href="#power_api.power_api.SixfabPower.set_battery_design_capacity">set_battery_design_capacity</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_battery_max_charge_level" href="#power_api.power_api.SixfabPower.set_battery_max_charge_level">set_battery_max_charge_level</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_battery_separation_status" href="#power_api.power_api.SixfabPower.set_battery_separation_status">set_battery_separation_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_debug_config" href="#power_api.power_api.SixfabPower.set_debug_config">set_debug_config</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_edm_status" href="#power_api.power_api.SixfabPower.set_edm_status">set_edm_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_end_device_alive_threshold" href="#power_api.power_api.SixfabPower.set_end_device_alive_threshold">set_end_device_alive_threshold</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_fan_automation" href="#power_api.power_api.SixfabPower.set_fan_automation">set_fan_automation</a></code></li>
-<li><code><a title="power_api.power_api.SixfabPower.set_fan_speed" href="#power_api.power_api.SixfabPower.set_fan_speed">set_fan_speed</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_fan_mode" href="#power_api.power_api.SixfabPower.set_fan_mode">set_fan_mode</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_lpm_status" href="#power_api.power_api.SixfabPower.set_lpm_status">set_lpm_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_power_outage_event_status" href="#power_api.power_api.SixfabPower.set_power_outage_event_status">set_power_outage_event_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_power_outage_params" href="#power_api.power_api.SixfabPower.set_power_outage_params">set_power_outage_params</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_rgb_animation" href="#power_api.power_api.SixfabPower.set_rgb_animation">set_rgb_animation</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_rtc_time" href="#power_api.power_api.SixfabPower.set_rtc_time">set_rtc_time</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_safe_shutdown_battery_level" href="#power_api.power_api.SixfabPower.set_safe_shutdown_battery_level">set_safe_shutdown_battery_level</a></code></li>
-<li><code><a title="power_api.power_api.SixfabPower.set_safe_shutdown_battery_status" href="#power_api.power_api.SixfabPower.set_safe_shutdown_battery_status">set_safe_shutdown_battery_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_safe_shutdown_status" href="#power_api.power_api.SixfabPower.set_safe_shutdown_status">set_safe_shutdown_status</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.set_watchdog_interval" href="#power_api.power_api.SixfabPower.set_watchdog_interval">set_watchdog_interval</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.set_watchdog_status" href="#power_api.power_api.SixfabPower.set_watchdog_status">set_watchdog_status</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.soft_power_off" href="#power_api.power_api.SixfabPower.soft_power_off">soft_power_off</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.soft_reboot" href="#power_api.power_api.SixfabPower.soft_reboot">soft_reboot</a></code></li>
 <li><code><a title="power_api.power_api.SixfabPower.update_firmware" href="#power_api.power_api.SixfabPower.update_firmware">update_firmware</a></code></li>
+<li><code><a title="power_api.power_api.SixfabPower.watchdog_signal" href="#power_api.power_api.SixfabPower.watchdog_signal">watchdog_signal</a></code></li>
 </ul>
 </li>
 </ul>
@@ -6284,9 +7742,7 @@ command in 5 seconds.</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>

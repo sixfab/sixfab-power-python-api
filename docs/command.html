@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.8.1" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>power_api.command API documentation</title>
 <meta name="description" content="" />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
 <style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -60,13 +62,13 @@ COMMAND_TYPE_REQUEST = 0x01
 COMMAND_TYPE_RESPONSE = 0x02
 
 DEVICE_ADDRESS = 0x41  # 7 bit address (will be left shifted to add the read write bit)
-
+BATTERY_TEMP_ADDRESS = 0x48 # This one uses when the battery holder is seperated from HAT.
 
 class Command:
     &#34;&#34;&#34; 
-        Command class for provide i2c communication requirements 
+    Command class for provide i2c communication requirements 
     of Sixfab Power API.
-        
+    
     Methods
     -------
     send_command : Function for sending command
@@ -122,7 +124,7 @@ class Command:
     PROTOCOL_COMMAND_SOFT_POWER_OFF = 36
     PROTOCOL_COMMAND_HARD_REBOOT = 37
     PROTOCOL_COMMAND_SOFT_REBOOT = 38
-    PROTOCOL_COMAMND_WATCHDOG_ALARM = 39
+    PROTOCOL_COMMAND_WATCHDOG_SIGNAL = 39
     PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY = 40
     PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY = 41
     PROTOCOL_COMMAND_HARD_POWER_ON = 42
@@ -132,6 +134,21 @@ class Command:
     PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
     PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
     PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
+    PROTOCOL_COMMAND_SET_FAN_MODE = 49
+    PROTOCOL_COMMAND_GET_FAN_MODE = 50
+    PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL = 51
+    PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL = 52
+    PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS = 53
+    PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS = 54
+    PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE = 55
+    PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS=56
+    PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS=57
+    PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS=58
+    PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS=59
+    PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD=60
+    PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD=61
+    PROTOCOL_COMMAND_GET_DEBUG_CONFIG=62
+    PROTOCOL_COMMAND_SET_DEBUG_CONFIG=63
     # .
     # .
     # .
@@ -342,7 +359,15 @@ class Command:
         if return_type == 0:
             return (crc_high, crc_low)
         else:
-            return cal_crc</code></pre>
+            return cal_crc
+
+    def read_word_data(self, address):
+        try:
+            word = bus.read_i2c_block_data(address, 0, 2)
+        except:
+            return -1
+        else:
+            return word</code></pre>
 </details>
 </section>
 <section>
@@ -374,9 +399,9 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 </summary>
 <pre><code class="python">class Command:
     &#34;&#34;&#34; 
-        Command class for provide i2c communication requirements 
+    Command class for provide i2c communication requirements 
     of Sixfab Power API.
-        
+    
     Methods
     -------
     send_command : Function for sending command
@@ -432,7 +457,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
     PROTOCOL_COMMAND_SOFT_POWER_OFF = 36
     PROTOCOL_COMMAND_HARD_REBOOT = 37
     PROTOCOL_COMMAND_SOFT_REBOOT = 38
-    PROTOCOL_COMAMND_WATCHDOG_ALARM = 39
+    PROTOCOL_COMMAND_WATCHDOG_SIGNAL = 39
     PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY = 40
     PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY = 41
     PROTOCOL_COMMAND_HARD_POWER_ON = 42
@@ -442,6 +467,21 @@ calculate_crc16 : Function for calculating CRC16</p></div>
     PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE = 46
     PROTOCOL_COMMAND_SET_LOW_POWER_MODE = 47
     PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE = 48
+    PROTOCOL_COMMAND_SET_FAN_MODE = 49
+    PROTOCOL_COMMAND_GET_FAN_MODE = 50
+    PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL = 51
+    PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL = 52
+    PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS = 53
+    PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS = 54
+    PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE = 55
+    PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS=56
+    PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS=57
+    PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS=58
+    PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS=59
+    PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD=60
+    PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD=61
+    PROTOCOL_COMMAND_GET_DEBUG_CONFIG=62
+    PROTOCOL_COMMAND_SET_DEBUG_CONFIG=63
     # .
     # .
     # .
@@ -652,7 +692,15 @@ calculate_crc16 : Function for calculating CRC16</p></div>
         if return_type == 0:
             return (crc_high, crc_low)
         else:
-            return cal_crc</code></pre>
+            return cal_crc
+
+    def read_word_data(self, address):
+        try:
+            word = bus.read_i2c_block_data(address, 0, 2)
+        except:
+            return -1
+        else:
+            return word</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -665,10 +713,6 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.CRC_CHECK_FAILED"><code class="name">var <span class="ident">CRC_CHECK_FAILED</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="power_api.command.Command.PROTOCOL_COMAMND_WATCHDOG_ALARM"><code class="name">var <span class="ident">PROTOCOL_COMAMND_WATCHDOG_ALARM</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -712,6 +756,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_TEMP"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_BATTERY_TEMP</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -728,7 +776,15 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_DEBUG_CONFIG</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -737,6 +793,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_FAN_HEALTH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_FAN_MODE</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -765,6 +825,14 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_LOW_POWER_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -801,6 +869,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL"><code class="name">var <span class="ident">PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -844,6 +916,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -852,11 +928,27 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_DEBUG_CONFIG</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_FAN_MODE</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -865,6 +957,14 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_LOW_POWER_MODE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -884,6 +984,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SET_WATCHDOG_STATUS</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -897,6 +1001,10 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <div class="desc"></div>
 </dd>
 <dt id="power_api.command.Command.PROTOCOL_COMMAND_SOFT_REBOOT"><code class="name">var <span class="ident">PROTOCOL_COMMAND_SOFT_REBOOT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="power_api.command.Command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL"><code class="name">var <span class="ident">PROTOCOL_COMMAND_WATCHDOG_SIGNAL</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1099,6 +1207,24 @@ calculate_crc16 : Function for calculating CRC16</p></div>
     buffer_send.append(crc_low)</code></pre>
 </details>
 </dd>
+<dt id="power_api.command.Command.read_word_data"><code class="name flex">
+<span>def <span class="ident">read_word_data</span></span>(<span>self, address)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_word_data(self, address):
+    try:
+        word = bus.read_i2c_block_data(address, 0, 2)
+    except:
+        return -1
+    else:
+        return word</code></pre>
+</details>
+</dd>
 <dt id="power_api.command.Command.receive_command"><code class="name flex">
 <span>def <span class="ident">receive_command</span></span>(<span>self, len_of_response)</span>
 </code></dt>
@@ -1174,7 +1300,6 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.BYTE_READ_FAILED" href="#power_api.command.Command.BYTE_READ_FAILED">BYTE_READ_FAILED</a></code></li>
 <li><code><a title="power_api.command.Command.BYTE_SEND_FAILED" href="#power_api.command.Command.BYTE_SEND_FAILED">BYTE_SEND_FAILED</a></code></li>
 <li><code><a title="power_api.command.Command.CRC_CHECK_FAILED" href="#power_api.command.Command.CRC_CHECK_FAILED">CRC_CHECK_FAILED</a></code></li>
-<li><code><a title="power_api.command.Command.PROTOCOL_COMAMND_WATCHDOG_ALARM" href="#power_api.command.Command.PROTOCOL_COMAMND_WATCHDOG_ALARM">PROTOCOL_COMAMND_WATCHDOG_ALARM</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_CLEAR_PROGRAM_AREA" href="#power_api.command.Command.PROTOCOL_COMMAND_CLEAR_PROGRAM_AREA">PROTOCOL_COMMAND_CLEAR_PROGRAM_AREA</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE" href="#power_api.command.Command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE">PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT" href="#power_api.command.Command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT">PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT</a></code></li>
@@ -1185,13 +1310,17 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL">PROTOCOL_COMMAND_GET_BATTERY_LEVEL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL">PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_POWER" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_POWER">PROTOCOL_COMMAND_GET_BATTERY_POWER</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS">PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_TEMP" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_TEMP">PROTOCOL_COMMAND_GET_BATTERY_TEMP</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE">PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS">PROTOCOL_COMMAND_GET_BUTTON1_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS">PROTOCOL_COMMAND_GET_BUTTON2_STATUS</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG">PROTOCOL_COMMAND_GET_DEBUG_CONFIG</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD">PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION">PROTOCOL_COMMAND_GET_FAN_AUTOMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_HEALTH">PROTOCOL_COMMAND_GET_FAN_HEALTH</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_MODE">PROTOCOL_COMMAND_GET_FAN_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FAN_SPEED">PROTOCOL_COMMAND_GET_FAN_SPEED</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_FIRMWARE_VER" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_FIRMWARE_VER">PROTOCOL_COMMAND_GET_FIRMWARE_VER</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_CURRENT" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_CURRENT">PROTOCOL_COMMAND_GET_INPUT_CURRENT</a></code></li>
@@ -1199,6 +1328,8 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_TEMP" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_TEMP">PROTOCOL_COMMAND_GET_INPUT_TEMP</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE">PROTOCOL_COMMAND_GET_INPUT_VOLTAGE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE">PROTOCOL_COMMAND_GET_LOW_POWER_MODE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS">PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS">PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_RGB_ANIMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_RGB_ANIMATION">PROTOCOL_COMMAND_GET_RGB_ANIMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_RTC_TIME" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_RTC_TIME">PROTOCOL_COMMAND_GET_RTC_TIME</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL">PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL</a></code></li>
@@ -1208,6 +1339,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_POWER" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_POWER">PROTOCOL_COMMAND_GET_SYSTEM_POWER</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP">PROTOCOL_COMMAND_GET_SYSTEM_TEMP</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE">PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL">PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS">PROTOCOL_COMMAND_GET_WATCHDOG_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_GET_WORKING_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_GET_WORKING_MODE">PROTOCOL_COMMAND_GET_WORKING_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_HARD_POWER_OFF" href="#power_api.command.Command.PROTOCOL_COMMAND_HARD_POWER_OFF">PROTOCOL_COMMAND_HARD_POWER_OFF</a></code></li>
@@ -1218,26 +1350,36 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT" href="#power_api.command.Command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT">PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_RESET_MCU" href="#power_api.command.Command.PROTOCOL_COMMAND_RESET_MCU">PROTOCOL_COMMAND_RESET_MCU</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE" href="#power_api.command.Command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE">PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE" href="#power_api.command.Command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE">PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY">PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL">PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS">PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG">PROTOCOL_COMMAND_SET_DEBUG_CONFIG</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE">PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD">PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION">PROTOCOL_COMMAND_SET_FAN_AUTOMATION</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_MODE">PROTOCOL_COMMAND_SET_FAN_MODE</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_FAN_SPEED">PROTOCOL_COMMAND_SET_FAN_SPEED</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE">PROTOCOL_COMMAND_SET_LOW_POWER_MODE</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS">PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS">PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_RGB_ANIMATION" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_RGB_ANIMATION">PROTOCOL_COMMAND_SET_RGB_ANIMATION</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_RTC_TIME" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_RTC_TIME">PROTOCOL_COMMAND_SET_RTC_TIME</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL">PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS">PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL">PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS" href="#power_api.command.Command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS">PROTOCOL_COMMAND_SET_WATCHDOG_STATUS</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SOFT_POWER_OFF" href="#power_api.command.Command.PROTOCOL_COMMAND_SOFT_POWER_OFF">PROTOCOL_COMMAND_SOFT_POWER_OFF</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SOFT_POWER_ON" href="#power_api.command.Command.PROTOCOL_COMMAND_SOFT_POWER_ON">PROTOCOL_COMMAND_SOFT_POWER_ON</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_SOFT_REBOOT" href="#power_api.command.Command.PROTOCOL_COMMAND_SOFT_REBOOT">PROTOCOL_COMMAND_SOFT_REBOOT</a></code></li>
+<li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL" href="#power_api.command.Command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL">PROTOCOL_COMMAND_WATCHDOG_SIGNAL</a></code></li>
 <li><code><a title="power_api.command.Command.PROTOCOL_COMMAND_WRITE_FIRMWARE_TO_FLASH" href="#power_api.command.Command.PROTOCOL_COMMAND_WRITE_FIRMWARE_TO_FLASH">PROTOCOL_COMMAND_WRITE_FIRMWARE_TO_FLASH</a></code></li>
 <li><code><a title="power_api.command.Command.calculate_crc16" href="#power_api.command.Command.calculate_crc16">calculate_crc16</a></code></li>
 <li><code><a title="power_api.command.Command.check_command" href="#power_api.command.Command.check_command">check_command</a></code></li>
 <li><code><a title="power_api.command.Command.create_command" href="#power_api.command.Command.create_command">create_command</a></code></li>
 <li><code><a title="power_api.command.Command.create_firmware_update_command" href="#power_api.command.Command.create_firmware_update_command">create_firmware_update_command</a></code></li>
 <li><code><a title="power_api.command.Command.create_set_command" href="#power_api.command.Command.create_set_command">create_set_command</a></code></li>
+<li><code><a title="power_api.command.Command.read_word_data" href="#power_api.command.Command.read_word_data">read_word_data</a></code></li>
 <li><code><a title="power_api.command.Command.receive_command" href="#power_api.command.Command.receive_command">receive_command</a></code></li>
 <li><code><a title="power_api.command.Command.send_command" href="#power_api.command.Command.send_command">send_command</a></code></li>
 </ul>
@@ -1248,9 +1390,7 @@ calculate_crc16 : Function for calculating CRC16</p></div>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>
