@@ -66,7 +66,10 @@ rm -r /tpm/sixfab-power-api > /dev/null 2>&1
 git clone https://github.com/sixfab/sixfab-power-python-api.git /tmp/sixfab-power-api > /dev/null 2>&1
 
 print_info "Installing package"
-python3 /tmp/sixfab-power-api/setup.py install > /dev/null 2>&1
+cd /tmp/sixfab-power-api
+python3 setup.py install > /dev/null 2>&1
+cd $HOME
+rm -r /tmp/sixfab-power-api
 
 if [ ! -d "/opt/sixfab" ]; then
     mkdir /opt/sixfab
