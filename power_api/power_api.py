@@ -2055,53 +2055,18 @@ class SixfabPower:
         return status
 
 
-    def get_debug_config(self, timeout=RESPONSE_DELAY):
+    def restore_factory_defaults(self, timeout=RESPONSE_DELAY):
         """
-        Function for getting debugging configuration
+        Function for factory defaults
         
         Parameters
         -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
+        None
 
         Returns
         ------- 
-        status : int
-            "1" for ENABLED, "2" for DISABLED, "3" for ENABLED_WITH_TIMESTAMP 
+        None
         """
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_DEBUG_CONFIG)
+        command.create_command(command.PROTOCOL_COMMAND_RESTORE_FACTORY_SETTINGS)
         command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-
-    def set_debug_config(self, config, timeout=RESPONSE_DELAY):
-        """
-        Function for setting debugging configuration
-        
-        Parameters
-        -----------
-        config : int
-            "1" for ENABLED, "2" for DISABLED, "3" for ENABLED_WITH_TIMESTAMP
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_DEBUG_CONFIG, config, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
