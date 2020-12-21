@@ -1840,7 +1840,7 @@ class SixfabPower:
         Parameters
         -----------
         interval : int
-            time in minutes to trigger recovery actions (min : 2 , max : 180)
+            time in minutes to trigger recovery actions (min : 4 , max : 180)
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1850,8 +1850,8 @@ class SixfabPower:
             "1" for SET OK, "2" for SET FAILED
         """
 
-        if(interval < 2) or (interval > 255):
-            print("Wrong argument. min:2 max:255")
+        if(interval < 4) or (interval > 180):
+            print("Wrong argument. min:2 max:180")
             return 2
 
         command.create_set_command(
@@ -1923,9 +1923,9 @@ class SixfabPower:
         Parameters
         -----------
         sleep_time : int
-            time in [minutes]   ( min : 2 , max : 1440 )
+            time in [minutes]   ( min : 2 , max : 1439 )
         run_time : int
-            time in [minutes]   ( min : 2 , max : 1440 )   
+            time in [minutes]   ( min : 0 , max : 1437 )   
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
         Returns
@@ -2034,7 +2034,7 @@ class SixfabPower:
         Parameters
         -----------
         threshold : int
-            current threshold in [mA] [min : 0 , max : 3000]
+            current threshold in [mA] (min : 0 , max : 3000)
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
