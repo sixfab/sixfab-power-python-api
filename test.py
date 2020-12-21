@@ -4,10 +4,13 @@ import time
 api = SixfabPower()
 
 
+print( "Battery Max Level: " + str(api.get_battery_max_charge_level()))
+print( "Battery Safe Level: " + str(api.get_safe_shutdown_battery_level()))
+print( "Battery Safe Status: " + str(api.get_safe_shutdown_status()))
+print( "Battery Design Cap: " + str(api.get_battery_design_capacity()))
+
 #print( "Return: " + str(api.set_lpm_status(2)))
 print( "LPM: " + str(api.get_lpm_status()))
-
-#print( "Battery Temp: " + str(api.get_battery_temp_qwiic()))
 
 #print( "Return: " + str(api.set_watchdog_status(2)))
 print( "WDT Status: " + str(api.get_watchdog_status()))
@@ -36,13 +39,8 @@ print( "POWER OUT. PARAMS: " + str(api.get_power_outage_params()))
 print( "Alive Threshold: " + str(api.get_end_device_alive_threshold()))
 
 print( "EDM: " + str(api.get_edm_status()))
-
 print( "LPM: " + str(api.get_lpm_status()))
-
-print( "WDT INTERVAL: " + str(api.get_watchdog_interval()))
-
 print( "Power Outage Status: " + str(api.get_power_outage_event_status()))
-
 print( "SE ID's: " + str(api.get_scheduled_event_ids()))
 
 #print( "Factory Reset: " + str(api.restore_factory_defaults()))
