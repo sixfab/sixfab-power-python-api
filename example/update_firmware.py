@@ -8,9 +8,6 @@ firmware_path = "./firmwares/sixfab_pms_firmware_v0.3.3.bin"
 
 error_occured = 0
 try:
-    api.reset_mcu()
-    api.reset_for_boot_update()
-    time.sleep(5)
     for step in api.update_firmware(firmware_path):
         print(f"{step}%")
         
