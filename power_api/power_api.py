@@ -1851,7 +1851,7 @@ class SixfabPower:
         """
 
         if(interval < 4) or (interval > 180):
-            print("Wrong argument. min:2 max:180")
+            print("Wrong argument. min:4 max:180")
             return 2
 
         command.create_set_command(
