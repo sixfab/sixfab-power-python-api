@@ -1,4 +1,4 @@
-from power_api import SixfabPower, Definition, Event
+from power_api import SixfabPower
 import time
 
 api = SixfabPower()

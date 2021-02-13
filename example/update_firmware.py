@@ -1,6 +1,7 @@
-from power_api import SixfabPower, Definition
+from power_api import SixfabPower
 import time
-import sys, os
+import sys
+import os
 
 api = SixfabPower()
 
