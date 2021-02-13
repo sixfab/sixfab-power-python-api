@@ -5,11 +5,11 @@ api = SixfabPower()
 
 epoch = time.time() # to get timestamp in seconds in GMT0
 
-# to get local time on raspberry pi 
+# to get local time on raspberry pi
 localtime = time.asctime( time.localtime(time.time()) )
 print("Local current time :", localtime)
 
-# to get timezone difference as minus 
+# to get timezone difference as minus
 print(time.timezone)
 
 # standard epoch time with no location specific

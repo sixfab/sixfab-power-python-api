@@ -27,4 +27,3 @@ print("Battery Health: " + str(api.get_battery_health()))
 print("************* Fan **************")
 print("Fan Health: " + str(api.get_fan_health()))
 print("Fan Speed: " + str(api.get_fan_speed()))
-
