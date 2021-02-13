@@ -18,7 +18,7 @@ except:
 
 finally:
     update_successful = 0
-    if error_occurred is 0:
+    if error_occurred == 0:
         counter = 0
 
         for i in range(15):
@@ -36,7 +36,7 @@ finally:
             else:
                 update_successful = 1
             finally:
-                if update_successful is 1:
+                if update_successful == 1:
                     print("\nUpdate is Successful to FW Ver: " + str(fw_ver))
                     break
                 else:
