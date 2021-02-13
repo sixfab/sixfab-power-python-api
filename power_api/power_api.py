@@ -90,7 +90,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float 
-        PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
+        PCB temperature of Sixfab Power Management and UPS HAT [Celsius]  
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
@@ -189,7 +189,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            raspberry pi core temperature [Celcius] 
+            raspberry pi core temperature [Celsius] 
         """
         temp = os.popen("vcgencmd measure_temp").readline()
         temp = temp.replace("temp=", "")
@@ -306,7 +306,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
@@ -331,7 +331,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         """
 
         word = command.read_word_data(BATTERY_TEMP_ADDRESS)
@@ -726,7 +726,7 @@ class SixfabPower:
         Returns
         ------- 
         automation : byteArray(2)
-            [slow_threshold, fast_threshold] [Celcius]
+            [slow_threshold, fast_threshold] [Celsius]
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
