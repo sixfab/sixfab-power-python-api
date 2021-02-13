@@ -83,7 +83,7 @@ class SixfabPower:
         """Function for getting input temperature
         
         Parameters
-        -----------		
+        -----------
         timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -108,7 +108,7 @@ class SixfabPower:
         Function for getting input voltage
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -133,7 +133,7 @@ class SixfabPower:
         Function for getting input current
         
         Parameters
-        -----------			
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -183,7 +183,7 @@ class SixfabPower:
         Function for getting raspberry pi core temperature
         
         Parameters
-        -----------	
+        -----------
         None
 
         Returns
@@ -200,7 +200,7 @@ class SixfabPower:
         Function for sending raspberry pi core temperature to mcu
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -251,7 +251,7 @@ class SixfabPower:
         Function for getting system current
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -275,7 +275,7 @@ class SixfabPower:
         Function for getting system power
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -355,7 +355,7 @@ class SixfabPower:
         Function for sending battery temperature in battery separated state
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1315,7 +1315,7 @@ class SixfabPower:
         --> epoch_local = 1585340340 (In this case local : GMT+3)
         --> daily exact_time = 1585340340 % 86400 = 73140
         
-        2) Calculation of day_factor 								 
+        2) Calculation of day_factor
         [monday] --> Bit 0
         [tuesday] --> Bit 1
         [wednesday] --> Bit 2
