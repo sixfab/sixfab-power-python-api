@@ -1,25 +1,26 @@
-from power_api import SixfabPower, Definition
+from power_api import SixfabPower
 import time
-import sys, os
+import sys
+import os
 
 api = SixfabPower()
 
 firmware_path = "./firmwares/sixfab_pms_firmware_v0.3.3.bin"
 
-error_occured = 0
+error_occurred = 0
 try:
     for step in api.update_firmware(firmware_path):
         print(f"{step}%")
-        
+
 except:
-    error_occured = 1
+    error_occurred = 1
     print("raised error")
 
 finally:
     update_successful = 0
-    if error_occured is 0:
+    if error_occurred == 0:
         counter = 0
-        
+
         for i in range(15):
             print('.', sep=' ', end=' ', flush=True)
             time.sleep(1)
@@ -33,14 +34,14 @@ finally:
                 counter += 1
                 print('.', sep=' ', end=' ', flush=True)
             else:
-               update_successful = 1
+                update_successful = 1
             finally:
-                if update_successful is 1:
+                if update_successful == 1:
                     print("\nUpdate is Successful to FW Ver: " + str(fw_ver))
                     break
-                else: 
+                else:
                     if counter >= 10:
                         print("Update is Failed!")
                         break
-            
+
             time.sleep(2)

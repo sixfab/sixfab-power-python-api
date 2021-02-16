@@ -1,5 +1,5 @@
 
-from power_api import SixfabPower, Definition, Event
+from power_api import SixfabPower, Definition
 import time
 
 pms = SixfabPower()

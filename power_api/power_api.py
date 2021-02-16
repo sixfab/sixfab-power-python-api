@@ -83,14 +83,14 @@ class SixfabPower:
         """Function for getting input temperature
         
         Parameters
-        -----------		
+        -----------
         timeout : int (optional)
         timeout while receiving the response (default is RESPONSE_DELAY)
 
         Returns
         ------- 
         temperature : float 
-        PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
+        PCB temperature of Sixfab Power Management and UPS HAT [Celsius]  
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
@@ -108,7 +108,7 @@ class SixfabPower:
         Function for getting input voltage
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -133,7 +133,7 @@ class SixfabPower:
         Function for getting input current
         
         Parameters
-        -----------			
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -183,13 +183,13 @@ class SixfabPower:
         Function for getting raspberry pi core temperature
         
         Parameters
-        -----------	
+        -----------
         None
 
         Returns
         ------- 
         temperature : float
-            raspberry pi core temperature [Celcius] 
+            raspberry pi core temperature [Celsius] 
         """
         temp = os.popen("vcgencmd measure_temp").readline()
         temp = temp.replace("temp=", "")
@@ -200,7 +200,7 @@ class SixfabPower:
         Function for sending raspberry pi core temperature to mcu
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -251,7 +251,7 @@ class SixfabPower:
         Function for getting system current
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -275,7 +275,7 @@ class SixfabPower:
         Function for getting system power
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -306,7 +306,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
@@ -331,7 +331,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         """
 
         word = command.read_word_data(BATTERY_TEMP_ADDRESS)
@@ -355,7 +355,7 @@ class SixfabPower:
         Function for sending battery temperature in battery separated state
         
         Parameters
-        -----------	
+        -----------
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -726,7 +726,7 @@ class SixfabPower:
         Returns
         ------- 
         automation : byteArray(2)
-            [slow_threshold, fast_threshold] [Celcius]
+            [slow_threshold, fast_threshold] [Celsius]
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -1315,7 +1315,7 @@ class SixfabPower:
         --> epoch_local = 1585340340 (In this case local : GMT+3)
         --> daily exact_time = 1585340340 % 86400 = 73140
         
-        2) Calculation of day_factor 								 
+        2) Calculation of day_factor
         [monday] --> Bit 0
         [tuesday] --> Bit 1
         [wednesday] --> Bit 2

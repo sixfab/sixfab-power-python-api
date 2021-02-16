@@ -118,7 +118,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float 
-        PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
+        PCB temperature of Sixfab Power Management and UPS HAT [Celsius]  
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
@@ -217,7 +217,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            raspberry pi core temperature [Celcius] 
+            raspberry pi core temperature [Celsius] 
         &#34;&#34;&#34;
         temp = os.popen(&#34;vcgencmd measure_temp&#34;).readline()
         temp = temp.replace(&#34;temp=&#34;, &#34;&#34;)
@@ -334,7 +334,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
@@ -359,7 +359,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         &#34;&#34;&#34;
 
         word = command.read_word_data(BATTERY_TEMP_ADDRESS)
@@ -754,7 +754,7 @@ class SixfabPower:
         Returns
         ------- 
         automation : byteArray(2)
-            [slow_threshold, fast_threshold] [Celcius]
+            [slow_threshold, fast_threshold] [Celsius]
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -2195,7 +2195,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float 
-        PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
+        PCB temperature of Sixfab Power Management and UPS HAT [Celsius]  
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
@@ -2294,7 +2294,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            raspberry pi core temperature [Celcius] 
+            raspberry pi core temperature [Celsius] 
         &#34;&#34;&#34;
         temp = os.popen(&#34;vcgencmd measure_temp&#34;).readline()
         temp = temp.replace(&#34;temp=&#34;, &#34;&#34;)
@@ -2411,7 +2411,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
@@ -2436,7 +2436,7 @@ class SixfabPower:
         Returns
         ------- 
         temperature : float
-            battery temperature [Celcius]
+            battery temperature [Celsius]
         &#34;&#34;&#34;
 
         word = command.read_word_data(BATTERY_TEMP_ADDRESS)
@@ -2831,7 +2831,7 @@ class SixfabPower:
         Returns
         ------- 
         automation : byteArray(2)
-            [slow_threshold, fast_threshold] [Celcius]
+            [slow_threshold, fast_threshold] [Celsius]
         &#34;&#34;&#34;
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -4757,7 +4757,7 @@ battery power [Watt]</p></div>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>temperature : float
-battery temperature [Celcius]</p></div>
+battery temperature [Celsius]</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4774,7 +4774,7 @@ battery temperature [Celcius]</p></div>
     Returns
     ------- 
     temperature : float
-        battery temperature [Celcius]
+        battery temperature [Celsius]
     &#34;&#34;&#34;
 
     command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
@@ -4800,7 +4800,7 @@ battery temperature [Celcius]</p></div>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>temperature : float
-battery temperature [Celcius]</p></div>
+battery temperature [Celsius]</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4816,7 +4816,7 @@ battery temperature [Celcius]</p></div>
     Returns
     ------- 
     temperature : float
-        battery temperature [Celcius]
+        battery temperature [Celsius]
     &#34;&#34;&#34;
 
     word = command.read_word_data(BATTERY_TEMP_ADDRESS)
@@ -5059,7 +5059,7 @@ current threshold [mA]</p></div>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>automation : byteArray(2)
-[slow_threshold, fast_threshold] [Celcius]</p></div>
+[slow_threshold, fast_threshold] [Celsius]</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5075,7 +5075,7 @@ current threshold [mA]</p></div>
     Returns
     ------- 
     automation : byteArray(2)
-        [slow_threshold, fast_threshold] [Celcius]
+        [slow_threshold, fast_threshold] [Celsius]
     &#34;&#34;&#34;
 
     command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
@@ -5356,7 +5356,7 @@ input power [Watt]</p></div>
 timeout while receiving the response (default is RESPONSE_DELAY)</p>
 <h2 id="returns">Returns</h2>
 <p>temperature : float
-PCB temperature of Sixfab Power Management and UPS HAT [Celcius]</p></div>
+PCB temperature of Sixfab Power Management and UPS HAT [Celsius]</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5372,7 +5372,7 @@ PCB temperature of Sixfab Power Management and UPS HAT [Celcius]</p></div>
     Returns
     ------- 
     temperature : float 
-    PCB temperature of Sixfab Power Management and UPS HAT [Celcius]  
+    PCB temperature of Sixfab Power Management and UPS HAT [Celsius]  
     &#34;&#34;&#34;
 
     command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
@@ -5925,7 +5925,7 @@ power that supplies raspberry pi and other peripherals [Ampere]</p></div>
 <p>None</p>
 <h2 id="returns">Returns</h2>
 <p>temperature : float
-raspberry pi core temperature [Celcius]</p></div>
+raspberry pi core temperature [Celsius]</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5941,7 +5941,7 @@ raspberry pi core temperature [Celcius]</p></div>
     Returns
     ------- 
     temperature : float
-        raspberry pi core temperature [Celcius] 
+        raspberry pi core temperature [Celsius] 
     &#34;&#34;&#34;
     temp = os.popen(&#34;vcgencmd measure_temp&#34;).readline()
     temp = temp.replace(&#34;temp=&#34;, &#34;&#34;)
