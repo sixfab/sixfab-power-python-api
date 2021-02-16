@@ -1080,7 +1080,7 @@ class SixfabPower:
             return time
 
 
-    def soft_power_off(self, timeout=RESPONSE_DELAY):
+    def soft_power_off(self, check=False, timeout=RESPONSE_DELAY):
         """
         Function for checking any soft power off request is exist. If any
         request exist, raspberry pi turns off by using "sudo shutdown" terminal
@@ -1088,6 +1088,9 @@ class SixfabPower:
         
         Parameters
         -----------
+        check : boolean (optional)
+            check if it is time to perform a soft power off (default is False)
+
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1101,7 +1104,6 @@ class SixfabPower:
         command.send_command()
         delay_ms(timeout)
         raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-        result2 = 0
         result = raw[PROTOCOL_HEADER_SIZE]
 
         if result == Definition.SET_OK:
@@ -1112,8 +1114,9 @@ class SixfabPower:
             result2 = raw[PROTOCOL_HEADER_SIZE]
 
             if result2 == Definition.SET_OK:
-                print("Raspberry Pi will shutdown in 5 seconds!")
-                os.system("sleep 5 && sudo shutdown -h now")
+                if check is False:
+                    print("Raspberry Pi will shutdown in 5 seconds!")
+                    os.system("sleep 5 && sudo shutdown -h now")
                 return result2
 
         return Definition.SET_FAILED
