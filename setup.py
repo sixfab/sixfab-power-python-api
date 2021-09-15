@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='sixfab-power-python-api',
-    version='0.2.2',
+    name='power_api',
+    version='0.3.0',
     author='Yasin Kaya',
     author_email='yasinkaya.121@gmail.com',
-    description='Sixfab power management service python api',
+    description='Python API for Sixfab UPS HAT V2',
     license='MIT',
     url='https://github.com/sixfab/sixfab-power-python-api',
     dependency_links  = [],
