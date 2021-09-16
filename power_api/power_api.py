@@ -597,63 +597,6 @@ class SixfabPower:
 
         return animation
 
-    def set_fan_automation(
-        self, slow_threshold, fast_threshold=100, timeout=RESPONSE_DELAY
-    ):
-        """
-        Function for setting fan automation
-        
-        Parameters
-        -----------
-        slow_threshold : int
-            temperature threshold to decide fan working status [min : 0 , max : 100]
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED 
-        """
-
-        value = bytearray()
-        value.append(int(slow_threshold))
-        value.append(int(fast_threshold))
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 2
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
-
-    def get_fan_automation(self, timeout=RESPONSE_DELAY):
-        """
-        Function for getting fan automation
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-        Returns
-        ------- 
-        automation : byteArray(2)
-            [slow_threshold, fast_threshold] [Celsius]
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(9)
-
-        fanAutomation = bytearray()
-        for i in range(2):
-            fanAutomation.append(raw[PROTOCOL_HEADER_SIZE + i])
-
-        return fanAutomation
 
     def set_battery_max_charge_level(self, level, timeout=RESPONSE_DELAY):
         """
