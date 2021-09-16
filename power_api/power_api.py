@@ -705,33 +705,6 @@ class SixfabPower:
         level = raw[PROTOCOL_HEADER_SIZE]
         return level
 
-    def set_safe_shutdown_battery_level(self, level, timeout=RESPONSE_DELAY):
-        """
-        Function for setting safe shutdown battery level
-        
-        Parameters
-        -----------
-        level : int
-            raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL, level, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        level = raw[PROTOCOL_HEADER_SIZE]
-        return level
-
     
     def get_working_mode(self, timeout=RESPONSE_DELAY):
         """
@@ -871,30 +844,6 @@ class SixfabPower:
             return time
 
 
-    def hard_reboot(self, timeout=100):
-        """
-        Function for hard rebooting
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" SET_OK, "2" for SET_FAILED
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_HARD_REBOOT)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
-
-   
     def watchdog_signal(self, timeout=RESPONSE_DELAY):
         """
         Function for sending watchdog signal
