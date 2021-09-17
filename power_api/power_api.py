@@ -195,32 +195,7 @@ class SixfabPower:
         temp = temp.replace("temp=", "")
         return float(temp[:-3])
 
-    def send_system_temp(self, timeout=10):
-        """
-        Function for sending raspberry pi core temperature to mcu
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SUCCESS, "2" for FAIL
-        """
-
-        temp = self.get_system_temp()
-        tempInt = int(temp * 100)
-
-        command.create_set_command(command.PROTOCOL_COMMAND_GET_SYSTEM_TEMP, tempInt, 4)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
-
+    
     def get_system_voltage(self, timeout=RESPONSE_DELAY):
         """
         Function for getting system voltage
@@ -318,66 +293,6 @@ class SixfabPower:
             raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
         )
         return temp / 100
-
-
-    def get_battery_temp_qwiic(self):
-        """
-        Function for getting battery temperature
-        
-        Parameters
-        -----------
-        None
-
-        Returns
-        ------- 
-        temperature : float
-            battery temperature [Celsius]
-        """
-
-        word = command.read_word_data(BATTERY_TEMP_ADDRESS)
-        high=word[0]
-        low=word[1] 
-
-        rawTemp = (high << 8 ) | (low & 0xFF)
-        rawTemp = rawTemp >> 5
-
-        if (rawTemp & 0x400):
-            rawTemp = ((~rawTemp) & 0x7FF) + 1
-            temp = rawTemp * -0.125
-        else:
-            temp = rawTemp * 0.125
-            
-        return temp
-
-
-    def send_battery_temp(self, timeout=10):
-        """
-        Function for sending battery temperature in battery separated state
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SUCCESS, "2" for FAIL
-        """
-        try:    
-            temp = self.get_battery_temp_qwiic()
-        except:
-            return 2
-        else:
-            tempInt = int(temp * 100)
-            time.sleep(0.05)
-            command.create_set_command(command.PROTOCOL_COMMAND_SEND_BATTERY_TEMPERATURE, tempInt, 4)
-            command.send_command()
-            delay_ms(timeout)
-            raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-            result = raw[PROTOCOL_HEADER_SIZE]
-            return result
 
 
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
@@ -682,63 +597,6 @@ class SixfabPower:
 
         return animation
 
-    def set_fan_automation(
-        self, slow_threshold, fast_threshold=100, timeout=RESPONSE_DELAY
-    ):
-        """
-        Function for setting fan automation
-        
-        Parameters
-        -----------
-        slow_threshold : int
-            temperature threshold to decide fan working status [min : 0 , max : 100]
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED 
-        """
-
-        value = bytearray()
-        value.append(int(slow_threshold))
-        value.append(int(fast_threshold))
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_FAN_AUTOMATION, value, 2
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
-
-    def get_fan_automation(self, timeout=RESPONSE_DELAY):
-        """
-        Function for getting fan automation
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-        Returns
-        ------- 
-        automation : byteArray(2)
-            [slow_threshold, fast_threshold] [Celsius]
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_AUTOMATION)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(9)
-
-        fanAutomation = bytearray()
-        for i in range(2):
-            fanAutomation.append(raw[PROTOCOL_HEADER_SIZE + i])
-
-        return fanAutomation
 
     def set_battery_max_charge_level(self, level, timeout=RESPONSE_DELAY):
         """
@@ -790,158 +648,7 @@ class SixfabPower:
         level = raw[PROTOCOL_HEADER_SIZE]
         return level
 
-    def set_safe_shutdown_battery_level(self, level, timeout=RESPONSE_DELAY):
-        """
-        Function for setting safe shutdown battery level
-        
-        Parameters
-        -----------
-        level : int
-            raspberry pi is turned off if battery falls to this level [min : 0 , max : 99]
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_BATTERY_LEVEL, level, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        level = raw[PROTOCOL_HEADER_SIZE]
-        return level
-
-    def get_safe_shutdown_battery_level(self, timeout=RESPONSE_DELAY):
-        """
-        Function for setting safe shutdown battery level
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        level : int
-            safe shutdown level in percentage [%]
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_BATTERY_LEVEL)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        level = raw[PROTOCOL_HEADER_SIZE]
-        return level
-
-    def set_safe_shutdown_status(self, status, timeout=RESPONSE_DELAY):
-        """
-        Function for setting safe shutdown status
-        
-        Parameters
-        -----------
-        status : int
-            "1" for ENABLED, "2" for DISABLED
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_SAFE_SHUTDOWN_STATUS, status, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-    def get_safe_shutdown_status(self, timeout=RESPONSE_DELAY):
-        """
-        Function for getting safe shutdown status
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        status : int
-            "1" for ENABLEDi "2" for DISABLED
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_SAFE_SHUTDOWN_STATUS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-
-    def set_battery_separation_status(self, status, timeout=RESPONSE_DELAY):
-        """
-        Function for setting battery separation status
-        
-        Parameters
-        -----------
-        status : int
-            "1" for SEPARETED, "2" for NOT SEPARATED
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_BATTERY_SEPARATION_STATUS, status, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-    def get_battery_separation_status(self, timeout=RESPONSE_DELAY):
-        """
-        Function for getting battery separation status
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        status : int
-            "1" for SEPARATED "2" for NOT SEPARATED
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_SEPARATION_STATUS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-
+    
     def get_working_mode(self, timeout=RESPONSE_DELAY):
         """
         Function for getting working mode
@@ -1080,106 +787,6 @@ class SixfabPower:
             return time
 
 
-    def soft_power_off(self, timeout=RESPONSE_DELAY):
-        """
-        Function for checking any soft power off request is exist. If any
-        request exist, raspberry pi turns off by using "sudo shutdown" terminal
-        command in 5 seconds.
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for EXIST, "2" for NOT_EXIST
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_SOFT_POWER_OFF)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-        result2 = 0
-        result = raw[PROTOCOL_HEADER_SIZE]
-
-        if result == Definition.SET_OK:
-            command.create_set_command(command.PROTOCOL_COMMAND_SOFT_POWER_OFF, 1, 1)
-            command.send_command()
-            delay_ms(timeout)
-            raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-            result2 = raw[PROTOCOL_HEADER_SIZE]
-
-            if result2 == Definition.SET_OK:
-                print("Raspberry Pi will shutdown in 5 seconds!")
-                os.system("sleep 5 && sudo shutdown -h now")
-                return result2
-
-        return Definition.SET_FAILED
-
-    def hard_reboot(self, timeout=100):
-        """
-        Function for hard rebooting
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" SET_OK, "2" for SET_FAILED
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_HARD_REBOOT)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
-
-    def soft_reboot(self, timeout=RESPONSE_DELAY):
-        """
-        Function for checking any soft reboot request is exist. If any
-        request exist, raspberry pi reboots by using "sudo reboot" terminal
-        command in 5 seconds.
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for EXIST, "2" for NOT_EXIST
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_SOFT_REBOOT)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result2 = 0
-        result = raw[PROTOCOL_HEADER_SIZE]
-
-        if result == Definition.SET_OK:
-            command.create_set_command(command.PROTOCOL_COMMAND_SOFT_REBOOT, 1, 1)
-            command.send_command()
-            delay_ms(timeout)
-            raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-            result2 = raw[PROTOCOL_HEADER_SIZE]
-
-            if result2 == Definition.SET_OK:
-                print("Raspberry Pi will shutdown in 5 seconds!")
-                os.system("sleep 5 && sudo reboot")
-                return result2
-
-        return Definition.SET_FAILED
-
     def watchdog_signal(self, timeout=RESPONSE_DELAY):
         """
         Function for sending watchdog signal
@@ -1273,7 +880,7 @@ class SixfabPower:
         Parameters
         -----------
         event_id : int 
-            id to describe events indivudially
+            id to describe events indivudially. Min/Max: 1-10
 
         schedule_type : Definition Object Property
             --> Definition.NO_EVENT
@@ -1285,7 +892,7 @@ class SixfabPower:
             --> Definition.EVENT_REPEATED
 
         time_or_interval : int
-            daily_epoch_time in seconds or interval (Checkout *Notes for daily_exact_time)
+            daily_epoch_time in seconds or interval in #interval_type (Checkout *Notes for daily_exact_time)
 
         interval_type : Definition Object Property 
             --> Definition.INTERVAL_TYPE_SEC
@@ -1298,9 +905,7 @@ class SixfabPower:
         action : int
             --> "1" for START
             --> "2" for HARD SHUTDOWN
-            --> "3" for SOFT SHUTDOWN
             --> "4" for HARD REBOOT
-            --> "5" for SOFT REBOOT
 
          timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
@@ -1671,116 +1276,6 @@ class SixfabPower:
         command.send_command()
 
     
-    def get_lpm_status(self, timeout=RESPONSE_DELAY):
-        """
-        Function for getting low power mode status. This mode provides power saving by disabling L1 and L2.
-        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        status : int
-            "1" for LPM ENABLED, "2" for LPM DISABLED 
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_LOW_POWER_MODE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-
-    def get_edm_status(self, timeout=RESPONSE_DELAY):
-        """
-        Function for getting easy deployment mode status. The EDM mode provides ulta power saving 
-        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
-        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.   
-        
-        Parameters
-        -----------
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        status : int
-            "1" for EDM ENABLED, "2" for EDM DISABLED 
-        """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_EASY_DEPLOYMENT_MODE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-
-    def set_lpm_status(self, status, timeout=RESPONSE_DELAY):
-        """
-        Function for setting low power mode status. This mode provides power saving by disabling L1 and L2.
-        L2 LED blinks very 10 seconds for a short time to indicate battery percentage.
-        
-        Parameters
-        -----------
-        status : int
-            "1" for ENABLED, "2" for DISABLED
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_LOW_POWER_MODE, status, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
-
-    def set_edm_status(self, status, timeout=RESPONSE_DELAY):
-        """
-        Function for setting easy deployment mode status. The EDM mode provides ulta power saving 
-        by disabling all power output on the HAT including end device (like Raspberry Pi). It can be used
-        transport and easy deployment purpose. It disables automatically when the power source is plugged to HAT.
-        
-        Parameters
-        -----------
-        status : int
-            "1" for ENABLED, "2" for DISABLED
-        timeout : int (optional)
-            timeout while receiving the response (default is RESPONSE_DELAY)
-
-        Returns
-        ------- 
-        result : int
-            "1" for SET OK, "2" for SET FAILED
-        """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_EASY_DEPLOYMENT_MODE, status, 1
-        )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-    
-    
     def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
         """
         Function for setting fan mode
@@ -1788,7 +1283,7 @@ class SixfabPower:
         Parameters
         -----------
         status : int
-            "1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE 
+            "1" for FAN ON MODE, "2" for FAN OFF MODE 
         timeout : int (optional)
             timeout while receiving the response (default is RESPONSE_DELAY)
 
@@ -1821,7 +1316,7 @@ class SixfabPower:
         Returns
         ------- 
         status : int
-            "1" for FAN ON MODE, "2" for FAN OFF MODE, "3" for FAN AUTO MODE 
+            "1" for FAN ON MODE, "2" for FAN OFF MODE 
         """
 
         command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
