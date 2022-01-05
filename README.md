@@ -2,7 +2,8 @@
 
 Sixfab Power API is offered for the UPS HAT v2 for easy integration into the user's project. 
 
-PS. This API is strictly for Sixfab UPS HAT v2. Sixfab UPS HAT v1 users should follow [UPS HAT V1 API](https://github.com/sixfab/sixfab-power-python-api/tree/UPS_HAT_V1).
+PS. This API is strictly for Sixfab UPS HAT v2. Sixfab UPS HAT v1 users should follow [UPS HAT v1 API](https://github.com/sixfab/sixfab-power-python-api/tree/UPS_HAT_V1).
+All methods of UPS HAT v1 are accessible from [UPS HAT v1 API Doc](https://htmlpreview.github.io/?https://github.com/sixfab/sixfab-power-python-api/blob/UPS_HAT_V1/docs/power_api.html). 
 
 Before we install the API, enable the I2C of the Raspberry Pi as the Sixfab UPS HAT v2 and the RPi communicates over the I2C. 
 
