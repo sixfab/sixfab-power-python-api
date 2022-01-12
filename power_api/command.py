@@ -161,7 +161,7 @@ class Command:
         try:
             bus.write_i2c_block_data(DEVICE_ADDRESS, 0x01, buffer_send)
         except:
-            return self.BYTE_SEND_FAILED
+            raise RuntimeError
 
     # Function for checking command according to protocol
     def check_command(self, received_byte):
@@ -217,8 +217,8 @@ class Command:
             try:
                 c = bus.read_byte(DEVICE_ADDRESS)
             except:
-                print("error in " + str(i))
-                return self.BYTE_READ_FAILED
+                # print("error in " + str(i))
+                raise RuntimeError
 
             # print("Recieved byte: " + str(hex(c)))
             msg = self.check_command(c)
@@ -229,7 +229,7 @@ class Command:
         elif msg == self.CRC_CHECK_FAILED:
             raise crc_check_failed("CRC check failed!")
         else:
-            return None
+            raise RuntimeError
 
     # Function for creating command according to protocol
     def create_command(self, command, command_type=COMMAND_TYPE_REQUEST):

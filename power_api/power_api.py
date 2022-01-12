@@ -55,6 +55,40 @@ def delay_ms(ms):
     time.sleep(float(ms / 1000.0))
 
 
+def retry_command(command_num, size, timeout=RESPONSE_DELAY):
+    for i in range(10):
+        try:
+            command.create_command(command_num)
+            command.send_command()
+            delay_ms(timeout)
+            raw = command.receive_command(size)
+        except:
+            pass
+        else:
+            if raw != None:
+                return raw
+
+        delay_ms(100)
+    return None
+
+
+def retry_set_command(command_num, size, value, value_len, timeout=RESPONSE_DELAY):
+    for i in range(10):
+        try:
+            command.create_set_command(command_num, value, value_len)
+            command.send_command()
+            delay_ms(timeout)
+            raw = command.receive_command(size)
+        except:
+            pass
+        else:
+            if raw != None:
+                return raw
+
+        delay_ms(100)
+    return None
+
+
 #############################################################
 ### SIXFAB POWER CLASS ######################################
 #############################################################
@@ -92,16 +126,18 @@ class SixfabPower:
         temperature : float 
         PCB temperature of Sixfab Power Management and UPS HAT [Celsius]  
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_TEMP)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        temp = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_INPUT_TEMP,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return temp / 100
+
+        if raw != None:
+            temp = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return temp / 100
+        return None
 
     def get_input_voltage(self, timeout=RESPONSE_DELAY):
         """
@@ -117,16 +153,19 @@ class SixfabPower:
         voltage : float 
             input voltage [Volt] 
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        voltage = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_INPUT_VOLTAGE,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return voltage / 1000
+
+        if raw != None:
+            voltage = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return voltage / 1000
+        else:
+            return None
 
     def get_input_current(self, timeout=RESPONSE_DELAY):
         """
@@ -142,16 +181,19 @@ class SixfabPower:
         current : float 
             input current [Ampere] 
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_CURRENT)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        current = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_INPUT_CURRENT,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return current / 1000
+
+        if raw != None:
+            current = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return current / 1000
+        else:
+            return None
 
     def get_input_power(self, timeout=50):
         """
@@ -167,16 +209,19 @@ class SixfabPower:
         power : float
             input power [Watt] 
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_INPUT_POWER)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        power = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_INPUT_POWER,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return power / 1000
+
+        if raw != None:
+            power = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return power / 1000
+        else:
+            return None
 
     def get_system_temp(self):
         """
@@ -210,16 +255,19 @@ class SixfabPower:
         voltage : float
             voltage source that supplies raspberry pi and other peripherals [Volt]
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        voltage = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_SYSTEM_VOLTAGE,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return voltage / 1000
+
+        if raw != None:
+            voltage = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return voltage / 1000
+        else:
+            return None
 
     def get_system_current(self, timeout=50):
         """
@@ -235,15 +283,19 @@ class SixfabPower:
         current : float
             current that supplies raspberry pi and other peripherals [Ampere]
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_SYSTEM_CURRENT)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        current = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_SYSTEM_CURRENT,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return current / 1000
+
+        if raw != None:
+            current = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return current / 1000
+        else:
+            return None
 
     def get_system_power(self, timeout=50):
         """
@@ -259,15 +311,19 @@ class SixfabPower:
         power : float
             power that supplies raspberry pi and other peripherals [Ampere]
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_SYSTEM_POWER)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        power = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_SYSTEM_POWER,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return power / 1000
+
+        if raw != None:
+            power = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return power / 1000
+        else:
+            return None
 
     def get_battery_temp(self, timeout=RESPONSE_DELAY):
         """
@@ -283,17 +339,19 @@ class SixfabPower:
         temperature : float
             battery temperature [Celsius]
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_TEMP)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        temp = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_TEMP,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return temp / 100
 
+        if raw != None:    
+            temp = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return temp / 100
+        else:
+            return None
 
     def get_battery_voltage(self, timeout=RESPONSE_DELAY):
         """
@@ -309,15 +367,19 @@ class SixfabPower:
         voltage : float 
             battery voltage [Volt]
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        voltage = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return voltage / 1000
+
+        if raw != None:
+            voltage = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return voltage / 1000
+        else:
+            return None
 
     def get_battery_current(self, timeout=RESPONSE_DELAY):
         """
@@ -333,16 +395,19 @@ class SixfabPower:
         current : float
             battery current [Ampere]
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_CURRENT)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        current = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big", signed=True
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_CURRENT,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return current / 1000
+
+        if raw != None:
+            current = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big", signed=True
+            )
+            return current / 1000
+        else:
+            return None
 
     def get_battery_power(self, timeout=RESPONSE_DELAY):
         """
@@ -358,16 +423,19 @@ class SixfabPower:
         power : float
             battery power [Watt]
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_POWER)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        power = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big", signed=True
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_POWER,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return power / 1000
+
+        if raw != None:
+            power = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big", signed=True
+            )
+            return power / 1000
+        else:
+            return None
 
     def get_battery_level(self, timeout=RESPONSE_DELAY):
         """
@@ -383,16 +451,19 @@ class SixfabPower:
         level : int
             battery charge of state as percentage [%]
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        level = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_LEVEL,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return level
+
+        if raw != None:
+            level = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return level
+        else:
+            return None
 
     def get_fan_health(self, timeout=RESPONSE_DELAY):
         """
@@ -408,16 +479,19 @@ class SixfabPower:
         health : int
             "1" for HEALTHY, "2" for BROKEN
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_HEALTH)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        health = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_FAN_HEALTH,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return health
+
+        if raw != None:
+            health = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return health
+        else:
+            return None
 
     def get_battery_health(self, timeout=RESPONSE_DELAY):
         """
@@ -433,15 +507,19 @@ class SixfabPower:
         health : int
             battery health as percentage [%] 
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        health = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_HEALTH,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return health
+
+        if raw != None:
+            health = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return health
+        else:
+            return None
 
     def get_fan_speed(self, timeout=RESPONSE_DELAY):
         """
@@ -457,16 +535,19 @@ class SixfabPower:
         speed : int
             fan speed [RPM] 
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_SPEED)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        rpm = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_FAN_SPEED,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
-        return rpm
+
+        if raw != None:
+            rpm = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return rpm
+        else:
+            return None
 
 
     def get_watchdog_status(self, timeout=RESPONSE_DELAY):
@@ -483,14 +564,17 @@ class SixfabPower:
         status : int
             "1" for WATCHDOG ENABLED, "2" for WATCHDOG DISABLED 
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_STATUS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def set_watchdog_status(self, status, timeout=RESPONSE_DELAY):
         """
@@ -507,16 +591,18 @@ class SixfabPower:
         result : int
             "1" for SET OK, "2" for SET FAILED 
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS, status, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_WATCHDOG_STATUS,
+            COMMAND_SIZE_FOR_UINT8,
+            status,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def set_rgb_animation(self, anim_type, color, speed, timeout=RESPONSE_DELAY):
         """
@@ -535,19 +621,23 @@ class SixfabPower:
         result : int
             "1" for SET OK, "2" for SET FAILED 
         """
-
         value = bytearray()
         value.append(int(anim_type))
         value.append(int(color))
         value.append(int(speed))
 
-        command.create_set_command(command.PROTOCOL_COMMAND_SET_RGB_ANIMATION, value, 3)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_RGB_ANIMATION,
+            COMMAND_SIZE_FOR_UINT8,
+            value,
+            3,
+            timeout
+        )
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def get_rgb_animation(self, timeout=RESPONSE_DELAY):
         """
@@ -585,17 +675,20 @@ class SixfabPower:
             --> Definition.NORMAL
             --> Definition.FAST
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_RGB_ANIMATION,
+            10,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_RGB_ANIMATION)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(10)
+        if raw != None:
+            animation = bytearray()
+            for i in range(3):
+                animation.append(raw[PROTOCOL_HEADER_SIZE + i])
 
-        animation = bytearray()
-        for i in range(3):
-            animation.append(raw[PROTOCOL_HEADER_SIZE + i])
-
-        return animation
+            return animation
+        else:
+            return None
 
 
     def set_battery_max_charge_level(self, level, timeout=RESPONSE_DELAY):
@@ -614,16 +707,18 @@ class SixfabPower:
         result : int
             "1" for SET OK, "2" for SET FAILED
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL, level, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_BATTERY_MAX_CHARGE_LEVEL,
+            COMMAND_SIZE_FOR_UINT8,
+            level,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        level = raw[PROTOCOL_HEADER_SIZE]
-        return level
+        if raw != None:
+            level = raw[PROTOCOL_HEADER_SIZE]
+            return level
+        else:
+            return None
 
     def get_battery_max_charge_level(self, timeout=RESPONSE_DELAY):
         """
@@ -639,15 +734,17 @@ class SixfabPower:
         level : int
             battery max charge level in percentage [%]
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_MAX_CHARGE_LEVEL)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        level = raw[PROTOCOL_HEADER_SIZE]
-        return level
-
+        if raw != None:
+            level = raw[PROTOCOL_HEADER_SIZE]
+            return level
+        else:
+            return None
     
     def get_working_mode(self, timeout=RESPONSE_DELAY):
         """
@@ -663,14 +760,17 @@ class SixfabPower:
         working_mode : int
             "1" for CHARGING, "2" for FULLY_CHARGED, "3" for BATTERY POWERED
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_WORKING_MODE,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_WORKING_MODE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        mode = raw[PROTOCOL_HEADER_SIZE]
-        return mode
+        if raw != None:
+            mode = raw[PROTOCOL_HEADER_SIZE]
+            return mode
+        else:
+            return None
 
     def get_button1_status(self, timeout=RESPONSE_DELAY):
         """
@@ -686,14 +786,17 @@ class SixfabPower:
         status : int
             "1" for SHORT_PRESS, "2" for LONG_PRESS, "3" for RELEASED
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_BUTTON1_STATUS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def get_button2_status(self, timeout=RESPONSE_DELAY):
         """
@@ -709,14 +812,17 @@ class SixfabPower:
         status : int
             "1" for SHORT_PRESS, "2" for LONG_PRESS, "3" for RELEASED
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_BUTTON2_STATUS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def set_rtc_time(self, timestamp, timeout=RESPONSE_DELAY):
         """
@@ -734,14 +840,18 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED
         """
-
-        command.create_set_command(command.PROTOCOL_COMMAND_SET_RTC_TIME, timestamp, 4)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_RTC_TIME,
+            COMMAND_SIZE_FOR_UINT8,
+            timestamp,
+            4,
+            timeout
+        )
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def get_rtc_time(self, format=Definition.TIME_FORMAT_EPOCH, timeout=RESPONSE_DELAY):
         """
@@ -762,29 +872,32 @@ class SixfabPower:
         timestamp : int/str
             time in chosen format
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_RTC_TIME)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        timestamp = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_RTC_TIME,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
 
-        if format == Definition.TIME_FORMAT_EPOCH:
-            return timestamp
-        elif format == Definition.TIME_FORMAT_DATE_AND_TIME:
-            date_and_time = datetime.datetime.utcfromtimestamp(timestamp).strftime(
-                "%Y-%m-%d %H:%M:%S"
+        if raw != None:
+            timestamp = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 2], "big"
             )
-            return date_and_time
-        elif format == Definition.TIME_FORMAT_DATE:
-            date = datetime.datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
-            return date
-        elif format == Definition.TIME_FORMAT_TIME:
-            time = datetime.datetime.utcfromtimestamp(timestamp).strftime("%H:%M:%S")
-            return time
+
+            if format == Definition.TIME_FORMAT_EPOCH:
+                return timestamp
+            elif format == Definition.TIME_FORMAT_DATE_AND_TIME:
+                date_and_time = datetime.datetime.utcfromtimestamp(timestamp).strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                )
+                return date_and_time
+            elif format == Definition.TIME_FORMAT_DATE:
+                date = datetime.datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
+                return date
+            elif format == Definition.TIME_FORMAT_TIME:
+                time = datetime.datetime.utcfromtimestamp(timestamp).strftime("%H:%M:%S")
+                return time
+        else:
+            return None
 
 
     def watchdog_signal(self, timeout=RESPONSE_DELAY):
@@ -801,16 +914,18 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL, 1, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_WATCHDOG_SIGNAL,
+            COMMAND_SIZE_FOR_UINT8,
+            1,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def get_battery_design_capacity(self, timeout=RESPONSE_DELAY):
         """
@@ -826,16 +941,20 @@ class SixfabPower:
         capacity : int
             battery design capacity in [mAh]
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
-
-        capacity = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_BATTERY_DESIGN_CAPACITY,
+            COMMAND_SIZE_FOR_INT16,
+            timeout
         )
-        return capacity
 
+        if raw != None:
+            capacity = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+            )
+            return capacity
+        else:
+            return None
+            
     def set_battery_design_capacity(self, capacity, timeout=RESPONSE_DELAY):
         """
         Function for setting battery design capacity
@@ -852,16 +971,19 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED 
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY, capacity, 2
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_BATTERY_DESIGN_CAPACITY,
+            COMMAND_SIZE_FOR_UINT8,
+            capacity,
+            2,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
 
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def create_scheduled_event(
         self,
@@ -941,7 +1063,6 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED 
         """
-
         value = bytearray()
         value.append(event_id)
         value.append(schedule_type)
@@ -954,15 +1075,19 @@ class SixfabPower:
         value.append(repeat_period)
         value.append(action)
 
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT,
+            COMMAND_SIZE_FOR_UINT8,
+            value,
+            10,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def create_scheduled_event_with_event(self, event, timeout=200):
         """
@@ -980,7 +1105,6 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED 
         """
-
         value = bytearray()
         value.append(event.id)
         value.append(event.schedule_type)
@@ -993,15 +1117,19 @@ class SixfabPower:
         value.append(event.day)
         value.append(event.action)
 
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT, value, 10
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_CREATE_SCHEDULED_EVENT,
+            COMMAND_SIZE_FOR_UINT8,
+            value,
+            10,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def get_scheduled_event_ids(self, timeout=50):
         """
@@ -1017,21 +1145,24 @@ class SixfabPower:
         ids : byteArray(10)
             active ids of scheduled events 
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
-
-        ids = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_SCHEDULED_EVENT_IDS,
+            COMMAND_SIZE_FOR_INT16,
+            timeout
         )
-        ids_bytes = bytearray()
 
-        for i in range(10):
-            if ids & (1 << i):
-                ids_bytes.append(i + 1)
-        return ids_bytes
+        if raw != None:
+            ids = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+            )
+            ids_bytes = bytearray()
+
+            for i in range(10):
+                if ids & (1 << i):
+                    ids_bytes.append(i + 1)
+            return ids_bytes
+        else:
+            return None
 
     def remove_scheduled_event(self, event_id, timeout=200):
         """
@@ -1049,16 +1180,19 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT, event_id, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_REMOVE_SCHEDULED_EVENT,
+            COMMAND_SIZE_FOR_UINT8,
+            event_id,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def remove_all_scheduled_events(self, timeout=200):
         """
@@ -1074,14 +1208,17 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_REMOVE_ALL_SCHEDULED_EVENTS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def get_firmware_ver(self, timeout=RESPONSE_DELAY):
         """
@@ -1097,18 +1234,22 @@ class SixfabPower:
         version : char[8] 
             ver [Ex. v1.00.00]
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_GET_FIRMWARE_VER)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(15)
         ver = bytearray(8)
 
-        for i in range(8):
-            ver[i] = raw[PROTOCOL_HEADER_SIZE + i]
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_FIRMWARE_VER,
+            15,
+            timeout
+        )
 
-        ver_str = ver.decode("utf-8")
-        return ver_str
+        if raw != None:
+            for i in range(8):
+                ver[i] = raw[PROTOCOL_HEADER_SIZE + i]
+
+            ver_str = ver.decode("utf-8")
+            return ver_str
+        else:
+            return None
 
     def update_firmware(self, firmware_file, update_method=0, timeout=25):
         """
@@ -1234,14 +1375,17 @@ class SixfabPower:
         result : int
             "1" for SUCCESS, "2" for FAIL
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_CLEAR_PROGRAM_STORAGE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        result = raw[PROTOCOL_HEADER_SIZE]
-        return result
+        if raw != None:
+            result = raw[PROTOCOL_HEADER_SIZE]
+            return result
+        else:
+            return None
 
     def reset_mcu(self):
         """
@@ -1255,9 +1399,13 @@ class SixfabPower:
         ------- 
         None
         """
-
-        command.create_command(command.PROTOCOL_COMMAND_RESET_MCU)
-        command.send_command()
+        try:
+            command.create_command(command.PROTOCOL_COMMAND_RESET_MCU)
+            command.send_command()
+        except:
+            return None
+        else:
+            return 1
 
     def reset_for_boot_update(self):
         """
@@ -1271,11 +1419,14 @@ class SixfabPower:
         ------- 
         None
         """
+        try:
+            command.create_command(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
+            command.send_command()
+        except:
+            return None
+        else:
+            return 1
 
-        command.create_command(command.PROTOCOL_COMMAND_RESET_MCU_FOR_BOOT_UPDATE)
-        command.send_command()
-
-    
     def set_fan_mode(self, mode, timeout=RESPONSE_DELAY):
         """
         Function for setting fan mode
@@ -1292,17 +1443,19 @@ class SixfabPower:
         result : int
             "1" for SET OK, "2" for SET FAILED
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_FAN_MODE, mode, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_FAN_MODE,
+            COMMAND_SIZE_FOR_UINT8,
+            mode,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
+        
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def get_fan_mode(self, timeout=RESPONSE_DELAY):
         """
@@ -1318,15 +1471,17 @@ class SixfabPower:
         status : int
             "1" for FAN ON MODE, "2" for FAN OFF MODE 
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_FAN_MODE,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_FAN_MODE)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
-
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     def set_watchdog_interval(self, interval, timeout=RESPONSE_DELAY):
         """
@@ -1349,15 +1504,19 @@ class SixfabPower:
             print("Wrong argument. min:4 max:180")
             return 2
 
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL, interval, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_WATCHDOG_INTERVAL,
+            COMMAND_SIZE_FOR_UINT8,
+            interval,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
 
     def get_watchdog_interval(self, timeout=RESPONSE_DELAY):
@@ -1374,14 +1533,17 @@ class SixfabPower:
         status : int
             time in minutes to trigger recovery actions
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_WATCHDOG_INTERVAL)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        interval = raw[PROTOCOL_HEADER_SIZE]
-        return interval
+        if raw != None:
+            interval = raw[PROTOCOL_HEADER_SIZE]
+            return interval
+        else:
+            return None
 
     def get_power_outage_params(self, timeout=RESPONSE_DELAY):
         """
@@ -1396,19 +1558,22 @@ class SixfabPower:
         sleep_time : int
             time in [minutes]
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT32)
-
-        sleep_time = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 4], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_PARAMS,
+            COMMAND_SIZE_FOR_INT32,
+            timeout
         )
 
-        run_time = int.from_bytes(
-            raw[COMMAND_SIZE_FOR_INT32 - 4 : COMMAND_SIZE_FOR_INT32 - 2], "big"
-        )
-        return (sleep_time, run_time)
+        if raw != None:
+            sleep_time = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT32 - 4], "big"
+            )
+
+            run_time = int.from_bytes(
+                raw[COMMAND_SIZE_FOR_INT32 - 4 : COMMAND_SIZE_FOR_INT32 - 2], "big"
+            )
+            return (sleep_time, run_time)
+        return None
 
 
     def set_power_outage_params(self, sleep_time, run_time, timeout=RESPONSE_DELAY):
@@ -1435,15 +1600,19 @@ class SixfabPower:
         params.append((run_time >> 8) & 0xFF)
         params.append(run_time & 0xFF)
 
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS, params, 4
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_PARAMS,
+            COMMAND_SIZE_FOR_UINT8,
+            params,
+            4,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     
     def get_power_outage_event_status(self, timeout=RESPONSE_DELAY):
@@ -1460,14 +1629,17 @@ class SixfabPower:
         status : int
             "1" for ENABLED, "2" for DISABLED 
         """
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS,
+            COMMAND_SIZE_FOR_UINT8,
+            timeout
+        )
 
-        command.create_command(command.PROTOCOL_COMMAND_GET_POWER_OUTAGE_EVENT_STATUS)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
 
     def set_power_outage_event_status(self, status, timeout=RESPONSE_DELAY):
@@ -1486,16 +1658,19 @@ class SixfabPower:
         result : int
             "1" for SET OK, "2" for SET FAILED
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS, status, 1
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_POWER_OUTAGE_EVENT_STATUS,
+            COMMAND_SIZE_FOR_UINT8,
+            status,
+            1,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
     
     def get_end_device_alive_threshold(self, timeout=RESPONSE_DELAY):
@@ -1512,15 +1687,19 @@ class SixfabPower:
         threshold : int
             current threshold [mA]
         """
-        command.create_command(command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD)
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_INT16)
-
-        threshold = int.from_bytes(
-            raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+        raw = retry_command(
+            command.PROTOCOL_COMMAND_GET_END_DEVICE_ALIVE_THRESHOLD,
+            COMMAND_SIZE_FOR_INT16,
+            timeout
         )
-        return threshold
+
+        if raw != None:
+            threshold = int.from_bytes(
+                raw[PROTOCOL_HEADER_SIZE : COMMAND_SIZE_FOR_INT16 - 2], "big"
+            )
+            return threshold
+        else:
+            return None
 
     def set_end_device_alive_threshold(self, threshold, timeout=RESPONSE_DELAY):
         """
@@ -1538,16 +1717,19 @@ class SixfabPower:
         result : int
             "1" for SET_OK, "2" for SET_FAILED 
         """
-
-        command.create_set_command(
-            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD, threshold, 2
+        raw = retry_set_command(
+            command.PROTOCOL_COMMAND_SET_END_DEVICE_ALIVE_THRESHOLD,
+            COMMAND_SIZE_FOR_UINT8,
+            threshold,
+            2,
+            timeout
         )
-        command.send_command()
-        delay_ms(timeout)
-        raw = command.receive_command(COMMAND_SIZE_FOR_UINT8)
-
-        status = raw[PROTOCOL_HEADER_SIZE]
-        return status
+        
+        if raw != None:
+            status = raw[PROTOCOL_HEADER_SIZE]
+            return status
+        else:
+            return None
 
 
     def restore_factory_defaults(self, timeout=RESPONSE_DELAY):
@@ -1563,5 +1745,10 @@ class SixfabPower:
         None
         """
 
-        command.create_command(command.PROTOCOL_COMMAND_RESTORE_FACTORY_SETTINGS)
-        command.send_command()
+        try:
+            command.create_command(command.PROTOCOL_COMMAND_RESTORE_FACTORY_SETTINGS)
+            command.send_command()
+        except:
+            return None
+        else:
+            return 1

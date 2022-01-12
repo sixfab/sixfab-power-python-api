@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='power_api',
-    version='0.3.1',
+    version='0.3.2',
     author='Yasin Kaya',
     author_email='yasinkaya.121@gmail.com',
     description='Python API for Sixfab UPS HAT V2',
